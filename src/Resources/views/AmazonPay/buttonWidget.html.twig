@@ -1,9 +1,9 @@
-<div id="AmazonPayButton"></div>
+Hello World
 
 <script type='text/javascript'>
     window.onAmazonLoginReady = function () {
         try {
-            amazon.Login.setClientId("amzn1.application-oa2-client.46d27733e6044b08860955d63511ad19");
+            amazon.Login.setClientId({{ amazon.clientId }});
             amazon.Login.setUseCookie(true);
         } catch (err) {
             alert(err);
@@ -12,13 +12,16 @@
 
     window.onAmazonPaymentsReady = function () {
         var authRequest;
-        OffAmazonPayments.Button("AmazonPayButton", "A5445N2KWSM0Z", {
+        OffAmazonPayments.Button("AmazonPayButton", {{ amazon.merchantId }}, {
             type: "PwA",
             color: "Gold",
             size: "large",
             language: "en-GB",
             authorization: function() {
-                loginOptions = { scope: "profile postal_code payments:widget payments:shipping_address", popup: true };
+                loginOptions = {
+                    scope: "profile postal_code payments:widget payments:shipping_address",
+                    popup: true
+                };
                 authRequest = amazon.Login.authorize(loginOptions, "");
             },
             onError: function(error) {
@@ -26,6 +29,4 @@
         });
     };
 </script>
-<script async="async" type='text/javascript'
-        src='https://static-eu.payments-amazon.com/OffAmazonPayments/gbp/sandbox/lpa/js/Widgets.js'>
-</script>
+<script async="async" type='text/javascript' src='https://static-eu.payments-amazon.com/OffAmazonPayments/gbp/sandbox/lpa/js/Widgets.js'></script>
