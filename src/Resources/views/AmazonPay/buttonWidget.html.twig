@@ -1,32 +1,32 @@
-Hello World
-
+{{ dump(amazon.api_env) }}
 <script type='text/javascript'>
-    window.onAmazonLoginReady = function () {
-        try {
-            amazon.Login.setClientId({{ amazon.clientId }});
-            amazon.Login.setUseCookie(true);
-        } catch (err) {
-            alert(err);
-        }
-    };
-
-    window.onAmazonPaymentsReady = function () {
-        var authRequest;
-        OffAmazonPayments.Button("AmazonPayButton", {{ amazon.merchantId }}, {
-            type: "PwA",
-            color: "Gold",
-            size: "large",
-            language: "en-GB",
-            authorization: function() {
-                loginOptions = {
-                    scope: "profile postal_code payments:widget payments:shipping_address",
-                    popup: true
-                };
-                authRequest = amazon.Login.authorize(loginOptions, "");
-            },
-            onError: function(error) {
+        window.onAmazonLoginReady = function () {
+            try {
+                amazon.Login.setClientId("{{ amazon.clientId }}");
+                amazon.Login.setUseCookie(true);
+            } catch (err) {
+                alert(err);
             }
-        });
-    };
+        };
+
+        window.onAmazonPaymentsReady = function () {
+            var authRequest;
+            OffAmazonPayments.Button("AmazonPayButton", "{{ amazon.merchantId }}", {
+                type: "PwA",
+                color: "Gold",
+                size: "large",
+                language: "en-GB",
+                authorization: function() {
+                    loginOptions = {
+                        scope: "profile postal_code payments:widget payments:shipping_address",
+                        popup: true
+                    };
+                    authRequest = amazon.Login.authorize(loginOptions, "{{ url('sylius_shop_checkout_start') }}");
+                },
+                onError: function(error) {
+                }
+            });
+        };
+
 </script>
-<script async="async" type='text/javascript' src='https://static-eu.payments-amazon.com/OffAmazonPayments/gbp/sandbox/lpa/js/Widgets.js'></script>
+<script async="async" type='text/javascript' src='https://static-eu.payments-amazon.com/OffAmazonPayments/gbp{{ amazon.api_env }}/lpa/js/Widgets.js'></script>

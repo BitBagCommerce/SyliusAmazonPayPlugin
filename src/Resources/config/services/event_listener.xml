@@ -8,7 +8,7 @@
         </service>
 
         <service id="tierperso_sylius_amazon_pay_plugin.event_listener.amazon_widget" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
-            <argument>TierpersoSyliusAmazonPayPlugin::amazon_widget.html.twig</argument>
+            <argument>TierpersoSyliusAmazonPayPlugin:AmazonPay:button.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.cart.summary.after_totals" method="onBlockEvent"/>
         </service>
     </services>
