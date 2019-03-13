@@ -5,7 +5,7 @@
         <defaults public="true" />
         <service id="Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayButtonWidgetAction">
             <argument type="service" id="templating" />
-            <argument type="service" id="parameter_bag" />
+            <argument type="string">%env(APP_ENV)%</argument>
         </service>
     </services>
 </container>
