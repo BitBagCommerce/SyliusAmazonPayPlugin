@@ -1,4 +1,3 @@
-{{ dump(amazon.api_env) }}
 <script type='text/javascript'>
         window.onAmazonLoginReady = function () {
             try {
@@ -26,7 +25,8 @@
                 onError: function(error) {
                 }
             });
+
         };
 
 </script>
-<script async="async" type='text/javascript' src='https://static-eu.payments-amazon.com/OffAmazonPayments/gbp{{ amazon.api_env }}/lpa/js/Widgets.js'></script>
+<script async="async" type='text/javascript' src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur{{ amazon.api_env }}/lpa/js/Widgets.js'></script>

@@ -1,0 +1,64 @@
+<script type='text/javascript'>
+    function getURLParameter(name, source) {
+        return decodeURIComponent((new RegExp('[?|&|#]' + name + '=' +
+            '([^&]+?)(&|#|;|$)').exec(source) || [,""])[1].replace(/\+/g,
+            '%20')) || null;
+    }
+
+    var accessToken = getURLParameter("access_token", location.hash);
+
+    if (typeof accessToken === 'string' && accessToken.match(/^Atza/)) {
+        document.cookie = "amazon_Login_accessToken=" + accessToken +
+            ";secure";
+    }
+
+    window.onAmazonLoginReady = function () {
+        amazon.Login.setClientId('');
+        amazon.Login.setUseCookie(true);
+    };
+
+</script>
+
+<script type='text/javascript'>
+    window.onAmazonLoginReady = function () {
+        try {
+            amazon.Login.setClientId('');
+            amazon.Login.setUseCookie(true);
+        } catch (err) {
+            alert(err);
+        }
+    };
+
+    window.onAmazonPaymentsReady = function () {
+        new OffAmazonPayments.Widgets.AddressBook({
+            sellerId: "",
+            onOrderReferenceCreate: function (orderReference) {
+
+
+                var access_token = '';
+
+                $.post("", {
+                    orderReferenceId: orderReference.getAmazonOrderReferenceId(),
+                    accessToken: access_token
+                }).done(function (data) {
+                    try {
+                        JSON.parse(data);
+                    } catch (err) {
+                    }
+                    $("#get_details_response").html(data);
+                });
+            },
+            onAddressSelect: function (orderReference) {
+            },
+            design: {
+                designMode: 'responsive'
+            },
+            onError: function (error) {
+                alert("AddressBook Widget error: " + error.getErrorCode() + ' - ' + error.getErrorMessage());
+            }
+        }).bind("addressBookWidgetDiv");
+        };
+
+</script>
+
+<script async="async" src='https://static-eu.payments-amazon.com/OffAmazonPayments/gbp/sandbox/lpa/js/Widgets.js'></script>
