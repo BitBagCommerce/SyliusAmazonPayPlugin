@@ -14,11 +14,11 @@
                 type: "PwA",
                 color: "Gold",
                 size: "large",
-                language: "en-GB",
+                language: "de-DE",
                 authorization: function() {
                     loginOptions = {
                         scope: "profile postal_code payments:widget payments:shipping_address",
-                        popup: true
+                        popup: false
                     };
                     authRequest = amazon.Login.authorize(loginOptions, "{{ url('sylius_shop_checkout_start') }}");
                 },
@@ -27,4 +27,4 @@
             });
         };
 </script>
-<script async="async" type='text/javascript' src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur{{ amazon.amazonApiEnvionment }}/lpa/js/Widgets.js'></script>
+<script async="async" type='text/javascript' src='https://static-eu.payments-amazon.com/OffAmazonPayments{{ amazon.amazonApiRegion }}{{ amazon.amazonApiEnvironment }}/lpa/js/Widgets.js'></script>

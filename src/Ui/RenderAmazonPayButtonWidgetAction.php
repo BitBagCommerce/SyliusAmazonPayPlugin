@@ -29,7 +29,8 @@ final class RenderAmazonPayButtonWidgetAction
             [
                 'amazon' => [
                     'amazonApiEnvironment' => $this->getAmazonApiEnvironment(),
-                    'clientId' => 'amzn1.application-oa2-client.46d27733e6044b08860955d63511ad19',
+                    'amazonApiRegion' => '/eur',
+                    'clientId' => 'amzn1.application-oa2-client.bce33695af0245ceb924af2ede4b9877',
                     'merchantId' => 'A5445N2KWSM0Z',
                 ],
             ]
