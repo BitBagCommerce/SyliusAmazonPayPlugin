@@ -1,23 +1,15 @@
-tierperso_sylius_amazon_pay_plugin_cart_button:
-    path: /cart/
-    methods: [GET]
-    defaults:
-        _controller: Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayButtonWidgetAction
-
-tierperso_sylius_amazon_pay_plugin_checkout_address_book_widget:
-    path: /checkout/
-    methods: [GET]
-    defaults:
-        _controller: Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayAddressBookWidgetAction
+tierperso_sylius_amazon_pay_plugin_address_book:
+    resource: 'routing/address_book.yaml'
+    prefix: /amazon-pay
 
 tierperso_sylius_amazon_pay_plugin_order_details:
-    path: /checkout/address
-    methods: [POST, GET]
-    defaults:
-        _controller: Tierperso\SyliusAmazonPayPlugin\Request\Api\AmazonPayOrderDetails::getAmazonOrderDetails
+    resource: 'routing/order_details.yaml'
+    prefix: /amazon-pay
 
-tierperso_sylius_amazon_pay_plugin_checkout_wallet_widget:
-    path: /checkout/select-payment
-    methods: [GET]
-    defaults:
-        _controller: Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayWalletWidgetAction
+tierperso_sylius_amazon_pay_plugin_pay_button:
+    resource: 'routing/pay_button.yaml'
+    prefix: /amazon-pay
+
+tierperso_sylius_amazon_pay_plugin_wallet:
+    resource: 'routing/wallet.yaml'
+    prefix: /amazon-pay

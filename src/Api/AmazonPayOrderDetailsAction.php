@@ -6,15 +6,16 @@ namespace Tierperso\SyliusAmazonPayPlugin\Request\Api;
 
 use AmazonPay\Client;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class AmazonPayOrderDetails
+final class AmazonPayOrderDetailsAction
 {
-    public function getAmazonOrderDetails(): object
+    public function __invoke(Request $request): Response
     {
         $client = new Client($this->getConfig());
-        $requestParameters = [];
 
+        $requestParameters = [];
         $requestParameters['amount']            = '19.95';
         $requestParameters['currencyCode']     = $this->getConfig()['currencyCode'];
         $requestParameters['sellerNote']       = 'Testing PHP SDK Samples';
@@ -26,16 +27,17 @@ final class AmazonPayOrderDetails
 
         $response = $client->setOrderReferenceDetails($requestParameters);
 
-        if ($client->success)
-        {
+        if ($client->success) {
             $requestParameters['accessToken'] = $_POST['accessToken'];
             $response = $client->getOrderReferenceDetails($requestParameters);
         }
+
+        $request->getSession()->set('amazonOrderReferenceId', $request->request->get('orderReferenceId'));
         $_SESSION['amazonOrderReferenceId'] = $_POST['orderReferenceId'];
 
         $json = json_decode($response->toJson());
 
-        return new JsonResponse($json);
+        return JsonResponse::create($response);
     }
 
     private function getConfig(): array

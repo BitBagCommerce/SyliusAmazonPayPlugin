@@ -1,0 +1,5 @@
+tierperso_sylius_amazon_pay_plugin_wallet_widget:
+    path: /wallet-widget
+    methods: [GET]
+    defaults:
+        _controller: Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayWalletWidgetAction

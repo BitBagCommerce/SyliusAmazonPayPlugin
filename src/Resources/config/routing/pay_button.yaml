@@ -1,5 +1,5 @@
-tierperso_sylius_amazon_pay_plugin_pay_button:
-    path: /pay-button
+tierperso_sylius_amazon_pay_plugin_pay_button_widget:
+    path: /pay-button-widget
     methods: [GET]
     defaults:
         _controller: Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayButtonWidgetAction
