@@ -7,5 +7,15 @@
             <argument type="service" id="templating" />
             <argument type="string">%env(APP_ENV)%</argument>
         </service>
+
+        <service id="Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayAddressBookWidgetAction">
+            <argument type="service" id="templating" />
+            <argument type="string">%env(APP_ENV)%</argument>
+        </service>
+
+        <service id="Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayWalletWidgetAction">
+            <argument type="service" id="templating" />
+            <argument type="string">%env(APP_ENV)%</argument>
+        </service>
     </services>
 </container>

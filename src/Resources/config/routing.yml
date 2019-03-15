@@ -3,3 +3,21 @@ tierperso_sylius_amazon_pay_plugin_cart_button:
     methods: [GET]
     defaults:
         _controller: Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayButtonWidgetAction
+
+tierperso_sylius_amazon_pay_plugin_checkout_address_book_widget:
+    path: /checkout/
+    methods: [GET]
+    defaults:
+        _controller: Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayAddressBookWidgetAction
+
+tierperso_sylius_amazon_pay_plugin_order_details:
+    path: /checkout/address
+    methods: [POST, GET]
+    defaults:
+        _controller: Tierperso\SyliusAmazonPayPlugin\Request\Api\AmazonPayOrderDetails::getAmazonOrderDetails
+
+tierperso_sylius_amazon_pay_plugin_checkout_wallet_widget:
+    path: /checkout/select-payment
+    methods: [GET]
+    defaults:
+        _controller: Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayWalletWidgetAction

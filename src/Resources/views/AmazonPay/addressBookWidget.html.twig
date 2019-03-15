@@ -1,28 +1,20 @@
+<p>This is the live response from the previous API call.</p>
+<pre id="get_details_response">
+</pre>
+
 <script type='text/javascript'>
     function getURLParameter(name, source) {
         return decodeURIComponent((new RegExp('[?|&|#]' + name + '=' +
             '([^&]+?)(&|#|;|$)').exec(source) || [,""])[1].replace(/\+/g,
             '%20')) || null;
     }
-
     var accessToken = getURLParameter("access_token", location.hash);
 
-    if (typeof accessToken === 'string' && accessToken.match(/^Atza/)) {
-        document.cookie = "amazon_Login_accessToken=" + accessToken +
-            ";secure";
-    }
+    console.log("Token:",accessToken);
 
-    window.onAmazonLoginReady = function () {
-        amazon.Login.setClientId('');
-        amazon.Login.setUseCookie(true);
-    };
-
-</script>
-
-<script type='text/javascript'>
     window.onAmazonLoginReady = function () {
         try {
-            amazon.Login.setClientId('');
+            amazon.Login.setClientId('{{ amazon.clientId }}');
             amazon.Login.setUseCookie(true);
         } catch (err) {
             alert(err);
@@ -31,15 +23,12 @@
 
     window.onAmazonPaymentsReady = function () {
         new OffAmazonPayments.Widgets.AddressBook({
-            sellerId: "",
+            sellerId: "{{ amazon.merchantId }}",
             onOrderReferenceCreate: function (orderReference) {
 
-
-                var access_token = '';
-
-                $.post("", {
+                $.post('{{ path('tierperso_sylius_amazon_pay_plugin_order_details') }}', {
                     orderReferenceId: orderReference.getAmazonOrderReferenceId(),
-                    accessToken: access_token
+                    accessToken: accessToken
                 }).done(function (data) {
                     try {
                         JSON.parse(data);
@@ -61,4 +50,4 @@
 
 </script>
 
-<script async="async" src='https://static-eu.payments-amazon.com/OffAmazonPayments/gbp/sandbox/lpa/js/Widgets.js'></script>
+<script async="async" type='text/javascript' src='https://static-eu.payments-amazon.com/OffAmazonPayments{{ amazon.amazonApiRegion }}{{ amazon.amazonApiEnvironment }}/lpa/js/Widgets.js'></script>

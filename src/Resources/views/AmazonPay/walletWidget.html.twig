@@ -1,0 +1,21 @@
+<script>
+    var orderReferenceId = null;
+
+    new OffAmazonPayments.Widgets.Wallet({
+        sellerId: '{{ amazon.merchantId }}',
+        onOrderReferenceCreate: function(orderReference) {
+            orderReferenceId = orderReference.getAmazonOrderReferenceId();
+        },
+        design: {
+            designMode: 'responsive'
+        },
+        onPaymentSelect: function(orderReference) {
+
+        },
+        onError: function(error) {
+            alert("Wallet Widget error: " + error.getErrorCode() + ' - ' + error.getErrorMessage());
+        }
+    }).bind("walletWidgetDiv");
+</script>
+
+<script async="async" type='text/javascript' src='https://static-eu.payments-amazon.com/OffAmazonPayments{{ amazon.amazonApiRegion }}{{ amazon.amazonApiEnvironment }}/lpa/js/Widgets.js'></script>
