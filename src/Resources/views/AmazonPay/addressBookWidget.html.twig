@@ -1,7 +1,3 @@
-<p>This is the live response from the previous API call.</p>
-<pre id="get_details_response">
-</pre>
-
 <script type='text/javascript'>
     function getURLParameter(name, source) {
         return decodeURIComponent((new RegExp('[?|&|#]' + name + '=' +
@@ -10,7 +6,7 @@
     }
     var accessToken = getURLParameter("access_token", location.hash);
 
-    console.log("Token:",accessToken);
+    var amazonOrderReferenceId = null;
 
     window.onAmazonLoginReady = function () {
         try {
@@ -25,19 +21,43 @@
         new OffAmazonPayments.Widgets.AddressBook({
             sellerId: "{{ amazon.merchantId }}",
             onOrderReferenceCreate: function (orderReference) {
-
-                $.post('{{ path('tierperso_sylius_amazon_pay_plugin_order_details') }}', {
-                    orderReferenceId: orderReference.getAmazonOrderReferenceId(),
+                amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
+                $.post('{{ path('tierperso_sylius_amazon_pay_plugin_get_order_details') }}', {
+                    orderReferenceId: amazonOrderReferenceId,
                     accessToken: accessToken
                 }).done(function (data) {
                     try {
                         JSON.parse(data);
                     } catch (err) {
                     }
-                    $("#get_details_response").html(data);
+                    console.log(data);
                 });
+
             },
             onAddressSelect: function (orderReference) {
+                $.post('{{ path('tierperso_sylius_amazon_pay_plugin_get_order_details') }}', {
+                    orderReferenceId: amazonOrderReferenceId,
+                    accessToken: accessToken
+                }).done(function (data) {
+                    try {
+                        JSON.parse(data);
+                    } catch (err) {
+                    }
+                    var name = data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.Name;
+                    var splitName = name.split(" ");
+
+                    $('#sylius_checkout_address_customer_email').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Buyer.Email);
+                    $('#sylius_checkout_address_shippingAddress_firstName').val(splitName[0]);
+                    $('#sylius_checkout_address_shippingAddress_lastName').val(splitName[1]);
+                    $('#sylius_checkout_address_shippingAddress_company').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Buyer.Name);
+                    $('#sylius_checkout_address_shippingAddress_street').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.AddressLine1);
+                    $('#sylius_checkout_address_shippingAddress_provinceName').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.StateOrRegion);
+                    $('#sylius_checkout_address_shippingAddress_city').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.City);
+                    $('#sylius_checkout_address_shippingAddress_postcode').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.PostalCode);
+                    $('#sylius_checkout_address_shippingAddress_phoneNumber').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.Phone);
+
+                    console.log(data);
+                });
             },
             design: {
                 designMode: 'responsive'

@@ -1,3 +1,4 @@
+
 <div id="sylius-shipping-address">
 
     {% include '@SyliusShop/Checkout/Address/_addressBookSelect.html.twig' %}
@@ -18,6 +19,4 @@
     {% include '@SyliusShop/Common/Form/_address.html.twig' with {'form': form.billingAddress, 'order': order} %}
 
     {{ sonata_block_render_event('sylius.shop.checkout.address.billing_address_form', {'order': order}) }}
-
-    <button type="button" id="button_override" class="ui button">Amazon Data</button>
 </div>

@@ -4,5 +4,6 @@
     <imports>
         <import resource="services/event_listener.xml"/>
         <import resource="services/ui.xml"/>
+        <import resource="services/request.xml"/>
     </imports>
 </container>
