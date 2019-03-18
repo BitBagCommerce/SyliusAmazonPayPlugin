@@ -45,7 +45,7 @@
                     }
                     var name = data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.Name;
                     var splitName = name.split(" ");
-
+                    console.log(data);
                     $('#sylius_checkout_address_customer_email').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Buyer.Email);
                     $('#sylius_checkout_address_shippingAddress_firstName').val(splitName[0]);
                     $('#sylius_checkout_address_shippingAddress_lastName').val(splitName[1]);

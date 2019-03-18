@@ -1,0 +1,11 @@
+tierperso_sylius_amazon_pay_plugin:
+    merchant_id:
+        not_blank: Merchant Id cannot be blank.
+    access_key:
+        not_blank: Access Key cannot be blank.
+    secret_key:
+        not_blank: Secret Key cannot be blank.
+    client_id:
+        not_blank: Client Id cannot be blank.
+    region:
+        not_blank: Region cannot be blank.

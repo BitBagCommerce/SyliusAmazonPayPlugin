@@ -5,5 +5,13 @@
         <import resource="services/event_listener.xml"/>
         <import resource="services/ui.xml"/>
         <import resource="services/request.xml"/>
+        <import resource="services/form.xml"/>
+        <import resource="services/gateway_factory.xml"/>
     </imports>
+
+    <services>
+        <defaults public="true" />
+        <service id="tierperso.sylius_amazon_pay_plugin.amazon_pay_api_client" class="Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClient">
+        </service>
+    </services>
 </container>
