@@ -28,11 +28,11 @@ final class AmazonPayOrderDetailsAction
         $response = $client->setOrderReferenceDetails($requestParameters);
 
         if ($client->success) {
-            $requestParameters['accessToken'] = $request->request->get('accessToken');
+            $requestParameters['access_token'] = $request->request->get('accessToken');
             $response = $client->getOrderReferenceDetails($requestParameters);
         }
 
-        $request->getSession()->set('amazonOrderReferenceId', $request->request->get('orderReferenceId'));
+        $request->getSession()->set('amazon_order_reference_id', $request->request->get('orderReferenceId'));
 
         return JsonResponse::create($response->toArray());
     }

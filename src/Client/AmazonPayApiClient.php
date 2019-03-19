@@ -49,5 +49,4 @@ class AmazonPayApiClient
         $this->client_id = $client_id;
         $this->region = $region;
     }
-
 }

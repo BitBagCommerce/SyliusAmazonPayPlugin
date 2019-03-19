@@ -44,7 +44,7 @@ final class AmazonPayGatewayFactory extends GatewayFactory
                 'region',
             ];
 
-            $config['payum.api'] = function (ArrayObject $config) {
+            $config['payum.api'] = function (ArrayObject $config): AmazonPayApiClient {
                 $config->validateNotEmpty($config['payum.required_options']);
 
                 /** @var AmazonPayApiClient $amazonPayApiClient */
