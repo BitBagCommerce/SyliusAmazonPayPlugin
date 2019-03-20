@@ -20,6 +20,40 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('buttonColor', ChoiceType::class, [
+                'choices' => [
+                    'tierperso_sylius_amazon_pay_plugin.ui.color_gold' => 'Gold',
+                    'tierperso_sylius_amazon_pay_plugin.ui.color_light_gray' => 'LightGray',
+                    'tierperso_sylius_amazon_pay_plugin.ui.color_dark_gray' => 'DarkGray',
+                ],
+                'label' => 'tierperso_sylius_amazon_pay_plugin.button_color',
+            ])
+            ->add('buttonSize', ChoiceType::class, [
+                'choices' => [
+                    'tierperso_sylius_amazon_pay_plugin.ui.small' => 'small',
+                    'tierperso_sylius_amazon_pay_plugin.ui.medium' => 'medium',
+                    'tierperso_sylius_amazon_pay_plugin.ui.large' => 'large',
+                    'tierperso_sylius_amazon_pay_plugin.ui.x-large' => 'x-large',
+                ],
+                'label' => 'tierperso_sylius_amazon_pay_plugin.button_size',
+            ])
+            ->add('buttonType', ChoiceType::class, [
+                'choices' => [
+                    'tierperso_sylius_amazon_pay_plugin.login_ui.with_amazon' => 'LwA',
+                    'tierperso_sylius_amazon_pay_plugin.ui.amazon_pay' => 'PwA',
+                ],
+                'label' => 'tierperso_sylius_amazon_pay_plugin.button_type',
+            ])
+            ->add('buttonLanguage', ChoiceType::class, [
+                'choices' => [
+                    'tierperso_sylius_amazon_pay_plugin.ui.german' => 'de-DE',
+                    'tierperso_sylius_amazon_pay_plugin.ui.english' => 'en-GB',
+                    'tierperso_sylius_amazon_pay_plugin.ui.spanish' => 'es-ES',
+                    'tierperso_sylius_amazon_pay_plugin.ui.french' => 'fr-FR',
+                    'tierperso_sylius_amazon_pay_plugin.ui.italian' => 'it-IT',
+                ],
+                'label' => 'tierperso_sylius_amazon_pay_plugin.button_language',
+            ])
             ->add('environment', ChoiceType::class, [
                 'choices' => [
                     'tierperso_sylius_amazon_pay_plugin.production' => 'production',
