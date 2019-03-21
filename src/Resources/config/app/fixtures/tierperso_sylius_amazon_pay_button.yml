@@ -1,0 +1,10 @@
+sylius_fixtures:
+    suites:
+        tierperso_sylius_amazon_pay_button:
+            fixtures:
+                amazon_pay_buttons:
+                    options:
+                        button_type: "PwA"
+                        button_color: "Gold"
+                        button_size: "large"
+                        button_language: "de-DE"
