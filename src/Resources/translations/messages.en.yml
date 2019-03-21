@@ -1,0 +1,8 @@
+tierperso_sylius_amazon_pay_plugin:
+    ui:
+        amazon_pay_gateway_label: AmazonPay
+        merchant_id: Merchant Id
+        access_key: Access Key
+        secret_key: Secret Key
+        client_id: Client Id
+        region: Region

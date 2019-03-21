@@ -2,4 +2,4 @@ tierperso_sylius_amazon_pay_plugin_get_order_details:
     path: /order-details
     methods: [POST, GET]
     defaults:
-        _controller: Tierperso\SyliusAmazonPayPlugin\Request\Api\AmazonPayOrderDetails::getAmazonOrderDetails
+        _controller: Tierperso\SyliusAmazonPayPlugin\Api\AmazonPayOrderDetailsAction

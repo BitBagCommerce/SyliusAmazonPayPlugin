@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Request\Api;
+namespace Tierperso\SyliusAmazonPayPlugin\Api;
 
 use AmazonPay\Client;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,41 +17,38 @@ final class AmazonPayOrderDetailsAction
 
         $requestParameters = [];
         $requestParameters['amount']            = '19.95';
-        $requestParameters['currencyCode']     = $this->getConfig()['currencyCode'];
-        $requestParameters['sellerNote']       = 'Testing PHP SDK Samples';
-        $requestParameters['sellerOrderId']   = '123456-TestOrder-123456';
-        $requestParameters['storeName']        = 'SDK Sample Store Name';
-        $requestParameters['customInformation']= 'Any custom information';
-        $requestParameters['mwsAuthorizationToken']    = null;
-        $requestParameters['amazonOrderReferenceId'] = $_POST['orderReferenceId'];
+        $requestParameters['currency_code']     = $this->getConfig()['currency_code'];
+        $requestParameters['seller_note']       = 'Testing PHP SDK Samples';
+        $requestParameters['seller_order_id']   = '123456-TestOrder-123456';
+        $requestParameters['store_name']        = 'SDK Sample Store Name';
+        $requestParameters['custom_information']= 'Any custom information';
+        $requestParameters['mws_auth_token']    = null;
+        $requestParameters['amazon_order_reference_id'] = $request->request->get('orderReferenceId');
 
         $response = $client->setOrderReferenceDetails($requestParameters);
 
         if ($client->success) {
-            $requestParameters['accessToken'] = $_POST['accessToken'];
+            $requestParameters['access_token'] = $request->request->get('accessToken');
             $response = $client->getOrderReferenceDetails($requestParameters);
         }
 
-        $request->getSession()->set('amazonOrderReferenceId', $request->request->get('orderReferenceId'));
-        $_SESSION['amazonOrderReferenceId'] = $_POST['orderReferenceId'];
+        $request->getSession()->set('amazon_order_reference_id', $request->request->get('orderReferenceId'));
 
-        $json = json_decode($response->toJson());
-
-        return JsonResponse::create($response);
+        return JsonResponse::create($response->toArray());
     }
 
     private function getConfig(): array
     {
-        $amazonpay_config = [
-            'merchantId'   => 'A5445N2KWSM0Z',
-            'accessKey'    => 'AKIAIK4SK5FO6ZB32ZMQ',
-            'secretKey'    => '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',
-            'clientId'     => 'amzn1.application-oa2-client.bce33695af0245ceb924af2ede4b9877',
+        $amazonpayConfig = [
+            'merchant_id'   => 'A5445N2KWSM0Z',
+            'access_key'    => 'AKIAIK4SK5FO6ZB32ZMQ',
+            'secret_key'    => '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',
+            'client_id'     => 'amzn1.application-oa2-client.bce33695af0245ceb924af2ede4b9877',
             'region'        => 'de',
-            'currencyCode' => 'EUR',
+            'currency_code' => 'EUR',
             'sandbox'       => true
         ];
 
-        return $amazonpay_config;
+        return $amazonpayConfig;
     }
 }

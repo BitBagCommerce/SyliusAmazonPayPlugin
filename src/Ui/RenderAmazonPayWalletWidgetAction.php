@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class RenderAmazonPayWalletWidgetAction
 {
+    use AmazonEnvironmentTrait;
+
     /** @var EngineInterface */
     private $templatingEngine;
 
@@ -33,14 +35,5 @@ final class RenderAmazonPayWalletWidgetAction
                 ],
             ]
         );
-    }
-
-    private function getAmazonApiEnvironment(): ?string
-    {
-        if ('dev' === $this->environment) {
-            return '/sandbox';
-        }
-
-        return null;
     }
 }
