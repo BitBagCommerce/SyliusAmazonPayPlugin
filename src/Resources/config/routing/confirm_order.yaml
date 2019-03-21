@@ -1,0 +1,5 @@
+tierperso_sylius_amazon_pay_plugin_get_confirm_order:
+    path: /confirm-order
+    methods: [POST, GET]
+    defaults:
+        _controller: Tierperso\SyliusAmazonPayPlugin\Api\AmazonPayConfirmOrderAction

@@ -1,6 +1,6 @@
 <script type='text/javascript'>
     var amazonOrderReferenceId = null;
-    console.log(accessToken);
+
     window.onAmazonLoginReady = function () {
         try {
             amazon.Login.setClientId('{{ amazon.clientId }}');
@@ -34,13 +34,14 @@
                         JSON.parse(data);
                     } catch (err) {
                     }
-                    $('#sylius_checkout_address_customer_email').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Buyer.Email);
-                    $('#sylius_checkout_address_shippingAddress_company').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Buyer.Name);
-                    $('#sylius_checkout_address_shippingAddress_street').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.AddressLine1);
-                    $('#sylius_checkout_address_shippingAddress_provinceName').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.StateOrRegion);
-                    $('#sylius_checkout_address_shippingAddress_city').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.City);
-                    $('#sylius_checkout_address_shippingAddress_postcode').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.PostalCode);
-                    $('#sylius_checkout_address_shippingAddress_phoneNumber').val(data.GetOrderReferenceDetailsResult.OrderReferenceDetails.Destination.PhysicalDestination.Phone);
+                    var addressData = data.GetOrderReferenceDetailsResult.OrderReferenceDetails;
+                    $('#sylius_checkout_address_customer_email').val(addressData.Buyer.Email);
+                    $('#sylius_checkout_address_shippingAddress_company').val(addressData.Buyer.Name);
+                    $('#sylius_checkout_address_shippingAddress_street').val(addressData.Destination.PhysicalDestination.AddressLine1);
+                    $('#sylius_checkout_address_shippingAddress_provinceName').val(addressData.Destination.PhysicalDestination.StateOrRegion);
+                    $('#sylius_checkout_address_shippingAddress_city').val(addressData.Destination.PhysicalDestination.City);
+                    $('#sylius_checkout_address_shippingAddress_postcode').val(addressData.Destination.PhysicalDestination.PostalCode);
+                    $('#sylius_checkout_address_shippingAddress_phoneNumber').val(addressData.Destination.PhysicalDestination.Phone);
                 });
             },
             design: {

@@ -2,6 +2,10 @@ tierperso_sylius_amazon_pay_plugin_address_book:
     resource: 'routing/address_book.yaml'
     prefix: /amazon-pay
 
+tierperso_sylius_amazon_pay_plugin_confirm_order:
+    resource: 'routing/confirm_order.yaml'
+    prefix: /amazon-pay
+
 tierperso_sylius_amazon_pay_plugin_order_details:
     resource: 'routing/order_details.yaml'
     prefix: /amazon-pay

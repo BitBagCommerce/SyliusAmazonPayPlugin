@@ -1,0 +1,33 @@
+<script type='text/javascript'>
+
+    var authorizeResponse;
+    var confirmResponse;
+    $.post('{{ path('tierperso_sylius_amazon_pay_plugin_get_confirm_order') }}', {}).done(function(data) {
+        try {
+            var obj = jQuery.parseJSON(data);
+            $.each(obj, function(key, value) {
+                if (key === 'confirm') {
+                    confirmResponse = value;
+                } else if (key === 'authorize') {
+                    authorizeResponse = value;
+                }
+            });
+
+            if (confirmResponse) {
+                if (confirmResponse.Error) {
+                }
+            }
+
+            if (authorizeResponse) {
+                if (authorizeResponse.AuthorizeResult.AuthorizationDetails.AuthorizationStatus.State === "Declined") {
+                }
+            }
+
+        } catch (err) {
+            $("#confirm").html(data);
+            console.log(data);
+            console.log(err);
+        }
+
+    });
+</script>

@@ -7,6 +7,9 @@ namespace Tierperso\SyliusAmazonPayPlugin;
 use Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClient;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
+use Tierperso\SyliusAmazonPayPlugin\Action\CaptureAction;
+use Tierperso\SyliusAmazonPayPlugin\Action\StatusAction;
+use Tierperso\SyliusAmazonPayPlugin\Action\ConvertPaymentAction;
 
 final class AmazonPayGatewayFactory extends GatewayFactory
 {
@@ -21,6 +24,9 @@ final class AmazonPayGatewayFactory extends GatewayFactory
             'payum.factory_name' => self::FACTORY_NAME,
             'payum.factory_title' => 'AmazonPay',
             'payum.http_client' => '@tierperso.sylius_amazon_pay_plugin.amazon_pay_api_client',
+            'payum.action.capture' => new CaptureAction(),
+            'payum.action.status' => new StatusAction(),
+            'payum.action.convert_payment' => new ConvertPaymentAction(),
         ]);
 
         if (false === (bool) $config['payum.api']) {
