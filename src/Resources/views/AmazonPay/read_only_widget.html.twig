@@ -1,0 +1,26 @@
+<script>
+    new OffAmazonPayments.Widgets.AddressBook({
+        sellerId: '{{ amazon.merchantId }}',
+        amazonOrderReferenceId: '{{ amazon.order_reference_id }}',
+
+        displayMode: 'Read',
+        design: {
+            designMode: 'responsive'
+        },
+        onError: function(error) {
+        }
+    }).bind('readOnlyAddressBookWidgetDiv');
+</script>
+
+<script>
+    new OffAmazonPayments.Widgets.Wallet({
+        sellerId: '{{ amazon.merchantId }}',
+        amazonOrderReferenceId: '{{ amazon.order_reference_id }}',
+        displayMode: 'Read',
+        design: {
+            designMode: 'responsive'
+        },
+        onError: function(error) {
+        }
+    }).bind('readOnlyWalletWidgetDiv');
+</script>

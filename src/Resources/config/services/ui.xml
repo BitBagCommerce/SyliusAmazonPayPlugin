@@ -17,5 +17,9 @@
             <argument type="service" id="templating" />
             <argument type="string">%env(APP_ENV)%</argument>
         </service>
+
+        <service id="Tierperso\SyliusAmazonPayPlugin\Ui\RenderReadOnlyWigetAction">
+            <argument type="service" id="templating" />
+        </service>
     </services>
 </container>

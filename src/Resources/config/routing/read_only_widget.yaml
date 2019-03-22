@@ -1,0 +1,5 @@
+tierperso_sylius_amazon_pay_plugin_read_only_widget:
+    path: /read-only-widget
+    methods: [GET]
+    defaults:
+        _controller: Tierperso\SyliusAmazonPayPlugin\Ui\RenderReadOnlyWigetAction
