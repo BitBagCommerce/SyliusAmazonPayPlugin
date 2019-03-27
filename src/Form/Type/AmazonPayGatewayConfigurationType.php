@@ -26,7 +26,7 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
                     'tierperso_sylius_amazon_pay_plugin.ui.color_light_gray' => 'LightGray',
                     'tierperso_sylius_amazon_pay_plugin.ui.color_dark_gray' => 'DarkGray',
                 ],
-                'label' => 'tierperso_sylius_amazon_pay_plugin.button_color',
+                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.button_color',
             ])
             ->add('buttonSize', ChoiceType::class, [
                 'choices' => [
@@ -35,31 +35,31 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
                     'tierperso_sylius_amazon_pay_plugin.ui.large' => 'large',
                     'tierperso_sylius_amazon_pay_plugin.ui.x-large' => 'x-large',
                 ],
-                'label' => 'tierperso_sylius_amazon_pay_plugin.button_size',
+                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.button_size',
             ])
             ->add('buttonType', ChoiceType::class, [
                 'choices' => [
-                    'tierperso_sylius_amazon_pay_plugin.login_ui.with_amazon' => 'LwA',
+                    'tierperso_sylius_amazon_pay_plugin.ui.login_with_amazon' => 'LwA',
                     'tierperso_sylius_amazon_pay_plugin.ui.amazon_pay' => 'PwA',
                 ],
-                'label' => 'tierperso_sylius_amazon_pay_plugin.button_type',
+                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.button_type',
             ])
             ->add('buttonLanguage', ChoiceType::class, [
                 'choices' => [
-                    'tierperso_sylius_amazon_pay_plugin.ui.german' => 'de-DE',
-                    'tierperso_sylius_amazon_pay_plugin.ui.english' => 'en-GB',
-                    'tierperso_sylius_amazon_pay_plugin.ui.spanish' => 'es-ES',
-                    'tierperso_sylius_amazon_pay_plugin.ui.french' => 'fr-FR',
-                    'tierperso_sylius_amazon_pay_plugin.ui.italian' => 'it-IT',
+                    'tierperso_sylius_amazon_pay_plugin.ui.language_german' => 'de-DE',
+                    'tierperso_sylius_amazon_pay_plugin.ui.language_english' => 'en-GB',
+                    'tierperso_sylius_amazon_pay_plugin.ui.language_spanish' => 'es-ES',
+                    'tierperso_sylius_amazon_pay_plugin.ui.language_french' => 'fr-FR',
+                    'tierperso_sylius_amazon_pay_plugin.ui.language_italian' => 'it-IT',
                 ],
-                'label' => 'tierperso_sylius_amazon_pay_plugin.button_language',
+                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.button_language',
             ])
             ->add('environment', ChoiceType::class, [
                 'choices' => [
-                    'tierperso_sylius_amazon_pay_plugin.production' => 'production',
-                    'tierperso_sylius_amazon_pay_plugin.sandbox' => 'sandbox',
+                    'tierperso_sylius_amazon_pay_plugin.ui.production' => 'production',
+                    'tierperso_sylius_amazon_pay_plugin.ui.sandbox' => 'sandbox',
                 ],
-                'label' => 'tierperso_sylius_amazon_pay_plugin.environment',
+                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.environment',
             ])
             ->add('merchant_id', TextType::class, [
                 'label' => 'tierperso_sylius_amazon_pay_plugin.ui.merchant_id',
