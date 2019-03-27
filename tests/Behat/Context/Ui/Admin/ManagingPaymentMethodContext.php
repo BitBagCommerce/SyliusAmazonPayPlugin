@@ -120,4 +120,18 @@ final class ManagingPaymentMethodContext implements Context
         Assert::true($this->createPage->containsErrorWithMessage($message));
     }
 
+    /**
+     * @Then I should be notified that :fields fields cannot be blank
+     */
+    public function iShouldBeNotifiedThatCannotBeBlank(string $fields): void
+    {
+        $fields = explode(',', $fields);
+        foreach ($fields as $field) {
+            Assert::true($this->createPage->containsErrorWithMessage(sprintf(
+                '%s cannot be blank.',
+                trim($field)
+            )));
+        }
+    }
+
 }

@@ -10,7 +10,6 @@ Feature: Adding a new amazon pay payment method
   @ui
   Scenario: Adding a new amazon pay payment method
     Given I want to create a new AmazonPay payment method
-    When I name it "AmazonPay" in English {United States}
     And I specify its code as "amazonpay_test"
     And I fill the Merchant Id with "A5445N2KWSM0Z"
     And I fill the Access Key with "AKIAIK4SK5FO6ZB32ZMQ"
