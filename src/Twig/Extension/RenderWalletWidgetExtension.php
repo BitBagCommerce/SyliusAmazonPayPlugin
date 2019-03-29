@@ -8,7 +8,7 @@ use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Symfony\Component\Templating\EngineInterface;
 
-final class RenderAddressBookWidgetExtension extends \Twig_Extension
+final class RenderWalletWidgetExtension extends \Twig_Extension
 {
     /** @var EngineInterface */
     private $templatingEngine;
@@ -21,11 +21,11 @@ final class RenderAddressBookWidgetExtension extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_Function('tierperso_amazon_pay_render_address_book_widget', [$this, 'renderAddressBookWidget'], ['is_safe' => ['html']]),
+            new \Twig_Function('tierperso_amazon_pay_render_wallet_widget', [$this, 'renderWalletWidget'], ['is_safe' => ['html']]),
         ];
     }
 
-    public function renderAddressBookWidget(): string
+    public function renderAddressBookWidget(string $clientId): string
     {
 
         return '';

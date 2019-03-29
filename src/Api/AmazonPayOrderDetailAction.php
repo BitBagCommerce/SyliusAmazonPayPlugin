@@ -8,6 +8,7 @@ use AmazonPay\Client;
 use Payum\Core\Request\GetCurrency;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final class AmazonPayOrderDetailAction extends Controller
 {
-    public function __invoke(Request $request): RedirectResponse
+    public function __invoke(Request $request): Response
     {
         /** @var AmazonPayApiClientInterface $config */
         $config = $config->getConfig();

@@ -8,7 +8,7 @@ tierperso_sylius_amazon_pay_plugin_confirm_order:
 
 tierperso_sylius_amazon_pay_plugin_order_details:
     resource: 'routing/order_details.yaml'
-    prefix: /amazon-pay
+    prefix: /en_US/amazon-pay
 
 tierperso_sylius_amazon_pay_plugin_pay_button:
     resource: 'routing/pay_button.yaml'
