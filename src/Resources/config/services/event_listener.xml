@@ -16,5 +16,11 @@
             <argument>TierpersoSyliusAmazonPayPlugin:AmazonPay:wallet.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.checkout.select_payment.before_summary" method="onBlockEvent"/>
         </service>
+
+        <service id="tierperso_sylius_amazon_pay_plugin.event_listener.amazon_read_only_widget" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+            <argument>TierpersoSyliusAmazonPayPlugin:AmazonPay:read_only.html.twig</argument>
+            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.checkout.complete.before_summary" method="onBlockEvent"/>
+
+        </service>
     </services>
 </container>

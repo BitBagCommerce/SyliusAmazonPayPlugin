@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="tierperso_sylius_amazon_pay_plugin.twig.extension.address_book_widget" class="Tierperso\SyliusAmazonPayPlugin\Twig\Extension\RenderAddressBookWidgetExtension">
+            <argument type="service" id="templating"/>
+            <tag name="twig.extension"/>
+        </service>
+
+        <service id="tierperso_sylius_amazon_pay_plugin.twig.extension.wallet_widget" class="Tierperso\SyliusAmazonPayPlugin\Twig\Extension\RenderWalletWidgetExtension">
+            <argument type="service" id="templating"/>
+            <tag name="twig.extension"/>
+        </service>
+    </services>
+</container>

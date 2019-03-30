@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Tierperso\SyliusAmazonPayPlugin\Client;
 
-use AmazonPay\ClientInterface;
 
-class AmazonPayApiClient
+class AmazonPayApiClient extends \AmazonPay\Client implements AmazonPayApiClientInterface
 {
-    /** @var ClientInterface */
-    protected $apiClient;
 
     /** @var string */
     protected $environment;
@@ -29,11 +26,6 @@ class AmazonPayApiClient
     /** @var string */
     protected $region;
 
-    public function __construct(ClientInterface $client)
-    {
-        $this->apiClient = $client;
-    }
-
     public function setConfig(
         string $environment,
         string $merchant_id,
@@ -48,5 +40,17 @@ class AmazonPayApiClient
         $this->secret_key = $secret_key;
         $this->client_id = $client_id;
         $this->region = $region;
+    }
+
+    public function getConfig(): array
+    {
+        return [
+            'environment' => $this->environment,
+            'merchant_id' => $this->merchant_id,
+            'access_key' => $this->access_key,
+            'secret_key' => $this->secret_key,
+            'client_id' =>$this->client_id,
+            'region' => $this->region,
+        ];
     }
 }

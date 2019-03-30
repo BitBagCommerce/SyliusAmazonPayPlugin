@@ -2,14 +2,23 @@ tierperso_sylius_amazon_pay_plugin_address_book:
     resource: 'routing/address_book.yaml'
     prefix: /amazon-pay
 
+tierperso_sylius_amazon_pay_plugin_confirm_order:
+    resource: 'routing/confirm_order.yaml'
+    prefix: /amazon-pay
+
 tierperso_sylius_amazon_pay_plugin_order_details:
     resource: 'routing/order_details.yaml'
-    prefix: /amazon-pay
+    prefix: /en_US/amazon-pay
 
 tierperso_sylius_amazon_pay_plugin_pay_button:
     resource: 'routing/pay_button.yaml'
     prefix: /amazon-pay
 
+tierperso_sylius_amazon_pay_plugin_read_only:
+    resource: 'routing/read_only_widget.yaml'
+    prefix: /amazon-pay
+
 tierperso_sylius_amazon_pay_plugin_wallet:
     resource: 'routing/wallet.yaml'
     prefix: /amazon-pay
+

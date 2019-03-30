@@ -9,31 +9,33 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class AmazonPayOrderDetailsAction
+final class AmazonPayConfirmOrderAction
 {
     public function __invoke(Request $request): Response
     {
         $client = new Client($this->getConfig());
 
         $requestParameters = [];
-        $requestParameters['amount']            = '19.95';
-        $requestParameters['currency_code']     = $this->getConfig()['currency_code'];
-        $requestParameters['seller_order_id']   = '123456-TestOrder-123456';
-        $requestParameters['store_name']        = 'SDK Sample Store Name';
-        $requestParameters['custom_information']= 'Any custom information';
         $requestParameters['mws_auth_token']    = null;
         $requestParameters['amazon_order_reference_id'] = $request->request->get('orderReferenceId');
 
-        $response = $client->setOrderReferenceDetails($requestParameters);
+        $response = $client->confirmOrderReference($requestParameters);
+
+        $responsearray['confirm'] = json_decode($response->toJson());
 
         if ($client->success) {
-            $requestParameters['access_token'] = $request->request->get('accessToken');
-            $response = $client->getOrderReferenceDetails($requestParameters);
+            $requestParameters['authorization_amount'] = '19.95';
+            $requestParameters['authorization_reference_id'] = uniqid('', false);
+            $requestParameters['seller_authorization_note'] = 'Authorizing and capturing the payment';
+            $requestParameters['transaction_timeout'] = 0;
+
+            $requestParameters['capture_now'] = false;
+            $requestParameters['soft_descriptor'] = null;
+
+            $response = $client->authorize($requestParameters);
+            $responsearray['authorize'] = json_decode($response->toJson());
         }
-
-        $request->getSession()->set('amazon_order_reference_id', $request->request->get('orderReferenceId'));
-
-        return JsonResponse::create($response->toArray());
+        return JsonResponse::create($responsearray->toArray());
     }
 
     private function getConfig(): array

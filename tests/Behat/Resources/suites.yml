@@ -1,0 +1,2 @@
+imports:
+    - suites/ui/managing_payment_method_amazon_pay.yml
