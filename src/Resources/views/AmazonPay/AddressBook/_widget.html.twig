@@ -1,15 +1,20 @@
+<link href="{{ asset('bundles/tierpersosyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
+
+<script src="{{ asset('bundles/tierpersosyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
+
+<div id="addressBookWidgetDiv"> </div>
+
 <script type='text/javascript'>
-    {{ tierperso_amazon_pay_render_address_book_widget() }}
     var amazonOrderReferenceId = null;
 
-    window.onAmazonLoginReady = function () {
-        try {
-            amazon.Login.setClientId('{{ amazon.clientId }}');
-            amazon.Login.setUseCookie(true);
-        } catch (err) {
-            alert(err);
-        }
-    };
+    {#window.onAmazonLoginReady = function () {#}
+    {#try {#}
+    {#amazon.Login.setClientId('{{ amazon.clientId }}');#}
+    {#amazon.Login.setUseCookie(true);#}
+    {#} catch (err) {#}
+    {#alert(err);#}
+    {#}#}
+    {#};#}
 
     window.onAmazonPaymentsReady = function () {
         new OffAmazonPayments.Widgets.AddressBook({
@@ -27,6 +32,8 @@
                 });
             },
             onAddressSelect: function (orderReference) {
+                console.log(orderReference);
+
                 $.post('{{ path('tierperso_sylius_amazon_pay_plugin_get_order_details') }}', {
                     orderReferenceId: amazonOrderReferenceId,
                     accessToken: accessToken
@@ -52,8 +59,9 @@
                 alert("AddressBook Widget error: " + error.getErrorCode() + ' - ' + error.getErrorMessage());
             }
         }).bind("addressBookWidgetDiv");
-        };
+    };
 
 </script>
 
-<script async="async" type='text/javascript' src='https://static-eu.payments-amazon.com/OffAmazonPayments{{ amazon.amazonApiRegion }}{{ amazon.amazonApiEnvironment }}/lpa/js/Widgets.js'></script>
+<script src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js?sellerId=A5445N2KWSM0Z'></script>
+

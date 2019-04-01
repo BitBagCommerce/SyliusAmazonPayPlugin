@@ -12,3 +12,12 @@ sylius_shop_default_locale:
     methods: [GET]
     defaults:
         _controller: sylius.controller.shop.locale_switch:switchAction
+
+sylius_shop_cart_summary:
+    path: /{_locale}/cart/cart-summary
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.order:summaryAction
+        _sylius:
+            template: "@SyliusShop/Cart/summary.html.twig"
+            form: Sylius\Bundle\OrderBundle\Form\Type\CartType

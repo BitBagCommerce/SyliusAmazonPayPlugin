@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tierperso\SyliusAmazonPayPlugin\Action;
@@ -36,6 +37,6 @@ final class CaptureAction implements ActionInterface, GatewayAwareInterface
         return
             $request instanceof Capture &&
             $request->getModel() instanceof \ArrayAccess
-            ;
+        ;
     }
 }

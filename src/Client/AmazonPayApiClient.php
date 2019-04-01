@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tierperso\SyliusAmazonPayPlugin\Client;
 
+use AmazonPay\Client;
 
-class AmazonPayApiClient extends \AmazonPay\Client implements AmazonPayApiClientInterface
+class AmazonPayApiClient extends Client implements AmazonPayApiClientInterface
 {
-
     /** @var string */
     protected $environment;
 

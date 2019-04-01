@@ -14,9 +14,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class AmazonPayGatewayConfigurationType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -61,7 +58,7 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
                 ],
                 'label' => 'tierperso_sylius_amazon_pay_plugin.ui.environment',
             ])
-            ->add('merchant_id', TextType::class, [
+            ->add('merchantId', TextType::class, [
                 'label' => 'tierperso_sylius_amazon_pay_plugin.ui.merchant_id',
                 'constraints' => [
                     new NotBlank([
@@ -70,7 +67,7 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('access_key', TextType::class, [
+            ->add('accessKey', TextType::class, [
                 'label' => 'tierperso_sylius_amazon_pay_plugin.ui.access_key',
                 'constraints' => [
                     new NotBlank([
@@ -79,7 +76,7 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('secret_key', TextType::class, [
+            ->add('secretKey', TextType::class, [
                 'label' => 'tierperso_sylius_amazon_pay_plugin.ui.secret_key',
                 'constraints' => [
                     new NotBlank([
@@ -88,7 +85,7 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('client_id', TextType::class, [
+            ->add('clientId', TextType::class, [
                 'label' => 'tierperso_sylius_amazon_pay_plugin.ui.client_id',
                 'constraints' => [
                     new NotBlank([
@@ -97,8 +94,14 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('region', TextType::class, [
+            ->add('region', ChoiceType::class, [
                 'label' => 'tierperso_sylius_amazon_pay_plugin.ui.region',
+                'choices' => [
+                    'de' => 'de',
+                    'uk' => 'uk',
+                    'us' => 'us',
+                    'jp' => 'jp',
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'tierperso_sylius_amazon_pay_plugin.region.not_blank',
@@ -106,6 +109,13 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
                     ]),
                 ],
             ])
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $data = $event->getData();
+
+                $data['payum.http_client'] = '@tierperso.sylius_amazon_pay_plugin.amazon_pay_api_client';
+
+                $event->setData($data);
+            })
         ;
     }
 }

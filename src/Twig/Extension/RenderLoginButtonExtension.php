@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tierperso\SyliusAmazonPayPlugin\Twig\Extension;
 
-use Tierperso\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
-use Twig\Extension\AbstractExtension;
 use Symfony\Component\Templating\EngineInterface;
+use Tierperso\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
 use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-final class RenderWalletWidgetExtension extends AbstractExtension
+final class RenderLoginButtonExtension extends AbstractExtension
 {
     /** @var EngineInterface */
     private $templatingEngine;
@@ -27,11 +27,11 @@ final class RenderWalletWidgetExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('tierperso_amazon_pay_render_wallet_widget', [$this, 'renderWalletWidget'], ['is_safe' => ['html']]),
+            new TwigFunction('tierperso_amazon_pay_render_login_button', [$this, 'renderLoginButton'], ['is_safe' => ['html']]),
         ];
     }
 
-    public function renderWalletWidget(): string
+    public function renderLoginButton(): string
     {
         $paymentMethod = $this->paymentMethodResolver->resolvePaymentMethod(AmazonPayGatewayFactory::FACTORY_NAME);
 
@@ -41,7 +41,7 @@ final class RenderWalletWidgetExtension extends AbstractExtension
 
         $config = $paymentMethod->getGatewayConfig()->getConfig();
 
-        return $this->templatingEngine->render('TierpersoSyliusAmazonPayPlugin:AmazonPay/Wallet:_widget.html.twig', [
+        return $this->templatingEngine->render('TierpersoSyliusAmazonPayPlugin:AmazonPay/Login:_button.html.twig', [
             'config' => $config,
         ]);
     }

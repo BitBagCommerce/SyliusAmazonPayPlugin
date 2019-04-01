@@ -22,3 +22,9 @@ tierperso_sylius_amazon_pay_plugin_wallet:
     resource: 'routing/wallet.yaml'
     prefix: /amazon-pay
 
+tierperso_sylius_amazon_pay_plugin_get_order_detail:
+    path: /en_US/cart/
+    methods: [POST, GET]
+    defaults:
+        _controller: Tierperso\SyliusAmazonPayPlugin\Api\AmazonPayOrderDetailAction
+

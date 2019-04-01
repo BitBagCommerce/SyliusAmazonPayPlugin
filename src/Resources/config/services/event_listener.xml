@@ -3,7 +3,7 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="tierperso_sylius_amazon_pay_plugin.event_listener.amazon_widget" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
-            <argument>TierpersoSyliusAmazonPayPlugin:AmazonPay:button.html.twig</argument>
+            <argument>TierpersoSyliusAmazonPayPlugin:AmazonPay:login.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.cart.summary.after_totals" method="onBlockEvent"/>
         </service>
 
@@ -20,7 +20,6 @@
         <service id="tierperso_sylius_amazon_pay_plugin.event_listener.amazon_read_only_widget" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
             <argument>TierpersoSyliusAmazonPayPlugin:AmazonPay:read_only.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.checkout.complete.before_summary" method="onBlockEvent"/>
-
         </service>
     </services>
 </container>

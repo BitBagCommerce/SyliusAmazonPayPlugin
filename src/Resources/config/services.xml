@@ -2,16 +2,17 @@
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <imports>
-        <import resource="services/event_listener.xml"/>
-        <import resource="services/form.xml"/>
-        <import resource="services/gateway_factory.xml"/>
-        <import resource="services/ui.xml"/>
-        <import resource="services/request.xml"/>
+        <import resource="services/**/*.xml"/>
     </imports>
 
     <services>
-        <defaults public="true" />
-        <service id="tierperso.sylius_amazon_pay_plugin.amazon_pay_api_client" class="Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClient">
+        <service id="tierperso.sylius_amazon_pay_plugin.amazon_pay_api_client" class="Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClient" public="true" />
+
+        <service id="tierperso.sylius_amazon_pay_plugin.repository.payment_method" class="Tierperso\SyliusAmazonPayPlugin\Repository\PaymentMethodRepository" parent="sylius.repository.payment_method" />
+
+        <service id="tierperso_sylius_amazon_pay_plugin.resolver.payment_method" class="Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolver">
+            <argument type="service" id="tierperso.sylius_amazon_pay_plugin.repository.payment_method" />
+            <argument type="service" id="sylius.context.channel" />
         </service>
     </services>
 </container>

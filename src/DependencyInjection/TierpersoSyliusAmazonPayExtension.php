@@ -11,14 +11,10 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 final class TierpersoSyliusAmazonPayExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $config, ContainerBuilder $container): void
     {
-        $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
-
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+
         $loader->load('services.xml');
     }
 }
