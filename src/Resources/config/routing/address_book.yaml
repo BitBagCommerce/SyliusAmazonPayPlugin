@@ -1,5 +1,0 @@
-tierperso_sylius_amazon_pay_plugin_address_book_widget:
-    path: /address-book-widget
-    methods: [GET]
-    defaults:
-        _controller: Tierperso\SyliusAmazonPayPlugin\Ui\RenderAmazonPayAddressBookWidgetAction
