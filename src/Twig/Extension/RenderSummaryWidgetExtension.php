@@ -7,12 +7,12 @@ namespace Tierperso\SyliusAmazonPayPlugin\Twig\Extension;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Tierperso\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
-use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\Templating\EngineInterface;
+use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use Twig\TwigFunction;
 
-final class RenderAddressBookWidgetExtension extends AbstractExtension
+final class RenderSummaryWidgetExtension extends AbstractExtension
 {
     /** @var EngineInterface */
     private $templatingEngine;
@@ -36,11 +36,11 @@ final class RenderAddressBookWidgetExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('tierperso_amazon_pay_render_address_book_widget', [$this, 'renderAddressBookWidget'], ['is_safe' => ['html']]),
+            new TwigFunction('tierperso_amazon_pay_render_summary_widget', [$this, 'renderSummaryWidget'], ['is_safe' => ['html']]),
         ];
     }
 
-    public function renderAddressBookWidget(): string
+    public function renderSummaryWidget(): string
     {
         $paymentMethod = $this->paymentMethodResolver->resolvePaymentMethod(AmazonPayGatewayFactory::FACTORY_NAME);
 
@@ -61,7 +61,7 @@ final class RenderAddressBookWidgetExtension extends AbstractExtension
             $amazonOrderReferenceId = $paymentDetails['amazon_pay']['amazon_order_reference_id'];
         }
 
-        return $this->templatingEngine->render('TierpersoSyliusAmazonPayPlugin:AmazonPay/AddressBook:_widget.html.twig', [
+        return $this->templatingEngine->render('TierpersoSyliusAmazonPayPlugin:AmazonPay/Summary:_widget.html.twig', [
             'config' => $config,
             'amazonOrderReferenceId' => $amazonOrderReferenceId,
         ]);

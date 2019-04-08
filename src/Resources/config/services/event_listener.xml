@@ -18,7 +18,7 @@
         </service>
 
         <service id="tierperso_sylius_amazon_pay_plugin.event_listener.amazon_read_only_widget" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
-            <argument>TierpersoSyliusAmazonPayPlugin:AmazonPay:read_only.html.twig</argument>
+            <argument>TierpersoSyliusAmazonPayPlugin:AmazonPay:summary.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.checkout.complete.before_summary" method="onBlockEvent"/>
         </service>
     </services>

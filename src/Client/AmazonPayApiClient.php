@@ -5,52 +5,34 @@ declare(strict_types=1);
 namespace Tierperso\SyliusAmazonPayPlugin\Client;
 
 use AmazonPay\Client;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
 
-class AmazonPayApiClient extends Client implements AmazonPayApiClientInterface
+class AmazonPayApiClient implements AmazonPayApiClientInterface
 {
-    /** @var string */
-    protected $environment;
+    /** @var Client */
+    private $client;
 
-    /** @var string */
-    protected $merchant_id;
+    public function initializeFromPaymentMethod(PaymentMethodInterface $paymentMethod): void
+    {
+        $config = $paymentMethod->getGatewayConfig()->getConfig();
 
-    /** @var string */
-    protected $access_key;
-
-    /** @var string */
-    protected $secret_key;
-
-    /** @var string */
-    protected $client_id;
-
-    /** @var string */
-    protected $region;
-
-    public function setConfig(
-        string $environment,
-        string $merchant_id,
-        string $access_key,
-        string $secret_key,
-        string $client_id,
-        string $region
-    ): void {
-        $this->environment = $environment;
-        $this->merchant_id = $merchant_id;
-        $this->access_key = $access_key;
-        $this->secret_key = $secret_key;
-        $this->client_id = $client_id;
-        $this->region = $region;
+        $this->initialize($config);
     }
 
-    public function getConfig(): array
+    public function initialize(array $config): void
     {
-        return [
-            'environment' => $this->environment,
-            'merchant_id' => $this->merchant_id,
-            'access_key' => $this->access_key,
-            'secret_key' => $this->secret_key,
-            'client_id' =>$this->client_id,
-            'region' => $this->region,
-        ];
+        $this->client = new Client([
+            'merchant_id' => $config['merchantId'],
+            'access_key' => $config['accessKey'],
+            'secret_key' => $config['secretKey'],
+            'client_id' => $config['clientId'],
+            'region' => $config['region'],
+            'sandbox' => $config['environment'] === self::SANDBOX_ENVIRONMENT,
+        ]);
+    }
+
+    public function getClient(): Client
+    {
+        return $this->client;
     }
 }

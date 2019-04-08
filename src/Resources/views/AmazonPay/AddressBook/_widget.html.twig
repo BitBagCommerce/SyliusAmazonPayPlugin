@@ -2,54 +2,65 @@
 
 <script src="{{ asset('bundles/tierpersosyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
 
-<div id="addressBookWidgetDiv"> </div>
+<div id="addressBookWidgetDiv"></div>
 
 <script type='text/javascript'>
-    var amazonOrderReferenceId = null;
+    window.onAmazonLoginReady = function () {
+        try {
+            amazon.Login.setClientId("{{ config.clientId }}");
+            amazon.Login.setUseCookie(true);
+        } catch (err) {
+            alert(err);
+        }
+    };
 
-    {#window.onAmazonLoginReady = function () {#}
-    {#try {#}
-    {#amazon.Login.setClientId('{{ amazon.clientId }}');#}
-    {#amazon.Login.setUseCookie(true);#}
-    {#} catch (err) {#}
-    {#alert(err);#}
-    {#}#}
-    {#};#}
+    var amazonOrderReferenceId = "{{ amazonOrderReferenceId is null ? 'null' : amazonOrderReferenceId }}";
 
     window.onAmazonPaymentsReady = function () {
         new OffAmazonPayments.Widgets.AddressBook({
-            sellerId: "{{ amazon.merchantId }}",
-            onOrderReferenceCreate: function (orderReference) {
-                amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
-                $.post('{{ path('tierperso_sylius_amazon_pay_plugin_get_order_details') }}', {
-                    orderReferenceId: amazonOrderReferenceId,
-                    accessToken: accessToken
-                }).done(function (data) {
-                    try {
-                        JSON.parse(data);
-                    } catch (err) {
-                    }
-                });
-            },
-            onAddressSelect: function (orderReference) {
-                console.log(orderReference);
+            sellerId: "{{ config.merchantId }}",
 
-                $.post('{{ path('tierperso_sylius_amazon_pay_plugin_get_order_details') }}', {
-                    orderReferenceId: amazonOrderReferenceId,
-                    accessToken: accessToken
+            {% if amazonOrderReferenceId is null %}
+                onOrderReferenceCreate: function(orderReference) {
+                    amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
+
+                    $.post('{{ path('tierperso_sylius_amazon_pay_order_reference_create') }}', {
+                        orderReferenceId: amazonOrderReferenceId
+                    }).done(function (data) {
+
+                    });
+                },
+            {% else %}
+                amazonOrderReferenceId: "{{ amazonOrderReferenceId }}",
+            {% endif %}
+
+            onAddressSelect: function (orderReference) {
+                $('form[name="sylius_checkout_address"]').addClass('loading');
+
+                $.post('{{ path('tierperso_sylius_amazon_pay_address_select') }}', {
+                    orderReferenceId: amazonOrderReferenceId
                 }).done(function (data) {
-                    try {
-                        JSON.parse(data);
-                    } catch (err) {
+                    let firstName = data.address.PhysicalDestination.Name.split(' ').slice(0, -1).join(' ');
+                    let lastName = data.address.PhysicalDestination.Name.split(' ').slice(-1).join(' ');
+
+                    let street = null;
+
+                    if (data.address.PhysicalDestination.AddressLine1) {
+                        street = data.address.PhysicalDestination.AddressLine1;
+                    } else {
+                        street = data.address.PhysicalDestination.AddressLine2;
                     }
-                    var addressData = data.GetOrderReferenceDetailsResult.OrderReferenceDetails;
-                    $('#sylius_checkout_address_customer_email').val(addressData.Buyer.Email);
-                    $('#sylius_checkout_address_shippingAddress_company').val(addressData.Buyer.Name);
-                    $('#sylius_checkout_address_shippingAddress_street').val(addressData.Destination.PhysicalDestination.AddressLine1);
-                    $('#sylius_checkout_address_shippingAddress_provinceName').val(addressData.Destination.PhysicalDestination.StateOrRegion);
-                    $('#sylius_checkout_address_shippingAddress_city').val(addressData.Destination.PhysicalDestination.City);
-                    $('#sylius_checkout_address_shippingAddress_postcode').val(addressData.Destination.PhysicalDestination.PostalCode);
-                    $('#sylius_checkout_address_shippingAddress_phoneNumber').val(addressData.Destination.PhysicalDestination.Phone);
+
+                    $('#sylius_checkout_address_customer_email').val(data.buyer.Email);
+                    $('#sylius_checkout_address_shippingAddress_firstName, #sylius_checkout_address_billingAddress_firstName').val(firstName);
+                    $('#sylius_checkout_address_shippingAddress_lastName, #sylius_checkout_address_billingAddress_lastName').val(lastName);
+                    $('#sylius_checkout_address_shippingAddress_street, #sylius_checkout_address_billingAddress_street').val(street);
+                    $('#sylius_checkout_address_shippingAddress_provinceName, #sylius_checkout_address_billingAddress_provinceName').val(data.address.PhysicalDestination.StateOrRegion);
+                    $('#sylius_checkout_address_shippingAddress_city, #sylius_checkout_address_billingAddress_city').val(data.address.PhysicalDestination.City);
+                    $('#sylius_checkout_address_shippingAddress_postcode, #sylius_checkout_address_billingAddress_postcode').val(data.address.PhysicalDestination.PostalCode);
+                    $('#sylius_checkout_address_shippingAddress_phoneNumber, #sylius_checkout_address_billingAddress_phoneNumber').val(data.address.PhysicalDestination.Phone);
+
+                    $('form[name="sylius_checkout_address"]').removeClass('loading');
                 });
             },
             design: {
@@ -60,8 +71,10 @@
             }
         }).bind("addressBookWidgetDiv");
     };
-
 </script>
 
-<script src='https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js?sellerId=A5445N2KWSM0Z'></script>
-
+<script
+        async="async"
+        type='text/javascript'
+        src='https://static-eu.payments-amazon.com/OffAmazonPayments/{{ config.region }}{{ 'sandbox' == config.environment ? '/' ~ config.environment : '' }}/lpa/js/Widgets.js?sellerId={{ config.merchantId }}'
+></script>

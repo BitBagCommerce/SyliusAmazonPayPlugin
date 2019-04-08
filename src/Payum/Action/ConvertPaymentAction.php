@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Action;
+namespace Tierperso\SyliusAmazonPayPlugin\Payum\Action;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Exception\RequestNotSupportedException;
@@ -15,6 +15,7 @@ use Sylius\Component\Core\Model\PaymentInterface;
 final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterface
 {
     use GatewayAwareTrait;
+
     /** @var PaymentDescriptionProviderInterface */
     private $paymentDescriptionProvider;
 
@@ -23,11 +24,6 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
         $this->paymentDescriptionProvider = $paymentDescriptionProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param Convert $request
-     */
     public function execute($request): void
     {
         RequestNotSupportedException::assertSupports($this, $request);
@@ -35,9 +31,13 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
         /** @var PaymentInterface $payment */
         $payment = $request->getSource();
 
-        $details = [
-            'mws_auth_token' => null,
-        ];
+        $details = $payment->getDetails();
+
+        $order = $payment->getOrder();
+
+        $details['amazon_pay']['currency_code'] = $order->getCurrencyCode();
+        $details['amazon_pay']['order_number'] = $order->getNumber();
+        $details['amazon_pay']['total'] = $order->getTotal() / 100;
 
         $request->setResult($details);
     }
@@ -47,6 +47,7 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
         return
             $request instanceof Convert &&
             $request->getSource() instanceof PaymentInterface &&
-            $request->getTo() === 'array';
+            $request->getTo() === 'array'
+        ;
     }
 }

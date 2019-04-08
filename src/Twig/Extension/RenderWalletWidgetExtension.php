@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tierperso\SyliusAmazonPayPlugin\Twig\Extension;
 
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Order\Context\CartContextInterface;
 use Tierperso\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\Templating\EngineInterface;
@@ -18,10 +20,17 @@ final class RenderWalletWidgetExtension extends AbstractExtension
     /** @var PaymentMethodResolverInterface */
     private $paymentMethodResolver;
 
-    public function __construct(EngineInterface $templatingEngine, PaymentMethodResolverInterface $paymentMethodResolver)
-    {
+    /** @var CartContextInterface */
+    private $cartContext;
+
+    public function __construct(
+        EngineInterface $templatingEngine,
+        PaymentMethodResolverInterface $paymentMethodResolver,
+        CartContextInterface $cartContext
+    ) {
         $this->templatingEngine = $templatingEngine;
         $this->paymentMethodResolver = $paymentMethodResolver;
+        $this->cartContext = $cartContext;
     }
 
     public function getFunctions(): array
@@ -41,8 +50,20 @@ final class RenderWalletWidgetExtension extends AbstractExtension
 
         $config = $paymentMethod->getGatewayConfig()->getConfig();
 
+        /** @var OrderInterface $order */
+        $order = $this->cartContext->getCart();
+
+        $paymentDetails = $order->getLastPayment()->getDetails();
+
+        $amazonOrderReferenceId = null;
+
+        if (isset($paymentDetails['amazon_pay']['amazon_order_reference_id'])) {
+            $amazonOrderReferenceId = $paymentDetails['amazon_pay']['amazon_order_reference_id'];
+        }
+
         return $this->templatingEngine->render('TierpersoSyliusAmazonPayPlugin:AmazonPay/Wallet:_widget.html.twig', [
             'config' => $config,
+            'amazonOrderReferenceId' => $amazonOrderReferenceId,
         ]);
     }
 }

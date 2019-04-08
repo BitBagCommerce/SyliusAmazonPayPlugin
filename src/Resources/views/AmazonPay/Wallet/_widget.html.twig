@@ -1,13 +1,41 @@
 <div id="walletWidgetDiv"></div>
 
+<link href="{{ asset('bundles/tierpersosyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
+
+<script src="{{ asset('bundles/tierpersosyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
+
+<script
+        type='text/javascript'
+        src='https://static-eu.payments-amazon.com/OffAmazonPayments/{{ config.region }}{{ 'sandbox' == config.environment ? '/' ~ config.environment : '' }}/lpa/js/Widgets.js?sellerId={{ config.merchantId }}'
+></script>
+
 <script>
-    var orderReferenceId = null;
+    window.onAmazonLoginReady = function () {
+        try {
+            amazon.Login.setClientId("{{ config.clientId }}");
+            amazon.Login.setUseCookie(true);
+        } catch (err) {
+            alert(err);
+        }
+    };
 
     new OffAmazonPayments.Widgets.Wallet({
-        sellerId: '{{ amazon.merchantId }}',
-        onOrderReferenceCreate: function(orderReference) {
-            orderReferenceId = orderReference.getAmazonOrderReferenceId();
-        },
+        sellerId: '{{ config.merchantId }}',
+
+        {% if amazonOrderReferenceId is null %}
+            onOrderReferenceCreate: function(orderReference) {
+                let orderReferenceId = orderReference.getAmazonOrderReferenceId();
+
+                $.post('{{ path('tierperso_sylius_amazon_pay_order_reference_create') }}', {
+                    orderReferenceId: orderReferenceId
+                }).done(function (data) {
+
+                });
+            },
+        {% else %}
+            amazonOrderReferenceId: "{{ amazonOrderReferenceId }}",
+        {% endif %}
+
         design: {
             designMode: 'responsive'
         },
@@ -19,5 +47,3 @@
         }
     }).bind("walletWidgetDiv");
 </script>
-
-<script async="async" type='text/javascript' src='https://static-eu.payments-amazon.com/OffAmazonPayments{{ amazon.amazonApiRegion }}{{ amazon.amazonApiEnvironment }}/lpa/js/Widgets.js'></script>

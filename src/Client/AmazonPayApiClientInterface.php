@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Tierperso\SyliusAmazonPayPlugin\Client;
 
+use AmazonPay\Client;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
+
 interface AmazonPayApiClientInterface
 {
-    public function setConfig(
-        string $environment,
-        string $merchant_id,
-        string $access_key,
-        string $secret_key,
-        string $client_id,
-        string $region
-    ): void;
+    public const PRODUCTION_ENVIRONMENT = 'production';
+    public const SANDBOX_ENVIRONMENT = 'sandbox';
 
-    public function getConfig(): array;
+    public function initializeFromPaymentMethod(PaymentMethodInterface $paymentMethod): void;
+
+    public function initialize(array $config): void;
+
+    public function getClient(): Client;
 }

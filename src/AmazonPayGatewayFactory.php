@@ -22,10 +22,10 @@ final class AmazonPayGatewayFactory extends GatewayFactory
         if (false === (bool) $config['payum.api']) {
             $config['payum.default_options'] = [
                 'environment' => 'sandbox',
-                'merchant_id' => null,
-                'access_key' => null,
-                'secret_key' => null,
-                'client_id' => null,
+                'merchantId' => null,
+                'accessKey' => null,
+                'secretKey' => null,
+                'clientId' => null,
                 'region' => null,
             ];
 
@@ -33,10 +33,10 @@ final class AmazonPayGatewayFactory extends GatewayFactory
 
             $config['payum.required_options'] = [
                 'environment',
-                'merchant_id',
-                'access_key',
-                'secret_key',
-                'client_id',
+                'merchantId',
+                'accessKey',
+                'secretKey',
+                'clientId',
                 'region',
             ];
 
@@ -46,14 +46,7 @@ final class AmazonPayGatewayFactory extends GatewayFactory
                 /** @var AmazonPayApiClient $amazonPayApiClient */
                 $amazonPayApiClient = $config['payum.http_client'];
 
-                $amazonPayApiClient->setConfig(
-                    $config['environment'],
-                    $config['merchant_id'],
-                    $config['access_key'],
-                    $config['secret_key'],
-                    $config['client_id'],
-                    $config['region']
-                );
+                $amazonPayApiClient->initialize($config->getArrayCopy());
 
                 return $amazonPayApiClient;
             };

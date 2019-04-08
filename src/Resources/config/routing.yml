@@ -1,30 +1,4 @@
-tierperso_sylius_amazon_pay_plugin_address_book:
-    resource: 'routing/address_book.yaml'
-    prefix: /amazon-pay
-
-tierperso_sylius_amazon_pay_plugin_confirm_order:
-    resource: 'routing/confirm_order.yaml'
-    prefix: /amazon-pay
-
-tierperso_sylius_amazon_pay_plugin_order_details:
-    resource: 'routing/order_details.yaml'
-    prefix: /en_US/amazon-pay
-
-tierperso_sylius_amazon_pay_plugin_pay_button:
-    resource: 'routing/pay_button.yaml'
-    prefix: /amazon-pay
-
-tierperso_sylius_amazon_pay_plugin_read_only:
-    resource: 'routing/read_only_widget.yaml'
-    prefix: /amazon-pay
-
-tierperso_sylius_amazon_pay_plugin_wallet:
-    resource: 'routing/wallet.yaml'
-    prefix: /amazon-pay
-
-tierperso_sylius_amazon_pay_plugin_get_order_detail:
-    path: /en_US/cart/
-    methods: [POST, GET]
-    defaults:
-        _controller: Tierperso\SyliusAmazonPayPlugin\Api\AmazonPayOrderDetailAction
-
+tierperso_sylius_amazon_pay:
+    resource: 'routing/amazon_pay.yml'
+#    prefix: /amazon-pay TODO add prefix
+    prefix: /en_US
