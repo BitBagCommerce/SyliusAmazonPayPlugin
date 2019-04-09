@@ -21,5 +21,7 @@
             <argument>TierpersoSyliusAmazonPayPlugin:AmazonPay:summary.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.checkout.complete.before_summary" method="onBlockEvent"/>
         </service>
+
+
     </services>
 </container>
