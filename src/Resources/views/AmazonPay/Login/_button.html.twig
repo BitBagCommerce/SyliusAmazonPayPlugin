@@ -1,0 +1,37 @@
+<div id="AmazonPayButton"></div>
+
+<script type='text/javascript'>
+    window.onAmazonLoginReady = function () {
+        try {
+            amazon.Login.setClientId("{{ config.clientId }}");
+            amazon.Login.setUseCookie(true);
+        } catch (err) {
+            alert(err);
+        }
+    };
+
+    window.onAmazonPaymentsReady = function () {
+        var authRequest;
+        OffAmazonPayments.Button("AmazonPayButton", "{{ config.merchantId }}", {
+            type: "{{ config.buttonType }}",
+            color: "{{ config.buttonColor }}",
+            size: "{{ config.buttonSize }}",
+            language: "{{ config.buttonLanguage }}",
+            authorization: function() {
+                loginOptions = {
+                    scope: "profile postal_code payments:widget payments:shipping_address",
+                    popup: false
+                };
+                authRequest = amazon.Login.authorize(loginOptions, "{{ url('tierperso_sylius_amazon_pay_start') }}?");
+            },
+            onError: function(error) {
+            }
+        });
+    };
+</script>
+
+<script
+        async="async"
+        type='text/javascript'
+        src='https://static-eu.payments-amazon.com/OffAmazonPayments/{{ config.region }}{{ 'sandbox' == config.environment ? '/' ~ config.environment : '' }}/lpa/js/Widgets.js?sellerId={{ config.merchantId }}'
+></script>

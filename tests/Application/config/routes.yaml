@@ -1,0 +1,3 @@
+tierperso_sylius_amazon_pay_plugin:
+    resource: "@TierpersoSyliusAmazonPayPlugin/Resources/config/routing.yml"
+    prefix: /

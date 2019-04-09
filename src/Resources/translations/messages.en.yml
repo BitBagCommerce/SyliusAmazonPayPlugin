@@ -1,0 +1,29 @@
+tierperso_sylius_amazon_pay_plugin:
+    ui:
+        amazon_pay_gateway_label: AmazonPay
+        merchant_id: Merchant Id
+        access_key: Access Key
+        secret_key: Secret Key
+        client_id: Client Id
+        region: Region
+        environment: Environment
+        button_color: Button Color
+        button_type: Button Type
+        button_size: Button Size
+        button_language: Button Language
+        language_german: German
+        language_english: English
+        language_spanish: Spanish
+        language_french: French
+        language_italian: Italian
+        login_with_amazon: Login with Amazon
+        amazon_pay: Amazon Pay
+        color_gold: Gold
+        color_light_gray: Light Gray
+        color_dark_gray: Dark Gray
+        production: Production
+        sandbox: Sandbox
+        small: Small
+        medium: Medium
+        large: Large
+        x-large: X Large

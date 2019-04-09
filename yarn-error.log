@@ -1,0 +1,26 @@
+Arguments: 
+  /usr/local/Cellar/node@10/10.15.1/bin/node /usr/local/Cellar/yarn/1.13.0/libexec/bin/yarn.js install
+
+PATH: 
+  /Users/radnok/.platformsh/bin:/usr/local/bin:/Users/radnok/.composer/vendor/bin:/usr/local/opt/php@7.2/sbin:/usr/local/opt/php@7.2/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/local/share/dotnet:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/Contents/MacOS:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin
+
+Yarn version: 
+  1.13.0
+
+Node version: 
+  10.15.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: EEXIST: file already exists, mkdir '/Users/radnok/Workspace/BitBag/SyliusAmazonPayPlugin/node_modules'
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

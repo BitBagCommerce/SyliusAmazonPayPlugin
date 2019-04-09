@@ -1,0 +1,44 @@
+<div id="readOnlyAddressBookWidgetDiv"></div>
+<div id="readOnlyWalletWidgetDiv"></div>
+
+<link href="{{ asset('bundles/tierpersosyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
+
+<script src="{{ asset('bundles/tierpersosyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
+
+<script
+        type='text/javascript'
+        src='https://static-eu.payments-amazon.com/OffAmazonPayments/{{ config.region }}{{ 'sandbox' == config.environment ? '/' ~ config.environment : '' }}/lpa/js/Widgets.js?sellerId={{ config.merchantId }}'
+></script>
+
+<script>
+    window.onAmazonLoginReady = function () {
+        try {
+            amazon.Login.setClientId("{{ config.clientId }}");
+            amazon.Login.setUseCookie(true);
+        } catch (err) {
+            alert(err);
+        }
+    };
+
+    new OffAmazonPayments.Widgets.AddressBook({
+        sellerId: '{{ config.merchantId }}',
+        displayMode: 'Read',
+        amazonOrderReferenceId: "{{ amazonOrderReferenceId }}",
+        design: {
+            designMode: 'responsive'
+        },
+        onError: function(error) {
+        }
+    }).bind('readOnlyAddressBookWidgetDiv');
+
+    new OffAmazonPayments.Widgets.Wallet({
+        sellerId: '{{ config.merchantId }}',
+        displayMode: 'Read',
+        amazonOrderReferenceId: "{{ amazonOrderReferenceId }}",
+        design: {
+            designMode: 'responsive'
+        },
+        onError: function(error) {
+        }
+    }).bind('readOnlyWalletWidgetDiv');
+</script>

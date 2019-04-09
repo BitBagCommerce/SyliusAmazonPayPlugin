@@ -1,0 +1,24 @@
+{% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
+
+<script>
+    function getURLParameter(name, source) {
+        return decodeURIComponent((new RegExp('[?|&|#]' + name + '=' +
+            '([^&]+?)(&|#|;|$)').exec(source) || [,""])[1].replace(/\+/g,
+            '%20')) || null
+        ;
+    }
+
+    let accessToken = getURLParameter("access_token", location.hash);
+
+    if (typeof accessToken === 'string' && accessToken.match(/^Atza/)) {
+        document.cookie = "amazon_Login_accessToken=" + accessToken;
+    }
+
+    $.post('{{ path('tierperso_sylius_amazon_pay_initialize') }}', {
+        accessToken: accessToken
+    }).done(function (data) {
+        window.location.replace("{{ path('sylius_shop_checkout_start') }}" + location.hash);
+    }).fail(function (data) {
+        {#window.location.replace("{{ path('sylius_shop_cart_summary') }}");#}
+    });
+</script>
