@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Tierperso\SyliusAmazonPayPlugin\Controller\Action;
 
 use Tierperso\SyliusAmazonPayPlugin\Controller\Action\AmazonPayStartAction;
@@ -8,7 +10,7 @@ use Symfony\Component\Templating\EngineInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class AmazonPayStartActionSpec extends ObjectBehavior
+final class AmazonPayStartActionSpec extends ObjectBehavior
 {
     function let(
         EngineInterface $templatingEngine): void {

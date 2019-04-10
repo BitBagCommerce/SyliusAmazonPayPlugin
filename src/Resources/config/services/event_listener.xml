@@ -22,6 +22,10 @@
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.checkout.complete.before_summary" method="onBlockEvent"/>
         </service>
 
-
+        <service id="tierperso_sylius_amazon_pay_plugin.event_listener.guest_account_create" class="Tierperso\SyliusAmazonPayPlugin\EventListener\GuestAccountCreateListener">
+            <argument type="service" id="service_container"/>
+            <argument type="service" id="sylius.context.cart" />
+            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.checkout.select_shipping.before_summary" method="addGuestAccount"/>
+        </service>
     </services>
 </container>

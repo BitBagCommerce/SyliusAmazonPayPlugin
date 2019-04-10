@@ -1,18 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Tierperso\SyliusAmazonPayPlugin\Twig\Extension;
 
+use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Templating\EngineInterface;
+use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use Tierperso\SyliusAmazonPayPlugin\Twig\Extension\RenderWalletWidgetExtension;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class RenderWalletWidgetExtensionSpec extends ObjectBehavior
+final class RenderWalletWidgetExtensionSpec extends ObjectBehavior
 {
     function let(
-        EngineInterface $templatingEngine
+        EngineInterface $templatingEngine,
+        PaymentMethodResolverInterface $paymentMethodResolver,
+        CartContextInterface $cartContext
     ): void {
-        $this->beConstructedWith($templatingEngine);
+        $this->beConstructedWith($templatingEngine, $paymentMethodResolver, $cartContext);
     }
 
     function it_is_initializable()
