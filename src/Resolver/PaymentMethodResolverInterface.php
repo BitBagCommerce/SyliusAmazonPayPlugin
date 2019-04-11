@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Resolver;
+namespace BitBag\SyliusAmazonPayPlugin\Resolver;
 
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 

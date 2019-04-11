@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace spec\Tierperso\SyliusAmazonPayPlugin\Twig\Extension;
+namespace spec\BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Templating\EngineInterface;
-use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
-use Tierperso\SyliusAmazonPayPlugin\Twig\Extension\RenderWalletWidgetExtension;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use BitBag\SyliusAmazonPayPlugin\Twig\Extension\RenderWalletWidgetExtension;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

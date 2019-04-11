@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Resolver;
+namespace BitBag\SyliusAmazonPayPlugin\Resolver;
 
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
-use Tierperso\SyliusAmazonPayPlugin\Repository\PaymentMethodRepositoryInterface;
+use BitBag\SyliusAmazonPayPlugin\Repository\PaymentMethodRepositoryInterface;
 
 final class PaymentMethodResolver implements PaymentMethodResolverInterface
 {

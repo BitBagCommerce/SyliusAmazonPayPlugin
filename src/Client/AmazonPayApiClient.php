@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Client;
+namespace BitBag\SyliusAmazonPayPlugin\Client;
 
 use AmazonPay\Client;
 use Sylius\Component\Core\Model\PaymentMethodInterface;

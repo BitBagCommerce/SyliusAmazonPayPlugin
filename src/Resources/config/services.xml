@@ -6,12 +6,12 @@
     </imports>
 
     <services>
-        <service id="tierperso.sylius_amazon_pay_plugin.amazon_pay_api_client" class="Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClient" public="true" />
+        <service id="bitbag.sylius_amazon_pay_plugin.amazon_pay_api_client" class="BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClient" public="true" />
 
-        <service id="tierperso.sylius_amazon_pay_plugin.repository.payment_method" class="Tierperso\SyliusAmazonPayPlugin\Repository\PaymentMethodRepository" parent="sylius.repository.payment_method" />
+        <service id="bitbag.sylius_amazon_pay_plugin.repository.payment_method" class="BitBag\SyliusAmazonPayPlugin\Repository\PaymentMethodRepository" parent="sylius.repository.payment_method" />
 
-        <service id="tierperso_sylius_amazon_pay_plugin.resolver.payment_method" class="Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolver">
-            <argument type="service" id="tierperso.sylius_amazon_pay_plugin.repository.payment_method" />
+        <service id="bitbag_sylius_amazon_pay_plugin.resolver.payment_method" class="BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolver">
+            <argument type="service" id="bitbag.sylius_amazon_pay_plugin.repository.payment_method" />
             <argument type="service" id="sylius.context.channel" />
         </service>
     </services>

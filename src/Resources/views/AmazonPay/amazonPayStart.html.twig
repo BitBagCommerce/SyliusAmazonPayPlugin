@@ -14,7 +14,7 @@
         document.cookie = "amazon_Login_accessToken=" + accessToken;
     }
 
-    $.post('{{ path('tierperso_sylius_amazon_pay_initialize') }}', {
+    $.post('{{ path('bitbag_sylius_amazon_pay_initialize') }}', {
         accessToken: accessToken
     }).done(function (data) {
         window.location.replace("{{ path('sylius_shop_checkout_start') }}" + location.hash);

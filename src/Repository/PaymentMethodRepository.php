@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Repository;
+namespace BitBag\SyliusAmazonPayPlugin\Repository;
 
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\PaymentMethodRepository as BasePaymentMethodRepository;
 use Sylius\Component\Channel\Model\ChannelInterface;

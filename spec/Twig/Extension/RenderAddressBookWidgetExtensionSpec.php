@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace spec\Tierperso\SyliusAmazonPayPlugin\Twig\Extension;
+namespace spec\BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Symfony\Component\Templating\EngineInterface;
-use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
-use Tierperso\SyliusAmazonPayPlugin\Twig\Extension\RenderAddressBookWidgetExtension;
+use BitBag\SyliusAmazonPayPlugin\Twig\Extension\RenderAddressBookWidgetExtension;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -65,7 +65,7 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
 
         $order->getLastPayment()->getDetails()->shouldBeCalled();
 
-        $templatingEngine->render('TierpersoSyliusAmazonPayPlugin:AmazonPay/AddressBook:_widget.html.twig', [
+        $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/AddressBook:_widget.html.twig', [
             'config' => [], 'amazonOrderReferenceId' => '123'])->willReturn('content');
 
         $this->renderAddressBookWidget()->shouldReturn('content');

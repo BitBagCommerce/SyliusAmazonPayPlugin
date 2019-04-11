@@ -1,8 +1,8 @@
 <div id="walletWidgetDiv"></div>
 
-<link href="{{ asset('bundles/tierpersosyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
+<link href="{{ asset('bundles/bitbagsyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
 
-<script src="{{ asset('bundles/tierpersosyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
+<script src="{{ asset('bundles/bitbagsyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
 
 <script
         type='text/javascript'
@@ -26,7 +26,7 @@
             onOrderReferenceCreate: function(orderReference) {
                 let orderReferenceId = orderReference.getAmazonOrderReferenceId();
 
-                $.post('{{ path('tierperso_sylius_amazon_pay_order_reference_create') }}', {
+                $.post('{{ path('bitbag_sylius_amazon_pay_order_reference_create') }}', {
                     orderReferenceId: orderReferenceId
                 }).done(function (data) {
 

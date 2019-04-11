@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Payum\Action;
+namespace BitBag\SyliusAmazonPayPlugin\Payum\Action;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\ApiAwareInterface;
@@ -11,7 +11,7 @@ use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Capture;
-use Tierperso\SyliusAmazonPayPlugin\Payum\Action\Api\ApiAwareTrait;
+use BitBag\SyliusAmazonPayPlugin\Payum\Action\Api\ApiAwareTrait;
 
 final class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {

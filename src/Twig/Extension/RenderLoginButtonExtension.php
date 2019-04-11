@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Twig\Extension;
+namespace BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
 use Symfony\Component\Templating\EngineInterface;
-use Tierperso\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
-use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -27,7 +27,7 @@ final class RenderLoginButtonExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('tierperso_amazon_pay_render_login_button', [$this, 'renderLoginButton'], ['is_safe' => ['html']]),
+            new TwigFunction('bitbag_amazon_pay_render_login_button', [$this, 'renderLoginButton'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -41,7 +41,7 @@ final class RenderLoginButtonExtension extends AbstractExtension
 
         $config = $paymentMethod->getGatewayConfig()->getConfig();
 
-        return $this->templatingEngine->render('TierpersoSyliusAmazonPayPlugin:AmazonPay/Login:_button.html.twig', [
+        return $this->templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/Login:_button.html.twig', [
             'config' => $config,
         ]);
     }

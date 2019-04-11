@@ -1,15 +1,15 @@
 <?php
 
-namespace spec\Tierperso\SyliusAmazonPayPlugin\Resolver;
+namespace spec\BitBag\SyliusAmazonPayPlugin\Resolver;
 
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
-use Tierperso\SyliusAmazonPayPlugin\Repository\PaymentMethodRepositoryInterface;
-use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolver;
+use BitBag\SyliusAmazonPayPlugin\Repository\PaymentMethodRepositoryInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolver;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 
 final class PaymentMethodResolverSpec extends ObjectBehavior
 {

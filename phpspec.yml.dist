@@ -1,4 +1,4 @@
 suites:
     main:
-        namespace: Tierperso\SyliusAmazonPayPlugin
-        psr4_prefix: Tierperso\SyliusAmazonPayPlugin
+        namespace: BitBag\SyliusAmazonPayPlugin
+        psr4_prefix: BitBag\SyliusAmazonPayPlugin

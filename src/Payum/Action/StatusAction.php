@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Payum\Action;
+namespace BitBag\SyliusAmazonPayPlugin\Payum\Action;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;

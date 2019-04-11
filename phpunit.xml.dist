@@ -6,7 +6,7 @@
          colors="true"
          bootstrap="tests/Application/config/bootstrap.php">
     <testsuites>
-        <testsuite name="TierpersoSyliusAmazonPayPlugin Test Suite">
+        <testsuite name="BitBagSyliusAmazonPayPlugin Test Suite">
             <directory>tests</directory>
         </testsuite>
         <env name="APP_ENV" value="test"/>

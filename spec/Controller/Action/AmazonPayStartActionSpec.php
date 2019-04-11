@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace spec\Tierperso\SyliusAmazonPayPlugin\Controller\Action;
+namespace spec\BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
-use Tierperso\SyliusAmazonPayPlugin\Controller\Action\AmazonPayStartAction;
+use BitBag\SyliusAmazonPayPlugin\Controller\Action\AmazonPayStartAction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Templating\EngineInterface;
 use PhpSpec\ObjectBehavior;
@@ -24,7 +24,7 @@ final class AmazonPayStartActionSpec extends ObjectBehavior
 
     function it_start(Request $request, EngineInterface $templatingEngine): void
     {
-        $templatingEngine->render('TierpersoSyliusAmazonPayPlugin:AmazonPay:amazonPayStart.html.twig')->shouldBeCalled();
+        $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay:amazonPayStart.html.twig')->shouldBeCalled();
 
         $this->__invoke($request);
     }

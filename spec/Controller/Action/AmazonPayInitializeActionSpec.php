@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace spec\Tierperso\SyliusAmazonPayPlugin\Controller\Action;
+namespace spec\BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -10,9 +10,9 @@ use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
-use Tierperso\SyliusAmazonPayPlugin\Controller\Action\AmazonPayInitializeAction;
-use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
-use Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use BitBag\SyliusAmazonPayPlugin\Controller\Action\AmazonPayInitializeAction;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use PhpSpec\ObjectBehavior;

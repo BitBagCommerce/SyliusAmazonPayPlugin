@@ -1,4 +1,4 @@
-tierperso_sylius_amazon_pay_plugin:
+bitbag_sylius_amazon_pay_plugin:
     ui:
         amazon_pay_gateway_label: AmazonPay
         merchant_id: Merchant Id
