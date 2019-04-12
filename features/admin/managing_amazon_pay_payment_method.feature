@@ -5,11 +5,13 @@ Feature: Adding a new amazon pay payment method
   I want to add a new payment method to the registry
 
   Background:
+    Given the store operates on a channel named "Web-USD" in "USD" currency
     Given I am logged in as an administrator
 
   @ui
   Scenario: Adding a new amazon pay payment method
     Given I want to create a new AmazonPay payment method
+    When I name it "AmazonPay" in "English (United States)"
     And I specify its code as "amazonpay_test"
     And I fill the Merchant Id with "A5445N2KWSM0Z"
     And I fill the Access Key with "AKIAIK4SK5FO6ZB32ZMQ"

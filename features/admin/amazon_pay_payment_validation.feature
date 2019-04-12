@@ -12,6 +12,9 @@ Feature: AmazonPay payment method validation
   @ui
   Scenario: Trying to add a new amazon pay payment method without specifying required configuration
     Given I want to create a new AmazonPay payment method
-    When I name it "AmazonPay" in English {United States}
+    When I name it "AmazonPay" in "English (United States)"
     And I add it
     Then I should be notified that "Merchant Id" fields cannot be blank
+    Then I should be notified that "Access Key" fields cannot be blank
+    Then I should be notified that "Secret Key" fields cannot be blank
+    Then I should be notified that "Client Id" fields cannot be blank

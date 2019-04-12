@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
+use AmazonPay\Client;
 use Doctrine\ORM\EntityManagerInterface;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
@@ -35,9 +38,10 @@ final class OrderReferenceCreateActionSpec extends ObjectBehavior
         $this->shouldHaveType(OrderReferenceCreateAction::class);
     }
 
-    function it_throw_exception_on_null_order_reference_id(Request $request): void
+    function it_throw_exception_on_null_order_reference_id(Request $request, ParameterBag $parameterBag): void
     {
-        $request->request->get('orderReferenceId')->willReturn(null);
+        $request->request = $parameterBag;
+        $parameterBag->get('orderReferenceId')->willReturn(null);
 
         $this->shouldThrow(new BadRequestHttpException());
 
@@ -51,28 +55,39 @@ final class OrderReferenceCreateActionSpec extends ObjectBehavior
         PaymentMethodInterface $paymentMethod,
         CartContextInterface $cartContext,
         AmazonPayApiClientInterface $amazonPayApiClient,
-        EntityManagerInterface $orderEntityManager
+        EntityManagerInterface $orderEntityManager,
+        ParameterBag $parameterBag,
+        Client $client
     ): void{
+        $request->request = $parameterBag;
+        $parameterBag->get('orderReferenceId')->willReturn('123');
 
-        $request->request->get('orderReferenceId')->willReturn('123');
         $cartContext->getCart()->willReturn($order);
         $order->getLastPayment()->willReturn($payment);
+        $payment->getDetails(
+            [
+                'amazon_pay' => [
+                    'access_token'
+                ]
+            ]
+        )->willReturn('321');
         $payment->getMethod()->willReturn($paymentMethod);
 
-        $amazonPayApiClient->initializeFromPaymentMethod($paymentMethod)->shouldBeCalled();
+        $amazonPayApiClient->initializeFromPaymentMethod($paymentMethod);
 
-        $order->getTotal()->willReturn('10');
+        $order->getTotal()->willReturn(10);
         $order->getCurrencyCode()->willReturn('3');
         $order->getNumber()->willReturn('1');
 
-        $amazonPayApiClient->getClient()->setOrderReferenceDetails([
-            'amount' => '10',
+        $client->setOrderReferenceDetails([
+            'amount' => 0.1,
             'currency_code' => '3',
             'seller_order_id' => '1',
             'mws_auth_token' => null,
             'amazon_order_reference_id' => '123',
             'access_token' => '321',
-        ])->shouldBeCalled();
+        ])->willReturn([]);
+        $amazonPayApiClient->getClient()->willReturn($client);
 
         $orderEntityManager->flush();
     }

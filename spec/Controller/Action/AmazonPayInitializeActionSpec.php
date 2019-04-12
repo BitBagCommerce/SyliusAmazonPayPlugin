@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
+use AmazonPay\Client;
+use BitBag\SyliusAmazonPayPlugin\Controller\Action\AmazonPayInitializeAction;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
-use BitBag\SyliusAmazonPayPlugin\Controller\Action\AmazonPayInitializeAction;
-use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
-use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 final class AmazonPayInitializeActionSpec extends ObjectBehavior
 {
@@ -50,13 +50,17 @@ final class AmazonPayInitializeActionSpec extends ObjectBehavior
         PaymentInterface $payment,
         OrderProcessorInterface $orderProcessor,
         EntityManagerInterface $orderEntityManager,
-        ParameterBag $parameterBag
+        AmazonPayApiClientInterface $amazonPayApiClient,
+        ParameterBag $parameterBag,
+        Client $client
     ): void{
-        //$parameterBag->get('accessToken')->willReturn('123')->shouldBeCalled();
-        //$request->request->get('accessToken')->willReturn('123')->shouldBeCalled();
-        $request->getWrappedObject()->request->get('accessToken')->willReturn('123')->shouldBeCalled();
+        $request->request = $parameterBag;
+        $parameterBag->get('accessToken')->willReturn('123');
 
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn($paymentMethod);
+
+        $client->getUserInfo('123')->willReturn([]);
+        $amazonPayApiClient->getClient()->willReturn($client);
 
         $cartContex->getCart()->willReturn($order);
 

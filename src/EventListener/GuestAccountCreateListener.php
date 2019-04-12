@@ -10,6 +10,7 @@ use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 
 final class GuestAccountCreateListener
 {
@@ -19,11 +20,15 @@ final class GuestAccountCreateListener
     /** @var CartContextInterface */
     private $cartContext;
 
+    /** @var PaymentMethodResolverInterface  */
+    private $paymentMethodResolver;
+
     public function __construct(
-        ContainerInterface $container, CartContextInterface $cartContext
+        ContainerInterface $container, CartContextInterface $cartContext, PaymentMethodResolverInterface $paymentMethodResolver
     ) {
         $this->container = $container;
         $this->cartContext = $cartContext;
+        $this->paymentMethodResolver = $paymentMethodResolver;
     }
 
     public function addGuestAccount(): void
@@ -42,20 +47,24 @@ final class GuestAccountCreateListener
         /** @var CustomerInterface $customer */
         $customer = $this->container->get('sylius.repository.customer')->findOneBy(['email' => $amazonEmail]);
 
+        $amazonpay = $this->paymentMethodResolver->resolvePaymentMethod('amazonpay');
+
         if(null === $shopUser && null !== $customer )
         {
             $password = bin2hex(random_bytes(9));
 
-            /** @var ShopUserInterface $user */
-            $user = $this->container->get('sylius.factory.shop_user')->createNew();
+            dump($amazonpay);
 
-            $orderEmailManager = $this->container->get('sylius.email_manager.order');
-
-            $user->setCustomer($customer);
-            $user->setUsername($amazonEmail);
-            $user->setPlainPassword($password);
-
-            $this->container->get('sylius.repository.shop_user')->add($user);
+//            /** @var ShopUserInterface $user */
+//            $user = $this->container->get('sylius.factory.shop_user')->createNew();
+//
+//            $orderEmailManager = $this->container->get('sylius.email_manager.order');
+//
+//            $user->setCustomer($customer);
+//            $user->setUsername($amazonEmail);
+//            $user->setPlainPassword($password);
+//
+//            $this->container->get('sylius.repository.shop_user')->add($user);
         }
     }
 }

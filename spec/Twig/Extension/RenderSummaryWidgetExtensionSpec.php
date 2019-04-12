@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace spec\BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
 use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
-use BitBag\SyliusAmazonPayPlugin\Twig\Extension\RenderAddressBookWidgetExtension;
+use BitBag\SyliusAmazonPayPlugin\Twig\Extension\RenderSummaryWidgetExtension;
 use Payum\Core\Model\GatewayConfigInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -14,8 +14,7 @@ use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Templating\EngineInterface;
 
-
-final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
+final class RenderSummaryWidgetExtensionSpec extends ObjectBehavior
 {
     function let(
         EngineInterface $templatingEngine,
@@ -27,7 +26,7 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
 
     function it_is_initializable(): void
     {
-        $this->shouldHaveType(RenderAddressBookWidgetExtension::class);
+        $this->shouldHaveType(RenderSummaryWidgetExtension::class);
     }
 
     function it_extends_twig_extension(): void
@@ -49,7 +48,7 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
     {
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn(null);
 
-        $this->renderAddressBookWidget()->shouldReturn('');
+        $this->renderSummaryWidget()->shouldReturn('');
     }
 
     function it_renders_address_book_widget(
@@ -72,9 +71,9 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
         ]]);
         $order->getLastPayment()->willReturn($payment);
 
-        $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/AddressBook:_widget.html.twig', [
+        $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/Summary:_widget.html.twig', [
             'config' => [], 'amazonOrderReferenceId' => 123])->willReturn('content');
 
-        $this->renderAddressBookWidget()->shouldReturn('content');
+        $this->renderSummaryWidget()->shouldReturn('content');
     }
 }

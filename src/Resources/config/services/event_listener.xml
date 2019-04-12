@@ -25,6 +25,7 @@
         <service id="bitbag_sylius_amazon_pay_plugin.event_listener.guest_account_create" class="BitBag\SyliusAmazonPayPlugin\EventListener\GuestAccountCreateListener">
             <argument type="service" id="service_container"/>
             <argument type="service" id="sylius.context.cart" />
+            <argument type="service" id="bitbag_sylius_amazon_pay_plugin.resolver.payment_method" />
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.checkout.complete.before_summary" method="addGuestAccount"/>
         </service>
     </services>

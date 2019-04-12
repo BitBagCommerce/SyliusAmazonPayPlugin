@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusAmazonPayPlugin\Payum\Action;
 
+use BitBag\SyliusAmazonPayPlugin\Payum\Action\ConvertPaymentAction;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\Request\Convert;
+use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
-use BitBag\SyliusAmazonPayPlugin\Payum\Action\ConvertPaymentAction;
-use PhpSpec\ObjectBehavior;
 use Sylius\Bundle\PayumBundle\Provider\PaymentDescriptionProviderInterface;
-use Prophecy\Argument;
 
 final class ConvertPaymentActionSpec extends ObjectBehavior
 {

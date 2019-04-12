@@ -4,30 +4,28 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
-use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
-use BitBag\SyliusAmazonPayPlugin\Twig\Extension\RenderAddressBookWidgetExtension;
-use Payum\Core\Model\GatewayConfigInterface;
-use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
-use Sylius\Component\Core\Model\PaymentInterface;
-use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Templating\EngineInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use BitBag\SyliusAmazonPayPlugin\Twig\Extension\RenderLoginButtonExtension;
+use Payum\Core\Model\GatewayConfigInterface;
+use Sylius\Component\Core\Model\PaymentInterface;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
-
-final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
+final class RenderLoginButtonExtensionSpec extends ObjectBehavior
 {
     function let(
         EngineInterface $templatingEngine,
-        PaymentMethodResolverInterface $paymentMethodResolver,
-        CartContextInterface $cartContext
+        PaymentMethodResolverInterface $paymentMethodResolver
     ): void {
-        $this->beConstructedWith($templatingEngine, $paymentMethodResolver, $cartContext);
+        $this->beConstructedWith($templatingEngine, $paymentMethodResolver);
     }
 
     function it_is_initializable(): void
     {
-        $this->shouldHaveType(RenderAddressBookWidgetExtension::class);
+        $this->shouldHaveType(RenderLoginButtonExtension::class);
     }
 
     function it_extends_twig_extension(): void
@@ -49,13 +47,12 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
     {
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn(null);
 
-        $this->renderAddressBookWidget()->shouldReturn('');
+        $this->renderLoginButton()->shouldReturn('');
     }
 
-    function it_renders_address_book_widget(
+    function it_renders_login_buttont(
         PaymentMethodResolverInterface $paymentMethodResolver,
         PaymentMethodInterface $paymentMethod,
-        CartContextInterface $cartContext,
         OrderInterface $order,
         EngineInterface $templatingEngine,
         PaymentInterface $payment,
@@ -65,16 +62,9 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn($paymentMethod);
 
-        $cartContext->getCart()->willReturn($order);
+        $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/Login:_button.html.twig', [
+            'config' => []])->willReturn('content');
 
-        $payment->getDetails()->willReturn(['amazon_pay' => [
-            'amazon_order_reference_id' => 123
-        ]]);
-        $order->getLastPayment()->willReturn($payment);
-
-        $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/AddressBook:_widget.html.twig', [
-            'config' => [], 'amazonOrderReferenceId' => 123])->willReturn('content');
-
-        $this->renderAddressBookWidget()->shouldReturn('content');
+        $this->renderLoginButton()->shouldReturn('content');
     }
 }

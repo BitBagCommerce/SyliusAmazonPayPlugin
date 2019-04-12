@@ -8,7 +8,6 @@ use BitBag\SyliusAmazonPayPlugin\Controller\Action\AmazonPayStartAction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Templating\EngineInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 final class AmazonPayStartActionSpec extends ObjectBehavior
 {
