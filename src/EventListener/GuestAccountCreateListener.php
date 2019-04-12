@@ -53,18 +53,16 @@ final class GuestAccountCreateListener
         {
             $password = bin2hex(random_bytes(9));
 
-            dump($amazonpay);
+            /** @var ShopUserInterface $user */
+            $user = $this->container->get('sylius.factory.shop_user')->createNew();
 
-//            /** @var ShopUserInterface $user */
-//            $user = $this->container->get('sylius.factory.shop_user')->createNew();
-//
-//            $orderEmailManager = $this->container->get('sylius.email_manager.order');
-//
-//            $user->setCustomer($customer);
-//            $user->setUsername($amazonEmail);
-//            $user->setPlainPassword($password);
-//
-//            $this->container->get('sylius.repository.shop_user')->add($user);
+            $orderEmailManager = $this->container->get('sylius.email_manager.order');
+
+            $user->setCustomer($customer);
+            $user->setUsername($amazonEmail);
+            $user->setPlainPassword($password);
+
+            $this->container->get('sylius.repository.shop_user')->add($user);
         }
     }
 }
