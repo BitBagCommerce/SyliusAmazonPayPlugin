@@ -1,6 +1,6 @@
 tierperso_sylius_amazon_pay_start:
-#    path: /start TODO add
-    path: cart/
+    path: /start
+#    path: cart/
     methods: [GET]
     defaults:
         _controller: tierperso_sylius_amazon_pay_plugin.controller.action.amazon_pay_start
@@ -22,3 +22,9 @@ tierperso_sylius_amazon_pay_address_select:
     methods: [POST]
     defaults:
         _controller: tierperso_sylius_amazon_pay_plugin.controller.action.address_select
+
+tierperso_sylius_amazon_pay_authorize_payment:
+    path: /authorize-payment
+    methods: [POST]
+    defaults:
+        _controller: tierperso_sylius_amazon_pay_plugin.controller.action.authorize_payment

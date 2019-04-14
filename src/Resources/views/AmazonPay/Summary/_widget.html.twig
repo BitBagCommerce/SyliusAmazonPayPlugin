@@ -1,6 +1,8 @@
 <div id="readOnlyAddressBookWidgetDiv"></div>
 <div id="readOnlyWalletWidgetDiv"></div>
 
+{% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
+
 <link href="{{ asset('bundles/tierpersosyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
 
 <script src="{{ asset('bundles/tierpersosyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
@@ -41,4 +43,30 @@
         onError: function(error) {
         }
     }).bind('readOnlyWalletWidgetDiv');
+
+    $('form[name="sylius_checkout_complete"]').on('submit', function (e) {
+        e.preventDefault();
+
+        let form = $(this);
+
+        $.post('{{ path('tierperso_sylius_amazon_pay_authorize_payment') }}', {
+            orderReferenceId: "{{ amazonOrderReferenceId }}"
+        }).done(function (data) {
+            form.unbind('submit').submit();
+        }).fail(function (data) {
+            if (data.responseJSON === "Failed payment") {
+                window.location.replace("{{ path('sylius_shop_cart_summary') }}");
+
+                return;
+            }
+
+            if (data.responseJSON === "Payment method invalid") {
+                window.location.replace("{{ path('sylius_shop_checkout_select_payment') }}");
+
+                return;
+            }
+
+            window.location.replace("{{ path('sylius_shop_cart_summary') }}");
+        });
+    });
 </script>

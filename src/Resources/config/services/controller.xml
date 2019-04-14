@@ -26,5 +26,19 @@
             <argument type="service" id="sylius.context.cart" />
             <argument type="service" id="tierperso.sylius_amazon_pay_plugin.amazon_pay_api_client" />
         </service>
+
+        <service id="tierperso_sylius_amazon_pay_plugin.controller.action.authorize_payment" class="Tierperso\SyliusAmazonPayPlugin\Controller\Action\AuthorizePaymentAction">
+            <argument type="service" id="sylius.context.cart" />
+            <argument type="service" id="tierperso.sylius_amazon_pay_plugin.amazon_pay_api_client" />
+            <argument type="service" id="sylius.manager.order" />
+            <argument type="service" id="session" />
+        </service>
+
+        <service id="tierperso_sylius_amazon_pay_plugin.controller.action.checkout_start" class="Tierperso\SyliusAmazonPayPlugin\Controller\Action\CheckoutStartAction">
+            <argument type="service" id="sylius.context.cart" />
+            <argument type="service" id="sylius.manager.order" />
+            <argument type="service" id="router" />
+            <argument type="service" id="sylius.payment_methods_resolver" />
+        </service>
     </services>
 </container>

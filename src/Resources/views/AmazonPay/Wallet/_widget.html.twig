@@ -1,5 +1,7 @@
 <div id="walletWidgetDiv"></div>
 
+{% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
+
 <link href="{{ asset('bundles/tierpersosyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
 
 <script src="{{ asset('bundles/tierpersosyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
@@ -18,6 +20,9 @@
             alert(err);
         }
     };
+
+    $('#next-step').addClass('disabled');
+    $('form[name="sylius_checkout_select_payment"] .ui.unmargined.segments').hide();
 
     new OffAmazonPayments.Widgets.Wallet({
         sellerId: '{{ config.merchantId }}',
@@ -40,10 +45,10 @@
             designMode: 'responsive'
         },
         onPaymentSelect: function(orderReference) {
-
+            $('#next-step').removeClass('disabled');
         },
         onError: function(error) {
-            alert("Wallet Widget error: " + error.getErrorCode() + ' - ' + error.getErrorMessage());
+            window.location.replace("{{ path('sylius_shop_cart_summary') }}");
         }
     }).bind("walletWidgetDiv");
 </script>

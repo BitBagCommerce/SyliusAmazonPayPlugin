@@ -10,9 +10,28 @@
 
         <service id="tierperso.sylius_amazon_pay_plugin.repository.payment_method" class="Tierperso\SyliusAmazonPayPlugin\Repository\PaymentMethodRepository" parent="sylius.repository.payment_method" />
 
+        <service id="tierperso.sylius_amazon_pay_plugin.repository.payment" class="Tierperso\SyliusAmazonPayPlugin\Repository\PaymentRepository" parent="sylius.repository.payment" />
+
         <service id="tierperso_sylius_amazon_pay_plugin.resolver.payment_method" class="Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolver">
             <argument type="service" id="tierperso.sylius_amazon_pay_plugin.repository.payment_method" />
             <argument type="service" id="sylius.context.channel" />
+        </service>
+
+        <service id="tierperso_sylius_amazon_pay_plugin.resolver.payment_state" class="Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentStateResolver">
+            <argument type="service" id="sm.factory" />
+            <argument type="service" id="tierperso.sylius_amazon_pay_plugin.amazon_pay_api_client" />
+            <argument type="service" id="sylius.manager.payment" />
+        </service>
+
+        <service id="tierperso_sylius_amazon_pay_plugin.command.update_amazon_pay_state" class="Tierperso\SyliusAmazonPayPlugin\Cli\Command\UpdateAmazonPayStatusCommand">
+            <argument type="service" id="tierperso.sylius_amazon_pay_plugin.repository.payment" />
+            <argument type="service" id="tierperso_sylius_amazon_pay_plugin.resolver.payment_state" />
+            <tag name="console.command" />
+        </service>
+
+        <service id="tierperso_sylius_amazon_pay_plugin.payment_methods_resolver.amazon_pay" class="Tierperso\SyliusAmazonPayPlugin\Resolver\AmazonPayPaymentMethodsResolver">
+            <argument type="service" id="sylius.repository.payment_method" />
+            <tag name="sylius.payment_method_resolver" type="amazon_pay" label="sylius.payment_methods_resolver.amazon_pay" priority="10" />
         </service>
     </services>
 </container>

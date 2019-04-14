@@ -1,3 +1,5 @@
+{% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
+
 <link href="{{ asset('bundles/tierpersosyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
 
 <script src="{{ asset('bundles/tierpersosyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
@@ -13,6 +15,8 @@
             alert(err);
         }
     };
+
+    $('#next-step').addClass('disabled');
 
     var amazonOrderReferenceId = "{{ amazonOrderReferenceId is null ? 'null' : amazonOrderReferenceId }}";
 
@@ -62,12 +66,14 @@
 
                     $('form[name="sylius_checkout_address"]').removeClass('loading');
                 });
+
+                $('#next-step').removeClass('disabled');
             },
             design: {
                 designMode: 'responsive'
             },
             onError: function (error) {
-                alert("AddressBook Widget error: " + error.getErrorCode() + ' - ' + error.getErrorMessage());
+                window.location.replace("{{ path('sylius_shop_cart_summary') }}");
             }
         }).bind("addressBookWidgetDiv");
     };

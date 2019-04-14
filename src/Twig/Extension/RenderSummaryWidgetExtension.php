@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tierperso\SyliusAmazonPayPlugin\Twig\Extension;
 
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\PaymentMethod;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Tierperso\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
 use Twig\Extension\AbstractExtension;
@@ -42,6 +43,19 @@ final class RenderSummaryWidgetExtension extends AbstractExtension
 
     public function renderSummaryWidget(): string
     {
+        /** @var OrderInterface $order */
+        $order = $this->cartContext->getCart();
+
+        /** @var PaymentMethod $paymentMethodCurrent */
+        $paymentMethodCurrent = $order->getLastPayment()->getMethod();
+
+        if (
+            null === $paymentMethodCurrent ||
+            AmazonPayGatewayFactory::FACTORY_NAME !== $paymentMethodCurrent->getGatewayConfig()->getFactoryName()
+        ) {
+            return '';
+        }
+
         $paymentMethod = $this->paymentMethodResolver->resolvePaymentMethod(AmazonPayGatewayFactory::FACTORY_NAME);
 
         if (null === $paymentMethod) {
@@ -49,9 +63,6 @@ final class RenderSummaryWidgetExtension extends AbstractExtension
         }
 
         $config = $paymentMethod->getGatewayConfig()->getConfig();
-
-        /** @var OrderInterface $order */
-        $order = $this->cartContext->getCart();
 
         $paymentDetails = $order->getLastPayment()->getDetails();
 

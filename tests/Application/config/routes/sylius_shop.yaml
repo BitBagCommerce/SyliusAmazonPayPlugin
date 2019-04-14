@@ -13,11 +13,10 @@ sylius_shop_default_locale:
     defaults:
         _controller: sylius.controller.shop.locale_switch:switchAction
 
-sylius_shop_cart_summary:
-    path: /{_locale}/cart/cart-summary
+sylius_shop_checkout_start:
+    path: /{_locale}/checkout-start
     methods: [GET]
     defaults:
-        _controller: sylius.controller.order:summaryAction
-        _sylius:
-            template: "@SyliusShop/Cart/summary.html.twig"
-            form: Sylius\Bundle\OrderBundle\Form\Type\CartType
+        _controller: tierperso_sylius_amazon_pay_plugin.controller.action.checkout_start
+    requirements:
+        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$

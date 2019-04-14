@@ -27,3 +27,5 @@ tierperso_sylius_amazon_pay_plugin:
         medium: Medium
         large: Large
         x-large: X Large
+        failed_payment: Failed payment
+        invalid_payment_method: Invalid payment method
