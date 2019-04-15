@@ -51,7 +51,7 @@ final class AmazonPayPaymentMethodsResolver implements PaymentMethodsResolverInt
             null !== $payment->getOrder() &&
             null !== $payment->getOrder()->getChannel() &&
             null !== $method &&
-            AmazonPayGatewayFactory::FACTORY_NAME !== $method->getGatewayConfig()->getFactoryName()
+            (AmazonPayGatewayFactory::FACTORY_NAME !== $method->getGatewayConfig()->getFactoryName() || $payment->getOrder()->isCheckoutCompleted())
         ;
     }
 }

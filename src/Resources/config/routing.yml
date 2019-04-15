@@ -1,4 +1,3 @@
 bitbag_sylius_amazon_pay:
     resource: 'routing/amazon_pay.yml'
     prefix: /amazon-pay
-#    prefix: /en_US

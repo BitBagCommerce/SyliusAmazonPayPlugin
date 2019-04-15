@@ -1,6 +1,5 @@
 bitbag_sylius_amazon_pay_start:
     path: /start
-#    path: cart/
     methods: [GET]
     defaults:
         _controller: bitbag_sylius_amazon_pay_plugin.controller.action.amazon_pay_start
@@ -28,3 +27,9 @@ bitbag_sylius_amazon_pay_authorize_payment:
     methods: [POST]
     defaults:
         _controller: bitbag_sylius_amazon_pay_plugin.controller.action.authorize_payment
+
+bitbag_sylius_amazon_pay_error:
+    path: /error
+    methods: [POST]
+    defaults:
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.error

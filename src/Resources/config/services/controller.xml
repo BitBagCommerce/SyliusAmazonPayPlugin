@@ -40,5 +40,7 @@
             <argument type="service" id="router" />
             <argument type="service" id="sylius.payment_methods_resolver" />
         </service>
+
+        <service id="bitbag_sylius_amazon_pay_plugin.controller.action.error" class="BitBag\SyliusAmazonPayPlugin\Controller\Action\AmazonPayErrorAction" />
     </services>
 </container>
