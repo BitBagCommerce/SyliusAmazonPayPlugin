@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Controller\Action;
+namespace BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,7 @@ final class AmazonPayStartAction
     public function __invoke(Request $request): Response
     {
         return new Response(
-            $this->templatingEngine->render('TierpersoSyliusAmazonPayPlugin:AmazonPay:amazonPayStart.html.twig')
+            $this->templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay:amazonPayStart.html.twig')
         );
     }
 }

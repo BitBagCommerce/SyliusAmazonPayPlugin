@@ -22,7 +22,7 @@
                     scope: "profile postal_code payments:widget payments:shipping_address",
                     popup: false
                 };
-                authRequest = amazon.Login.authorize(loginOptions, "{{ url('tierperso_sylius_amazon_pay_start') }}?");
+                authRequest = amazon.Login.authorize(loginOptions, "{{ url('bitbag_sylius_amazon_pay_start') }}?");
             },
             onError: function(error) {
             }

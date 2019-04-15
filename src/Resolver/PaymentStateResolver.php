@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Resolver;
+namespace BitBag\SyliusAmazonPayPlugin\Resolver;
 
 use Doctrine\ORM\EntityManagerInterface;
 use SM\Factory\FactoryInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Payment\PaymentTransitions;
-use Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 
 final class PaymentStateResolver implements PaymentStateResolverInterface
 {

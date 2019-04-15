@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Tierperso\SyliusAmazonPayPlugin\Twig\Extension;
+namespace spec\BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
 use Symfony\Component\Templating\EngineInterface;
-use Tierperso\SyliusAmazonPayPlugin\Twig\Extension\RenderAddressBookWidgetExtension;
+use BitBag\SyliusAmazonPayPlugin\Twig\Extension\RenderAddressBookWidgetExtension;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

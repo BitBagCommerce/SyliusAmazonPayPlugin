@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Payum\Action;
+namespace BitBag\SyliusAmazonPayPlugin\Payum\Action;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
@@ -9,7 +9,7 @@ use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\GetStatusInterface;
-use Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 
 final class StatusAction implements ActionInterface, GatewayAwareInterface
 {

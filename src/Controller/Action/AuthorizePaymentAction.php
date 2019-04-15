@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Controller\Action;
+namespace BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -12,10 +12,10 @@ use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class AuthorizePaymentAction
 {
@@ -28,19 +28,19 @@ final class AuthorizePaymentAction
     /** @var EntityManagerInterface */
     private $orderEntityManager;
 
-    /** @var SessionInterface|Session */
-    private $session;
+    /** @var TranslatorInterface */
+    private $translator;
 
     public function __construct(
         CartContextInterface $cartContext,
         AmazonPayApiClientInterface $amazonPayApiClient,
         EntityManagerInterface $orderEntityManager,
-        SessionInterface $session
+        TranslatorInterface $translator
     ) {
         $this->cartContext = $cartContext;
         $this->amazonPayApiClient = $amazonPayApiClient;
         $this->orderEntityManager = $orderEntityManager;
-        $this->session = $session;
+        $this->translator = $translator;
     }
 
     public function __invoke(Request $request): Response
@@ -76,8 +76,11 @@ final class AuthorizePaymentAction
             'amazon_order_reference_id' => $orderReferenceId,
         ])->toArray();
 
+        /** @var FlashBagInterface $flashBag */
+        $flashBag = $request->getSession()->getBag('flashes');
+
         if (isset($confirmOrderReferenceResponse['Error']['Message'])) {
-            $this->session->getFlashBag()->set('error', 'tierperso_sylius_amazon_pay_plugin.ui.invalid_payment_method');
+            $flashBag->add('error', $this->translator->trans('bitbag_sylius_amazon_pay_plugin.ui.invalid_payment_method'));
 
             return new JsonResponse(
                 'Payment method invalid',
@@ -100,7 +103,7 @@ final class AuthorizePaymentAction
 
         if ($authorizationStatus['State'] === AmazonPayApiClientInterface::DECLINED_AUTHORIZATION_STATUS) {
             if ($authorizationStatus['ReasonCode'] === 'InvalidPaymentMethod') {
-                $this->session->getFlashBag()->set('error', 'tierperso_sylius_amazon_pay_plugin.ui.invalid_payment_method');
+                $flashBag->add('error', $this->translator->trans('bitbag_sylius_amazon_pay_plugin.ui.invalid_payment_method'));
 
                 return new JsonResponse(
                     'Payment method invalid',
@@ -143,7 +146,7 @@ final class AuthorizePaymentAction
                 ]);
             }
 
-            $this->session->getFlashBag()->set('error', 'tierperso_sylius_amazon_pay_plugin.ui.failed_payment');
+            $flashBag->add('error', $this->translator->trans('bitbag_sylius_amazon_pay_plugin.ui.failed_payment'));
 
             return new JsonResponse(
                 'Failed payment',

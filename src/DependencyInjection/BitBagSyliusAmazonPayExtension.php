@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\DependencyInjection;
+namespace BitBag\SyliusAmazonPayPlugin\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class TierpersoSyliusAmazonPayExtension extends Extension
+final class BitBagSyliusAmazonPayExtension extends Extension
 {
     public function load(array $config, ContainerBuilder $container): void
     {

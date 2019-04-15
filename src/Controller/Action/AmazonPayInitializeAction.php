@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Controller\Action;
+namespace BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -12,10 +12,10 @@ use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Tierperso\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
-use Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClient;
-use Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
-use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClient;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 
 final class AmazonPayInitializeAction
 {

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Twig\Extension;
+namespace BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentMethod;
 use Sylius\Component\Order\Context\CartContextInterface;
-use Tierperso\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
+use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\Templating\EngineInterface;
-use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use Twig\TwigFunction;
 
 final class RenderSummaryWidgetExtension extends AbstractExtension
@@ -37,7 +37,7 @@ final class RenderSummaryWidgetExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('tierperso_amazon_pay_render_summary_widget', [$this, 'renderSummaryWidget'], ['is_safe' => ['html']]),
+            new TwigFunction('bitbag_amazon_pay_render_summary_widget', [$this, 'renderSummaryWidget'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -72,7 +72,7 @@ final class RenderSummaryWidgetExtension extends AbstractExtension
             $amazonOrderReferenceId = $paymentDetails['amazon_pay']['amazon_order_reference_id'];
         }
 
-        return $this->templatingEngine->render('TierpersoSyliusAmazonPayPlugin:AmazonPay/Summary:_widget.html.twig', [
+        return $this->templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/Summary:_widget.html.twig', [
             'config' => $config,
             'amazonOrderReferenceId' => $amazonOrderReferenceId,
         ]);

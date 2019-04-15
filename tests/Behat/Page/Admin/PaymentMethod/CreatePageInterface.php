@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Tierperso\SyliusAmazonPayPlugin\Behat\Page\Admin\PaymentMethod;
+namespace Tests\BitBag\SyliusAmazonPayPlugin\Behat\Page\Admin\PaymentMethod;
 
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Page\Admin\Crud\CreatePageInterface as BaseCreatePageInterface;

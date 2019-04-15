@@ -17,6 +17,6 @@ sylius_shop_checkout_start:
     path: /{_locale}/checkout-start
     methods: [GET]
     defaults:
-        _controller: tierperso_sylius_amazon_pay_plugin.controller.action.checkout_start
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.checkout_start
     requirements:
         _locale: ^[a-z]{2}(?:_[A-Z]{2})?$

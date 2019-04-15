@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin;
+namespace BitBag\SyliusAmazonPayPlugin;
 
-use Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClient;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClient;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
 

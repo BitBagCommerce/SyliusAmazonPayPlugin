@@ -2,11 +2,12 @@
 
 {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
 
-<link href="{{ asset('bundles/tierpersosyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
+<link href="{{ asset('bundles/bitbagsyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
 
-<script src="{{ asset('bundles/tierpersosyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
+<script src="{{ asset('bundles/bitbagsyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
 
 <script
+        async
         type='text/javascript'
         src='https://static-eu.payments-amazon.com/OffAmazonPayments/{{ config.region }}{{ 'sandbox' == config.environment ? '/' ~ config.environment : '' }}/lpa/js/Widgets.js?sellerId={{ config.merchantId }}'
 ></script>
@@ -24,31 +25,34 @@
     $('#next-step').addClass('disabled');
     $('form[name="sylius_checkout_select_payment"] .ui.unmargined.segments').hide();
 
-    new OffAmazonPayments.Widgets.Wallet({
-        sellerId: '{{ config.merchantId }}',
+    window.onAmazonPaymentsReady = function () {
+        new OffAmazonPayments.Widgets.Wallet({
+            sellerId: '{{ config.merchantId }}',
 
-        {% if amazonOrderReferenceId is null %}
+            {% if amazonOrderReferenceId is null %}
             onOrderReferenceCreate: function(orderReference) {
                 let orderReferenceId = orderReference.getAmazonOrderReferenceId();
 
-                $.post('{{ path('tierperso_sylius_amazon_pay_order_reference_create') }}', {
+                $.post('{{ path('bitbag_sylius_amazon_pay_order_reference_create') }}', {
                     orderReferenceId: orderReferenceId
                 }).done(function (data) {
 
                 });
             },
-        {% else %}
+            {% else %}
             amazonOrderReferenceId: "{{ amazonOrderReferenceId }}",
-        {% endif %}
+            {% endif %}
 
-        design: {
-            designMode: 'responsive'
-        },
-        onPaymentSelect: function(orderReference) {
-            $('#next-step').removeClass('disabled');
-        },
-        onError: function(error) {
-            window.location.replace("{{ path('sylius_shop_cart_summary') }}");
-        }
-    }).bind("walletWidgetDiv");
+            design: {
+                designMode: 'responsive'
+            },
+            onPaymentSelect: function(orderReference) {
+                $('#next-step').removeClass('disabled');
+            },
+            onError: function(error) {
+                {#window.location.replace("{{ path('sylius_shop_cart_summary') }}");#}
+                console.log(error.getErrorCode());
+            }
+        }).bind("walletWidgetDiv");
+    };
 </script>

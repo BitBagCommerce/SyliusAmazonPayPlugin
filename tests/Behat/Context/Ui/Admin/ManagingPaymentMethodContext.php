@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Tierperso\SyliusAmazonPayPlugin\Behat\Context\Ui\Admin;
+namespace Tests\BitBag\SyliusAmazonPayPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
-use Tests\Tierperso\SyliusAmazonPayPlugin\Behat\Page\Admin\PaymentMethod\CreatePageInterface;
+use Tests\BitBag\SyliusAmazonPayPlugin\Behat\Page\Admin\PaymentMethod\CreatePageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingPaymentMethodContext implements Context

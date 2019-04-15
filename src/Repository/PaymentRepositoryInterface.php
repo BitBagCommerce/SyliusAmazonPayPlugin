@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Repository;
+namespace BitBag\SyliusAmazonPayPlugin\Repository;
 
 use Sylius\Component\Core\Repository\PaymentRepositoryInterface as BasePaymentRepositoryInterface;
 

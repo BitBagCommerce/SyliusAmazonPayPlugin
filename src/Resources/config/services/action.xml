@@ -4,16 +4,16 @@
     <services>
         <defaults public="true" />
 
-        <service id="tierperso_sylius_amazon_pay_plugin.action.capture" class="Tierperso\SyliusAmazonPayPlugin\Payum\Action\CaptureAction">
+        <service id="bitbag_sylius_amazon_pay_plugin.action.capture" class="BitBag\SyliusAmazonPayPlugin\Payum\Action\CaptureAction">
             <tag name="payum.action" factory="amazonpay" alias="payum.action.capture"/>
         </service>
 
-        <service id="tierperso_sylius_amazon_pay_plugin.action.convert_payment" class="Tierperso\SyliusAmazonPayPlugin\Payum\Action\ConvertPaymentAction">
+        <service id="bitbag_sylius_amazon_pay_plugin.action.convert_payment" class="BitBag\SyliusAmazonPayPlugin\Payum\Action\ConvertPaymentAction">
             <argument type="service" id="sylius.payment_description_provider"/>
             <tag name="payum.action" factory="amazonpay" alias="payum.action.convert_payment"/>
         </service>
 
-        <service id="tierperso_sylius_amazon_pay_plugin.action.status" class="Tierperso\SyliusAmazonPayPlugin\Payum\Action\StatusAction">
+        <service id="bitbag_sylius_amazon_pay_plugin.action.status" class="BitBag\SyliusAmazonPayPlugin\Payum\Action\StatusAction">
             <tag name="payum.action" factory="amazonpay" alias="payum.action.status"/>
         </service>
     </services>

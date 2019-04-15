@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Cli\Command;
+namespace BitBag\SyliusAmazonPayPlugin\Cli\Command;
 
 use Sylius\Component\Core\Model\PaymentInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Tierperso\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
-use Tierperso\SyliusAmazonPayPlugin\Repository\PaymentRepositoryInterface;
-use Tierperso\SyliusAmazonPayPlugin\Resolver\PaymentStateResolverInterface;
+use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
+use BitBag\SyliusAmazonPayPlugin\Repository\PaymentRepositoryInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentStateResolverInterface;
 
 final class UpdateAmazonPayStatusCommand extends Command
 {

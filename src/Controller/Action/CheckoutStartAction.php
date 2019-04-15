@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Controller\Action;
+namespace BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
-use Tierperso\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
+use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
 
 final class CheckoutStartAction
 {

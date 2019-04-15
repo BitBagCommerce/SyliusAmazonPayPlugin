@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Controller\Action;
+namespace BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -12,7 +12,7 @@ use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 
 final class OrderReferenceCreateAction
 {
