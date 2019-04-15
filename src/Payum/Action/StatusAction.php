@@ -9,6 +9,7 @@ use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\GetStatusInterface;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 
 final class StatusAction implements ActionInterface, GatewayAwareInterface
 {
@@ -26,7 +27,17 @@ final class StatusAction implements ActionInterface, GatewayAwareInterface
             return;
         }
 
-
+        switch ($details['amazon_pay']['status']) {
+            case AmazonPayApiClientInterface::STATUS_AUTHORIZED:
+                $request->markCaptured();
+                break;
+            case AmazonPayApiClientInterface::STATUS_PROCESSING:
+                $request->markPending();
+                break;
+            default:
+                $request->markUnknown();
+                break;
+        }
     }
     public function supports($request): bool
     {

@@ -1,6 +1,6 @@
 bitbag_sylius_amazon_pay_start:
-#    path: /start TODO add
-    path: cart/
+    path: /start
+#    path: cart/
     methods: [GET]
     defaults:
         _controller: bitbag_sylius_amazon_pay_plugin.controller.action.amazon_pay_start
@@ -22,3 +22,10 @@ bitbag_sylius_amazon_pay_address_select:
     methods: [POST]
     defaults:
         _controller: bitbag_sylius_amazon_pay_plugin.controller.action.address_select
+
+bitbag_sylius_amazon_pay_authorize_payment:
+    path: /authorize-payment
+    methods: [POST]
+    defaults:
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.authorize_payment
+

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\BitBag\SyliusAmazonPayPlugin\Resolver;
 
 use Sylius\Component\Channel\Context\ChannelContextInterface;

@@ -38,16 +38,6 @@ final class OrderReferenceCreateActionSpec extends ObjectBehavior
         $this->shouldHaveType(OrderReferenceCreateAction::class);
     }
 
-    function it_throw_exception_on_null_order_reference_id(Request $request, ParameterBag $parameterBag): void
-    {
-        $request->request = $parameterBag;
-        $parameterBag->get('orderReferenceId')->willReturn(null);
-
-        $this->shouldThrow(new BadRequestHttpException());
-
-        $this->__invoke($request);
-    }
-
     function it_create_order_reference(
         Request $request,
         OrderInterface $order,
@@ -64,13 +54,12 @@ final class OrderReferenceCreateActionSpec extends ObjectBehavior
 
         $cartContext->getCart()->willReturn($order);
         $order->getLastPayment()->willReturn($payment);
-        $payment->getDetails(
+        $payment->getDetails()->willReturn(
             [
-                'amazon_pay' => [
-                    'access_token'
-                ]
+            'amazon_pay' => [
+                'access_token' => '321'
             ]
-        )->willReturn('321');
+        ]);
         $payment->getMethod()->willReturn($paymentMethod);
 
         $amazonPayApiClient->initializeFromPaymentMethod($paymentMethod);

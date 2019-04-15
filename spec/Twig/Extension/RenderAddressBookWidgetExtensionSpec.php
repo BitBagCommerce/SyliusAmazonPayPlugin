@@ -14,7 +14,6 @@ use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Templating\EngineInterface;
 
-
 final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
 {
     function let(
@@ -44,28 +43,59 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
         }
     }
 
-    function it_returns_empty_string_if_no_payment_method(
-        PaymentMethodResolverInterface $paymentMethodResolver): void
-    {
+    function it_returns_empty_string_on_null_payment_method_current(
+        CartContextInterface $cartContext,
+        OrderInterface $order,
+        PaymentInterface $payment
+    ): void {
+        $cartContext->getCart()->willReturn($order);
+
+        $payment->getMethod()->willReturn(null);
+        $order->getLastPayment()->willReturn($payment);
+
+        $this->renderAddressBookWidget()->shouldReturn('');
+    }
+
+    function it_returns_empty_string_on_null_payment_method(
+        CartContextInterface $cartContext,
+        OrderInterface $order,
+        PaymentMethodInterface $paymentMethod,
+        PaymentInterface $payment,
+        PaymentMethodResolverInterface $paymentMethodResolver,
+        GatewayConfigInterface $gatewayConfig
+    ): void {
+        $cartContext->getCart()->willReturn($order);
+        $payment->getMethod()->willReturn($paymentMethod);
+        $order->getLastPayment()->willReturn($payment);
+
+        $gatewayConfig->getFactoryName()->willReturn('amazonpay');
+        $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
+
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn(null);
 
         $this->renderAddressBookWidget()->shouldReturn('');
     }
 
     function it_renders_address_book_widget(
-        PaymentMethodResolverInterface $paymentMethodResolver,
-        PaymentMethodInterface $paymentMethod,
         CartContextInterface $cartContext,
         OrderInterface $order,
         EngineInterface $templatingEngine,
+        PaymentMethodResolverInterface $paymentMethodResolver,
+        PaymentMethodInterface $paymentMethod,
         PaymentInterface $payment,
         GatewayConfigInterface $gatewayConfig
     ): void {
+        $cartContext->getCart()->willReturn($order);
+
+        $payment->getMethod()->willReturn($paymentMethod);
+        $order->getLastPayment()->willReturn($payment);
+
+        $gatewayConfig->getFactoryName()->willReturn('amazonpay');
+        $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
+
         $gatewayConfig->getConfig()->willReturn([]);
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn($paymentMethod);
-
-        $cartContext->getCart()->willReturn($order);
 
         $payment->getDetails()->willReturn(['amazon_pay' => [
             'amazon_order_reference_id' => 123

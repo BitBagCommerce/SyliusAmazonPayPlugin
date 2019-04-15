@@ -1,10 +1,13 @@
 <div id="walletWidgetDiv"></div>
 
+{% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
+
 <link href="{{ asset('bundles/bitbagsyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
 
 <script src="{{ asset('bundles/bitbagsyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
 
 <script
+        async
         type='text/javascript'
         src='https://static-eu.payments-amazon.com/OffAmazonPayments/{{ config.region }}{{ 'sandbox' == config.environment ? '/' ~ config.environment : '' }}/lpa/js/Widgets.js?sellerId={{ config.merchantId }}'
 ></script>
@@ -19,10 +22,14 @@
         }
     };
 
-    new OffAmazonPayments.Widgets.Wallet({
-        sellerId: '{{ config.merchantId }}',
+    $('#next-step').addClass('disabled');
+    $('form[name="sylius_checkout_select_payment"] .ui.unmargined.segments').hide();
 
-        {% if amazonOrderReferenceId is null %}
+    window.onAmazonPaymentsReady = function () {
+        new OffAmazonPayments.Widgets.Wallet({
+            sellerId: '{{ config.merchantId }}',
+
+            {% if amazonOrderReferenceId is null %}
             onOrderReferenceCreate: function(orderReference) {
                 let orderReferenceId = orderReference.getAmazonOrderReferenceId();
 
@@ -32,18 +39,20 @@
 
                 });
             },
-        {% else %}
+            {% else %}
             amazonOrderReferenceId: "{{ amazonOrderReferenceId }}",
-        {% endif %}
+            {% endif %}
 
-        design: {
-            designMode: 'responsive'
-        },
-        onPaymentSelect: function(orderReference) {
-
-        },
-        onError: function(error) {
-            alert("Wallet Widget error: " + error.getErrorCode() + ' - ' + error.getErrorMessage());
-        }
-    }).bind("walletWidgetDiv");
+            design: {
+                designMode: 'responsive'
+            },
+            onPaymentSelect: function(orderReference) {
+                $('#next-step').removeClass('disabled');
+            },
+            onError: function(error) {
+                {#window.location.replace("{{ path('sylius_shop_cart_summary') }}");#}
+                console.log(error.getErrorCode());
+            }
+        }).bind("walletWidgetDiv");
+    };
 </script>

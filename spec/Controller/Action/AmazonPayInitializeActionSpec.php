@@ -45,7 +45,7 @@ final class AmazonPayInitializeActionSpec extends ObjectBehavior
         Request $request,
         PaymentMethodResolverInterface $paymentMethodResolver,
         PaymentMethodInterface $paymentMethod,
-        CartContextInterface $cartContex,
+        CartContextInterface $cartContext,
         OrderInterface $order,
         PaymentInterface $payment,
         OrderProcessorInterface $orderProcessor,
@@ -59,10 +59,11 @@ final class AmazonPayInitializeActionSpec extends ObjectBehavior
 
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn($paymentMethod);
 
+        $amazonPayApiClient->initializeFromPaymentMethod($paymentMethod)->shouldBeCalled();
         $client->getUserInfo('123')->willReturn([]);
         $amazonPayApiClient->getClient()->willReturn($client);
 
-        $cartContex->getCart()->willReturn($order);
+        $cartContext->getCart()->willReturn($order);
 
         $order->getLastPayment()->willReturn($payment);
 

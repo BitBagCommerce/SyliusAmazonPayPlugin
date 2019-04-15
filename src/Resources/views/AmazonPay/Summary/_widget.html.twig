@@ -1,11 +1,14 @@
 <div id="readOnlyAddressBookWidgetDiv"></div>
 <div id="readOnlyWalletWidgetDiv"></div>
 
+{% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
+
 <link href="{{ asset('bundles/bitbagsyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
 
 <script src="{{ asset('bundles/bitbagsyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
 
 <script
+        async
         type='text/javascript'
         src='https://static-eu.payments-amazon.com/OffAmazonPayments/{{ config.region }}{{ 'sandbox' == config.environment ? '/' ~ config.environment : '' }}/lpa/js/Widgets.js?sellerId={{ config.merchantId }}'
 ></script>
@@ -20,25 +23,53 @@
         }
     };
 
-    new OffAmazonPayments.Widgets.AddressBook({
-        sellerId: '{{ config.merchantId }}',
-        displayMode: 'Read',
-        amazonOrderReferenceId: "{{ amazonOrderReferenceId }}",
-        design: {
-            designMode: 'responsive'
-        },
-        onError: function(error) {
-        }
-    }).bind('readOnlyAddressBookWidgetDiv');
+    window.onAmazonPaymentsReady = function () {
+        new OffAmazonPayments.Widgets.AddressBook({
+            sellerId: '{{ config.merchantId }}',
+            displayMode: 'Read',
+            amazonOrderReferenceId: "{{ amazonOrderReferenceId }}",
+            design: {
+                designMode: 'responsive'
+            },
+            onError: function(error) {
+            }
+        }).bind('readOnlyAddressBookWidgetDiv');
 
-    new OffAmazonPayments.Widgets.Wallet({
-        sellerId: '{{ config.merchantId }}',
-        displayMode: 'Read',
-        amazonOrderReferenceId: "{{ amazonOrderReferenceId }}",
-        design: {
-            designMode: 'responsive'
-        },
-        onError: function(error) {
-        }
-    }).bind('readOnlyWalletWidgetDiv');
+        new OffAmazonPayments.Widgets.Wallet({
+            sellerId: '{{ config.merchantId }}',
+            displayMode: 'Read',
+            amazonOrderReferenceId: "{{ amazonOrderReferenceId }}",
+            design: {
+                designMode: 'responsive'
+            },
+            onError: function(error) {
+            }
+        }).bind('readOnlyWalletWidgetDiv');
+    };
+
+    $('form[name="sylius_checkout_complete"]').on('submit', function (e) {
+        e.preventDefault();
+
+        let form = $(this);
+
+        $.post('{{ path('bitbag_sylius_amazon_pay_authorize_payment') }}', {
+            orderReferenceId: "{{ amazonOrderReferenceId }}"
+        }).done(function (data) {
+            form.unbind('submit').submit();
+        }).fail(function (data) {
+            if (data.responseJSON === "Failed payment") {
+                window.location.replace("{{ path('sylius_shop_cart_summary') }}");
+
+                return;
+            }
+
+            if (data.responseJSON === "Payment method invalid") {
+                window.location.replace("{{ path('sylius_shop_checkout_select_payment') }}");
+
+                return;
+            }
+
+            window.location.replace("{{ path('sylius_shop_cart_summary') }}");
+        });
+    });
 </script>

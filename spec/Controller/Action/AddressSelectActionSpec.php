@@ -34,16 +34,6 @@ final class AddressSelectActionSpec extends ObjectBehavior
         $this->shouldHaveType(AddressSelectAction::class);
     }
 
-    function it_throw_exception_on_null_order_reference_id( Request $request, ParameterBag $parameterBag): void
-    {
-        $request->request = $parameterBag;
-        $parameterBag->get('orderReferenceId')->willReturn(null);
-
-        $this->shouldThrow(new BadRequestHttpException())->during('__invoke', [$request]);
-
-        $this->__invoke($request);
-    }
-
     function it_selects(
         Request $request,
         OrderInterface $order,

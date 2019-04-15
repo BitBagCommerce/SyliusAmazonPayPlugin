@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\PaymentMethod;
 use Sylius\Component\Order\Context\CartContextInterface;
 use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
 use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
@@ -42,6 +43,19 @@ final class RenderAddressBookWidgetExtension extends AbstractExtension
 
     public function renderAddressBookWidget(): string
     {
+        /** @var OrderInterface $order */
+        $order = $this->cartContext->getCart();
+
+        /** @var PaymentMethod $paymentMethodCurrent */
+        $paymentMethodCurrent = $order->getLastPayment()->getMethod();
+
+        if (
+            null === $paymentMethodCurrent ||
+            AmazonPayGatewayFactory::FACTORY_NAME !== $paymentMethodCurrent->getGatewayConfig()->getFactoryName()
+        ) {
+            return '';
+        }
+
         $paymentMethod = $this->paymentMethodResolver->resolvePaymentMethod(AmazonPayGatewayFactory::FACTORY_NAME);
 
         if (null === $paymentMethod) {
@@ -49,9 +63,6 @@ final class RenderAddressBookWidgetExtension extends AbstractExtension
         }
 
         $config = $paymentMethod->getGatewayConfig()->getConfig();
-
-        /** @var OrderInterface $order */
-        $order = $this->cartContext->getCart();
 
         $paymentDetails = $order->getLastPayment()->getDetails();
 
