@@ -1,4 +1,4 @@
-tierperso_sylius_amazon_pay_plugin:
+bitbag_sylius_amazon_pay_plugin:
     merchant_id:
         not_blank: Merchant Id cannot be blank.
     access_key:

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Form\Type;
+namespace BitBag\SyliusAmazonPayPlugin\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,83 +19,83 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
         $builder
             ->add('buttonColor', ChoiceType::class, [
                 'choices' => [
-                    'tierperso_sylius_amazon_pay_plugin.ui.color_gold' => 'Gold',
-                    'tierperso_sylius_amazon_pay_plugin.ui.color_light_gray' => 'LightGray',
-                    'tierperso_sylius_amazon_pay_plugin.ui.color_dark_gray' => 'DarkGray',
+                    'bitbag_sylius_amazon_pay_plugin.ui.color_gold' => 'Gold',
+                    'bitbag_sylius_amazon_pay_plugin.ui.color_light_gray' => 'LightGray',
+                    'bitbag_sylius_amazon_pay_plugin.ui.color_dark_gray' => 'DarkGray',
                 ],
-                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.button_color',
+                'label' => 'bitbag_sylius_amazon_pay_plugin.ui.button_color',
             ])
             ->add('buttonSize', ChoiceType::class, [
                 'choices' => [
-                    'tierperso_sylius_amazon_pay_plugin.ui.small' => 'small',
-                    'tierperso_sylius_amazon_pay_plugin.ui.medium' => 'medium',
-                    'tierperso_sylius_amazon_pay_plugin.ui.large' => 'large',
-                    'tierperso_sylius_amazon_pay_plugin.ui.x-large' => 'x-large',
+                    'bitbag_sylius_amazon_pay_plugin.ui.small' => 'small',
+                    'bitbag_sylius_amazon_pay_plugin.ui.medium' => 'medium',
+                    'bitbag_sylius_amazon_pay_plugin.ui.large' => 'large',
+                    'bitbag_sylius_amazon_pay_plugin.ui.x-large' => 'x-large',
                 ],
-                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.button_size',
+                'label' => 'bitbag_sylius_amazon_pay_plugin.ui.button_size',
             ])
             ->add('buttonType', ChoiceType::class, [
                 'choices' => [
-                    'tierperso_sylius_amazon_pay_plugin.ui.login_with_amazon' => 'LwA',
-                    'tierperso_sylius_amazon_pay_plugin.ui.amazon_pay' => 'PwA',
+                    'bitbag_sylius_amazon_pay_plugin.ui.login_with_amazon' => 'LwA',
+                    'bitbag_sylius_amazon_pay_plugin.ui.amazon_pay' => 'PwA',
                 ],
-                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.button_type',
+                'label' => 'bitbag_sylius_amazon_pay_plugin.ui.button_type',
             ])
             ->add('buttonLanguage', ChoiceType::class, [
                 'choices' => [
-                    'tierperso_sylius_amazon_pay_plugin.ui.language_german' => 'de-DE',
-                    'tierperso_sylius_amazon_pay_plugin.ui.language_english' => 'en-GB',
-                    'tierperso_sylius_amazon_pay_plugin.ui.language_spanish' => 'es-ES',
-                    'tierperso_sylius_amazon_pay_plugin.ui.language_french' => 'fr-FR',
-                    'tierperso_sylius_amazon_pay_plugin.ui.language_italian' => 'it-IT',
+                    'bitbag_sylius_amazon_pay_plugin.ui.language_german' => 'de-DE',
+                    'bitbag_sylius_amazon_pay_plugin.ui.language_english' => 'en-GB',
+                    'bitbag_sylius_amazon_pay_plugin.ui.language_spanish' => 'es-ES',
+                    'bitbag_sylius_amazon_pay_plugin.ui.language_french' => 'fr-FR',
+                    'bitbag_sylius_amazon_pay_plugin.ui.language_italian' => 'it-IT',
                 ],
-                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.button_language',
+                'label' => 'bitbag_sylius_amazon_pay_plugin.ui.button_language',
             ])
             ->add('environment', ChoiceType::class, [
                 'choices' => [
-                    'tierperso_sylius_amazon_pay_plugin.ui.production' => 'production',
-                    'tierperso_sylius_amazon_pay_plugin.ui.sandbox' => 'sandbox',
+                    'bitbag_sylius_amazon_pay_plugin.ui.production' => 'production',
+                    'bitbag_sylius_amazon_pay_plugin.ui.sandbox' => 'sandbox',
                 ],
-                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.environment',
+                'label' => 'bitbag_sylius_amazon_pay_plugin.ui.environment',
             ])
             ->add('merchantId', TextType::class, [
-                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.merchant_id',
+                'label' => 'bitbag_sylius_amazon_pay_plugin.ui.merchant_id',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'tierperso_sylius_amazon_pay_plugin.merchant_id.not_blank',
+                        'message' => 'bitbag_sylius_amazon_pay_plugin.merchant_id.not_blank',
                         'groups' => ['sylius'],
                     ]),
                 ],
             ])
             ->add('accessKey', TextType::class, [
-                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.access_key',
+                'label' => 'bitbag_sylius_amazon_pay_plugin.ui.access_key',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'tierperso_sylius_amazon_pay_plugin.access_key.not_blank',
+                        'message' => 'bitbag_sylius_amazon_pay_plugin.access_key.not_blank',
                         'groups' => ['sylius'],
                     ]),
                 ],
             ])
             ->add('secretKey', TextType::class, [
-                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.secret_key',
+                'label' => 'bitbag_sylius_amazon_pay_plugin.ui.secret_key',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'tierperso_sylius_amazon_pay_plugin.secret_key.not_blank',
+                        'message' => 'bitbag_sylius_amazon_pay_plugin.secret_key.not_blank',
                         'groups' => ['sylius'],
                     ]),
                 ],
             ])
             ->add('clientId', TextType::class, [
-                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.client_id',
+                'label' => 'bitbag_sylius_amazon_pay_plugin.ui.client_id',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'tierperso_sylius_amazon_pay_plugin.client_id.not_blank',
+                        'message' => 'bitbag_sylius_amazon_pay_plugin.client_id.not_blank',
                         'groups' => ['sylius'],
                     ]),
                 ],
             ])
             ->add('region', ChoiceType::class, [
-                'label' => 'tierperso_sylius_amazon_pay_plugin.ui.region',
+                'label' => 'bitbag_sylius_amazon_pay_plugin.ui.region',
                 'choices' => [
                     'de' => 'de',
                     'uk' => 'uk',
@@ -104,7 +104,7 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'tierperso_sylius_amazon_pay_plugin.region.not_blank',
+                        'message' => 'bitbag_sylius_amazon_pay_plugin.region.not_blank',
                         'groups' => ['sylius'],
                     ]),
                 ],
@@ -112,7 +112,7 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $data = $event->getData();
 
-                $data['payum.http_client'] = '@tierperso.sylius_amazon_pay_plugin.amazon_pay_api_client';
+                $data['payum.http_client'] = '@bitbag.sylius_amazon_pay_plugin.amazon_pay_api_client';
 
                 $event->setData($data);
             })

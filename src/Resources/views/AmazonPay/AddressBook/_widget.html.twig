@@ -1,6 +1,8 @@
-<link href="{{ asset('bundles/tierpersosyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
+{% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
 
-<script src="{{ asset('bundles/tierpersosyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
+<link href="{{ asset('bundles/bitbagsyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
+
+<script src="{{ asset('bundles/bitbagsyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
 
 <div id="addressBookWidgetDiv"></div>
 
@@ -14,6 +16,8 @@
         }
     };
 
+    $('#next-step').addClass('disabled');
+
     var amazonOrderReferenceId = "{{ amazonOrderReferenceId is null ? 'null' : amazonOrderReferenceId }}";
 
     window.onAmazonPaymentsReady = function () {
@@ -24,7 +28,7 @@
                 onOrderReferenceCreate: function(orderReference) {
                     amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
 
-                    $.post('{{ path('tierperso_sylius_amazon_pay_order_reference_create') }}', {
+                    $.post('{{ path('bitbag_sylius_amazon_pay_order_reference_create') }}', {
                         orderReferenceId: amazonOrderReferenceId
                     }).done(function (data) {
 
@@ -37,7 +41,7 @@
             onAddressSelect: function (orderReference) {
                 $('form[name="sylius_checkout_address"]').addClass('loading');
 
-                $.post('{{ path('tierperso_sylius_amazon_pay_address_select') }}', {
+                $.post('{{ path('bitbag_sylius_amazon_pay_address_select') }}', {
                     orderReferenceId: amazonOrderReferenceId
                 }).done(function (data) {
                     let firstName = data.address.PhysicalDestination.Name.split(' ').slice(0, -1).join(' ');
@@ -62,12 +66,14 @@
 
                     $('form[name="sylius_checkout_address"]').removeClass('loading');
                 });
+
+                $('#next-step').removeClass('disabled');
             },
             design: {
                 designMode: 'responsive'
             },
             onError: function (error) {
-                alert("AddressBook Widget error: " + error.getErrorCode() + ' - ' + error.getErrorMessage());
+                window.location.replace("{{ path('sylius_shop_cart_summary') }}");
             }
         }).bind("addressBookWidgetDiv");
     };

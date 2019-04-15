@@ -12,3 +12,42 @@ parameters:
 sylius_shop:
     product_grid:
         include_all_descendants: true
+    checkout_resolver:
+        pattern: /checkout/.+
+        route_map:
+            empty_order:
+                route: sylius_shop_cart_summary
+            cart:
+                route: sylius_shop_checkout_address
+            addressed:
+                route: sylius_shop_checkout_select_payment
+            payment_selected:
+                route: sylius_shop_checkout_select_shipping
+            payment_skipped:
+                route: sylius_shop_checkout_select_shipping
+            shipping_selected:
+                route: sylius_shop_checkout_complete
+            shipping_skipped:
+                route: sylius_shop_checkout_complete
+
+winzou_state_machine:
+    sylius_order_checkout:
+        transitions:
+#            address:
+#                from: [cart, addressed, shipping_selected, shipping_skipped, payment_selected, payment_skipped]
+#                to: addressed
+#            skip_shipping:
+#                from: [addressed]
+#                to: shipping_skipped
+#            select_shipping:
+#                from: [addressed, shipping_selected, payment_selected, payment_skipped]
+#                to: shipping_selected
+#            skip_payment:
+#                from: [shipping_selected, shipping_skipped]
+#                to: payment_skipped
+            select_payment:
+                from: [payment_selected, shipping_skipped, shipping_selected, addressed]
+                to: payment_selected
+            complete:
+                from: [payment_selected, payment_skipped, shipping_selected, shipping_skipped]
+                to: completed

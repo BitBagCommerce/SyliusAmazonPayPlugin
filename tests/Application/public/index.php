@@ -1,6 +1,6 @@
 <?php
 
-use Tests\Tierperso\SyliusAmazonPayPlugin\Application\Kernel;
+use Tests\BitBag\SyliusAmazonPayPlugin\Application\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 

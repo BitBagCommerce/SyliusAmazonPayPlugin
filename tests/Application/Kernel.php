@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Tierperso\SyliusAmazonPayPlugin\Application;
+namespace Tests\BitBag\SyliusAmazonPayPlugin\Application;
 
 use PSS\SymfonyMockerContainer\DependencyInjection\MockerContainer;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;

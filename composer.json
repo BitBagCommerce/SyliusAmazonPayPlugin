@@ -49,8 +49,8 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Tierperso\\SyliusAmazonPayPlugin\\": "src/",
-            "Tests\\Tierperso\\SyliusAmazonPayPlugin\\": "tests/"
+            "BitBag\\SyliusAmazonPayPlugin\\": "src/",
+            "Tests\\BitBag\\SyliusAmazonPayPlugin\\": "tests/"
         }
     },
     "autoload-dev": {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Payum\Action\Api;
+namespace BitBag\SyliusAmazonPayPlugin\Payum\Action\Api;
 
 use Payum\Core\Exception\UnsupportedApiException;
-use Tierperso\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 
 trait ApiAwareTrait
 {

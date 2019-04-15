@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tierperso\SyliusAmazonPayPlugin\Payum\Action;
+namespace BitBag\SyliusAmazonPayPlugin\Payum\Action;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\ApiAwareInterface;
@@ -11,7 +11,8 @@ use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Capture;
-use Tierperso\SyliusAmazonPayPlugin\Payum\Action\Api\ApiAwareTrait;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use BitBag\SyliusAmazonPayPlugin\Payum\Action\Api\ApiAwareTrait;
 
 final class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {
@@ -23,48 +24,55 @@ final class CaptureAction implements ActionInterface, GatewayAwareInterface, Api
 
         $details = ArrayObject::ensureArrayObject($request->getModel());
 
-        if (true === isset($details['mws_auth_token'])) {
+        $amazonPayDetails = $details['amazon_pay'];
+
+        if (!isset($amazonPayDetails['amazon_authorization_id'])) {
             return;
         }
 
-        $amazonOrderReferenceId = $details['amazon_pay']['amazon_order_reference_id'];
-
-        $confirmOrderReferenceResponse = $this->amazonPayApiClient->getClient()->confirmOrderReference([
-            'amazon_order_reference_id' => $amazonOrderReferenceId,
+        $authorizationDetailsResponse = $this->amazonPayApiClient->getClient()->getAuthorizationDetails([
+            'amazon_authorization_id' => $amazonPayDetails['amazon_authorization_id'],
         ])->toArray();
 
-        if (!$this->amazonPayApiClient->getClient()->success) {
-            // todo
+        $authorizationStatus = $authorizationDetailsResponse['GetAuthorizationDetailsResult']['AuthorizationDetails']['AuthorizationStatus'];
+
+        if (
+            AmazonPayApiClientInterface::OPEN_AUTHORIZATION_STATUS === $authorizationStatus['State'] ||
+            AmazonPayApiClientInterface::PENDING_AUTHORIZATION_STATUS === $authorizationStatus['State']
+        ) {
+            $amazonPayDetails['status'] = AmazonPayApiClientInterface::STATUS_PROCESSING;
+
+            $details['amazon_pay'] = $amazonPayDetails;
+
+            return;
         }
 
-        $authorizeResponse = $this->amazonPayApiClient->getClient()->authorize([
-            'authorization_reference_id' => $details['amazon_pay']['order_number'],
-            'amazon_order_reference_id' => $amazonOrderReferenceId,
-            'authorization_amount' => $details['amazon_pay']['total'],
-            'currency_code' => $details['amazon_pay']['currency_code'],
-        ])->toArray();
+        if (AmazonPayApiClientInterface::DECLINED_AUTHORIZATION_STATUS === $authorizationStatus['State']) {
+            $amazonPayDetails['status'] = AmazonPayApiClientInterface::STATUS_FAILED;
+            $amazonPayDetails['error'] = $authorizationStatus['ReasonCode'];
 
-        $amazonAuthorizationId = $authorizeResponse['AuthorizeResult']['AuthorizationDetails']['AmazonAuthorizationId'];
+            $details['amazon_pay'] = $amazonPayDetails;
 
-        $captureReferenceId = bin2hex(random_bytes(12));
+            return;
+        }
 
-        $captureResponse = $this->amazonPayApiClient->getClient()->capture([
-            'amazon_authorization_id' => $amazonAuthorizationId,
-            'capture_amount' => $details['amazon_pay']['total'],
-            'capture_reference_id' => $captureReferenceId,
-            'currency_code' => $details['amazon_pay']['currency_code'],
-        ])->toArray();
+        if (
+            AmazonPayApiClientInterface::CLOSED_AUTHORIZATION_STATUS === $authorizationStatus['State'] &&
+            AmazonPayApiClientInterface::MAX_CAPTURES_PROCESSED_CODE === $authorizationStatus['ReasonCode']
+        ) {
+            $amazonPayDetails['status'] = AmazonPayApiClientInterface::STATUS_AUTHORIZED;
 
-        $orderReferenceDetailsResponse = $this->amazonPayApiClient->getClient()->getOrderReferenceDetails([
-            'amazon_order_reference_id' => $amazonOrderReferenceId,
-        ])->toArray();
+            $details['amazon_pay'] = $amazonPayDetails;
 
-        $closeOrderReferenceResponse = $this->amazonPayApiClient->getClient()->closeOrderReference([
-            'amazon_order_reference_id' => $amazonOrderReferenceId,
-        ])->toArray();
+            return;
+        }
 
-        // todo
+        $amazonPayDetails['status'] = AmazonPayApiClientInterface::STATUS_FAILED;
+        $amazonPayDetails['error'] = $authorizationStatus['ReasonCode'];
+
+        $details['amazon_pay'] = $amazonPayDetails;
     }
+
     public function supports($request): bool
     {
         return

@@ -1,24 +1,30 @@
-tierperso_sylius_amazon_pay_start:
-#    path: /start TODO add
-    path: cart/
+bitbag_sylius_amazon_pay_start:
+    path: /start
+#    path: cart/
     methods: [GET]
     defaults:
-        _controller: tierperso_sylius_amazon_pay_plugin.controller.action.amazon_pay_start
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.amazon_pay_start
 
-tierperso_sylius_amazon_pay_initialize:
+bitbag_sylius_amazon_pay_initialize:
     path: /initialize
     methods: [POST]
     defaults:
-        _controller: tierperso_sylius_amazon_pay_plugin.controller.action.initialize
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.initialize
 
-tierperso_sylius_amazon_pay_order_reference_create:
+bitbag_sylius_amazon_pay_order_reference_create:
     path: /order-reference-create
     methods: [POST]
     defaults:
-        _controller: tierperso_sylius_amazon_pay_plugin.controller.action.order_reference_create
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.order_reference_create
 
-tierperso_sylius_amazon_pay_address_select:
+bitbag_sylius_amazon_pay_address_select:
     path: /address-select
     methods: [POST]
     defaults:
-        _controller: tierperso_sylius_amazon_pay_plugin.controller.action.address_select
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.address_select
+
+bitbag_sylius_amazon_pay_authorize_payment:
+    path: /authorize-payment
+    methods: [POST]
+    defaults:
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.authorize_payment
