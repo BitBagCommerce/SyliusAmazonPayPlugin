@@ -9,8 +9,8 @@ use BitBag\SyliusAmazonPayPlugin\Twig\Extension\RenderAddressBookWidgetExtension
 use Payum\Core\Model\GatewayConfigInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -98,12 +98,12 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn($paymentMethod);
 
         $payment->getDetails()->willReturn(['amazon_pay' => [
-            'amazon_order_reference_id' => 123
+            'amazon_order_reference_id' => 123,
         ]]);
         $order->getLastPayment()->willReturn($payment);
 
         $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/AddressBook:_widget.html.twig', [
-            'config' => [], 'amazonOrderReferenceId' => 123])->willReturn('content');
+            'config' => [], 'amazonOrderReferenceId' => 123, ])->willReturn('content');
 
         $this->renderAddressBookWidget()->shouldReturn('content');
     }

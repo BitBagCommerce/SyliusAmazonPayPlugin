@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusAmazonPayPlugin\Resolver;
 
+use BitBag\SyliusAmazonPayPlugin\Repository\PaymentMethodRepositoryInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolver;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use PhpSpec\ObjectBehavior;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
-use BitBag\SyliusAmazonPayPlugin\Repository\PaymentMethodRepositoryInterface;
-use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolver;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 
 final class PaymentMethodResolverSpec extends ObjectBehavior
 {
@@ -40,7 +39,6 @@ final class PaymentMethodResolverSpec extends ObjectBehavior
         ChannelContextInterface $channelContext,
         PaymentMethodInterface $paymentMethod,
         ChannelInterface $channel
-
     ): void {
         $channelContext->getChannel()->willReturn($channel);
         $paymentMethodRepository->findAllEnabledByFactoryNameAndChannel('factoryName', $channel)->willReturn([$paymentMethod]);

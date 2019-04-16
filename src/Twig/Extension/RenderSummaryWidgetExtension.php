@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
+use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentMethod;
 use Sylius\Component\Order\Context\CartContextInterface;
-use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
-use Twig\Extension\AbstractExtension;
 use Symfony\Component\Templating\EngineInterface;
-use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 final class RenderSummaryWidgetExtension extends AbstractExtension

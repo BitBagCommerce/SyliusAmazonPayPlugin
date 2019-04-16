@@ -4,21 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusAmazonPayPlugin\Behat\Context\Ui\Admin;
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Tests\BitBag\SyliusAmazonPayPlugin\Behat\Page\Admin\PaymentMethod\CreatePageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingPaymentMethodContext implements Context
 {
-    /**
-     * @var CreatePageInterface
-     */
+    /** @var CreatePageInterface */
     private $createPage;
 
-    /**
-     * @param CreatePageInterface $createPage
-     */
     public function __construct(CreatePageInterface $createPage)
     {
         $this->createPage = $createPage;
@@ -27,7 +21,7 @@ final class ManagingPaymentMethodContext implements Context
     /**
      * @Given I want to create a new AmazonPay payment method
      */
-    public function iWantToCreateANewAmazonpayPaymentMethod()
+    public function iWantToCreateANewAmazonpayPaymentMethod(): void
     {
         $this->createPage->open(['factory' => 'amazonpay']);
     }
@@ -43,7 +37,7 @@ final class ManagingPaymentMethodContext implements Context
     /**
      * @When I fill the Access Key with :accessKey
      */
-    public function iFillTheAccessKeyWith($accessKey)
+    public function iFillTheAccessKeyWith(string $accessKey): void
     {
         $this->createPage->setAccessKey($accessKey);
     }
@@ -51,7 +45,7 @@ final class ManagingPaymentMethodContext implements Context
     /**
      * @When I fill the Secret Key with :secretKey
      */
-    public function iFillTheSecretKeyWith($secretKey)
+    public function iFillTheSecretKeyWith(string $secretKey): void
     {
         $this->createPage->setSecretKey($secretKey);
     }
@@ -59,7 +53,7 @@ final class ManagingPaymentMethodContext implements Context
     /**
      * @When I fill the Client Id with :clientId
      */
-    public function iFillTheClientIdWith($clientId)
+    public function iFillTheClientIdWith(string $clientId): void
     {
         $this->createPage->setClientId($clientId);
     }
@@ -67,7 +61,7 @@ final class ManagingPaymentMethodContext implements Context
     /**
      * @When I fill the Region with :region
      */
-    public function iFillTheRegionWith($region)
+    public function iFillTheRegionWith(string $region): void
     {
         $this->createPage->setRegion($region);
     }
@@ -75,7 +69,7 @@ final class ManagingPaymentMethodContext implements Context
     /**
      * @When I select :buttonColor as its buttonColor
      */
-    public function iSelectButtonColor($buttonColor)
+    public function iSelectButtonColor(string $buttonColor): void
     {
         $this->createPage->chooseButtonColor($buttonColor);
     }
@@ -83,7 +77,7 @@ final class ManagingPaymentMethodContext implements Context
     /**
      * @When I select :buttonSize as its buttonSize
      */
-    public function iSelectButtonSize($buttonSize)
+    public function iSelectButtonSize(string $buttonSize): void
     {
         $this->createPage->chooseButtonSize($buttonSize);
     }
@@ -91,7 +85,7 @@ final class ManagingPaymentMethodContext implements Context
     /**
      * @When I select :buttonType as its buttonType
      */
-    public function iSelectButtonType($buttonType)
+    public function iSelectButtonType(string $buttonType): void
     {
         $this->createPage->chooseButtonType($buttonType);
     }
@@ -99,7 +93,7 @@ final class ManagingPaymentMethodContext implements Context
     /**
      * @When I select :buttonLanguage as its buttonLanguage
      */
-    public function iSelectButtonLanguage($buttonLanguage)
+    public function iSelectButtonLanguage(string $buttonLanguage): void
     {
         $this->createPage->chooseButtonLanguage($buttonLanguage);
     }
@@ -107,7 +101,7 @@ final class ManagingPaymentMethodContext implements Context
     /**
      * @When I select :environment as its environment
      */
-    public function iSelectEnvironment($environment)
+    public function iSelectEnvironment(string $environment): void
     {
         $this->createPage->chooseEnvironment($environment);
     }
@@ -133,5 +127,4 @@ final class ManagingPaymentMethodContext implements Context
             )));
         }
     }
-
 }

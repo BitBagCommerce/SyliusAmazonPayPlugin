@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusAmazonPayPlugin\Resolver;
 
+use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethod;
 use Sylius\Component\Core\Repository\PaymentMethodRepositoryInterface;
 use Sylius\Component\Payment\Model\PaymentInterface as BasePaymentInterface;
 use Sylius\Component\Payment\Resolver\PaymentMethodsResolverInterface;
-use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
 use Webmozart\Assert\Assert;
 
 final class AmazonPayPaymentMethodsResolver implements PaymentMethodsResolverInterface

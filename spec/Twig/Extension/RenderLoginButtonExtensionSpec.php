@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\PaymentMethodInterface;
-use Symfony\Component\Templating\EngineInterface;
 use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use BitBag\SyliusAmazonPayPlugin\Twig\Extension\RenderLoginButtonExtension;
 use Payum\Core\Model\GatewayConfigInterface;
-use Sylius\Component\Core\Model\PaymentInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 final class RenderLoginButtonExtensionSpec extends ObjectBehavior
 {
@@ -53,9 +50,7 @@ final class RenderLoginButtonExtensionSpec extends ObjectBehavior
     function it_renders_login_buttont(
         PaymentMethodResolverInterface $paymentMethodResolver,
         PaymentMethodInterface $paymentMethod,
-        OrderInterface $order,
         EngineInterface $templatingEngine,
-        PaymentInterface $payment,
         GatewayConfigInterface $gatewayConfig
     ): void {
         $gatewayConfig->getConfig()->willReturn([]);
@@ -63,7 +58,7 @@ final class RenderLoginButtonExtensionSpec extends ObjectBehavior
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn($paymentMethod);
 
         $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/Login:_button.html.twig', [
-            'config' => []])->willReturn('content');
+            'config' => [], ])->willReturn('content');
 
         $this->renderLoginButton()->shouldReturn('content');
     }

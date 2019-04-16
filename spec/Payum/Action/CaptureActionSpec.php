@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusAmazonPayPlugin\Payum\Action;
 
-use AmazonPay\Client;
-use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 use BitBag\SyliusAmazonPayPlugin\Payum\Action\CaptureAction;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\ApiAwareInterface;
 use Payum\Core\GatewayAwareInterface;
-use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Request\Capture;
 use PhpSpec\ObjectBehavior;
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\PaymentInterface;
 
 final class CaptureActionSpec extends ObjectBehavior
 {

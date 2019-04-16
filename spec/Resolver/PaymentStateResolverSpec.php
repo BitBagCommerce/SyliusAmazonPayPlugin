@@ -6,14 +6,13 @@ namespace spec\BitBag\SyliusAmazonPayPlugin\Resolver;
 
 use AmazonPay\Client;
 use AmazonPay\ResponseParser;
-use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentStateResolver;
 use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentStateResolver;
 use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentStateResolverInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpSpec\ObjectBehavior;
 use SM\Factory\FactoryInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 
 final class PaymentStateResolverSpec extends ObjectBehavior
@@ -54,12 +53,12 @@ final class PaymentStateResolverSpec extends ObjectBehavior
 
         $payment->getDetails()->willReturn([
             'amazon_pay' => [
-                'amazon_authorization_id' => '321'
-            ]
+                'amazon_authorization_id' => '321',
+            ],
         ]);
 
         $client->getAuthorizationDetails([
-            'amazon_authorization_id' => '321'
+            'amazon_authorization_id' => '321',
         ])->willReturn($parser);
 
         $amazonPayApiClient->getClient()->willReturn($client);

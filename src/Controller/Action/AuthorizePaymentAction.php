@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
@@ -14,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class AuthorizePaymentAction

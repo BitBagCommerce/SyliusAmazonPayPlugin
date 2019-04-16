@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace spec\BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
 use AmazonPay\Client;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 use BitBag\SyliusAmazonPayPlugin\Controller\Action\AmazonPayInitializeAction;
 use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
-use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
+use Sylius\Component\Order\Context\CartContextInterface;
+use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
-use Sylius\Component\Order\Processor\OrderProcessorInterface;
-use Sylius\Component\Order\Context\CartContextInterface;
 
 final class AmazonPayInitializeActionSpec extends ObjectBehavior
 {
@@ -31,7 +31,7 @@ final class AmazonPayInitializeActionSpec extends ObjectBehavior
             $cartContext,
             $paymentMethodResolver,
             $amazonPayApiClient,
-            $orderProcessor ,
+            $orderProcessor,
             $orderEntityManager
         );
     }
@@ -53,7 +53,7 @@ final class AmazonPayInitializeActionSpec extends ObjectBehavior
         AmazonPayApiClientInterface $amazonPayApiClient,
         ParameterBag $parameterBag,
         Client $client
-    ): void{
+    ): void {
         $request->request = $parameterBag;
         $parameterBag->get('accessToken')->willReturn('123');
 

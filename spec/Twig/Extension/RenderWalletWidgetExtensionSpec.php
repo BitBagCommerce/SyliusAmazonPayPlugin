@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\PaymentMethodInterface;
-use Sylius\Component\Order\Context\CartContextInterface;
-use Symfony\Component\Templating\EngineInterface;
 use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use BitBag\SyliusAmazonPayPlugin\Twig\Extension\RenderWalletWidgetExtension;
 use Payum\Core\Model\GatewayConfigInterface;
-use Sylius\Component\Core\Model\PaymentInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\PaymentInterface;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
+use Sylius\Component\Order\Context\CartContextInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 final class RenderWalletWidgetExtensionSpec extends ObjectBehavior
 {
@@ -101,12 +100,12 @@ final class RenderWalletWidgetExtensionSpec extends ObjectBehavior
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn($paymentMethod);
 
         $payment->getDetails()->willReturn(['amazon_pay' => [
-            'amazon_order_reference_id' => 123
+            'amazon_order_reference_id' => 123,
         ]]);
         $order->getLastPayment()->willReturn($payment);
 
         $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/Wallet:_widget.html.twig', [
-            'config' => [], 'amazonOrderReferenceId' => 123])->willReturn('content');
+            'config' => [], 'amazonOrderReferenceId' => 123, ])->willReturn('content');
 
         $this->renderWalletWidget()->shouldReturn('content');
     }

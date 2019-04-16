@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace spec\BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
 use BitBag\SyliusAmazonPayPlugin\Controller\Action\AmazonPayStartAction;
+use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Templating\EngineInterface;
-use PhpSpec\ObjectBehavior;
 
 final class AmazonPayStartActionSpec extends ObjectBehavior
 {
     function let(
-        EngineInterface $templatingEngine): void {
+        EngineInterface $templatingEngine): void
+    {
         $this->beConstructedWith($templatingEngine);
     }
 

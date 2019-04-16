@@ -5,19 +5,16 @@ declare(strict_types=1);
 namespace spec\BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
 use AmazonPay\Client;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use BitBag\SyliusAmazonPayPlugin\Controller\Action\OrderReferenceCreateAction;
 use Doctrine\ORM\EntityManagerInterface;
-use Prophecy\Prophecy\ObjectProphecy;
+use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
+use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
-use BitBag\SyliusAmazonPayPlugin\Controller\Action\OrderReferenceCreateAction;
-use Sylius\Component\Order\Context\CartContextInterface;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 final class OrderReferenceCreateActionSpec extends ObjectBehavior
 {
@@ -48,7 +45,7 @@ final class OrderReferenceCreateActionSpec extends ObjectBehavior
         EntityManagerInterface $orderEntityManager,
         ParameterBag $parameterBag,
         Client $client
-    ): void{
+    ): void {
         $request->request = $parameterBag;
         $parameterBag->get('orderReferenceId')->willReturn('123');
 
@@ -57,8 +54,8 @@ final class OrderReferenceCreateActionSpec extends ObjectBehavior
         $payment->getDetails()->willReturn(
             [
             'amazon_pay' => [
-                'access_token' => '321'
-            ]
+                'access_token' => '321',
+            ],
         ]);
         $payment->getMethod()->willReturn($paymentMethod);
 

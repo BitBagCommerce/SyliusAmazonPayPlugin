@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
-use Symfony\Component\Templating\EngineInterface;
 use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
 use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
+use Symfony\Component\Templating\EngineInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 

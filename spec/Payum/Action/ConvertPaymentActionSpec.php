@@ -10,9 +10,9 @@ use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\Request\Convert;
 use PhpSpec\ObjectBehavior;
+use Sylius\Bundle\PayumBundle\Provider\PaymentDescriptionProviderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
-use Sylius\Bundle\PayumBundle\Provider\PaymentDescriptionProviderInterface;
 
 final class ConvertPaymentActionSpec extends ObjectBehavior
 {
@@ -57,7 +57,7 @@ final class ConvertPaymentActionSpec extends ObjectBehavior
                 'currency_code' => 'code',
                 'order_number' => 'number',
                 'total' => 0.1,
-            ]
+            ],
         ])->shouldBeCalled();
 
         $this->execute($request);
@@ -70,6 +70,5 @@ final class ConvertPaymentActionSpec extends ObjectBehavior
         $request->getSource()->willReturn($payment);
         $request->getTo()->willReturn('array');
         $this->supports($request)->shouldReturn(true);
-
     }
 }

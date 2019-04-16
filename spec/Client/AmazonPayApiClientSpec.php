@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusAmazonPayPlugin\Client;
 
-use AmazonPay\Client;
 use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClient;
 use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 use Payum\Core\Model\GatewayConfigInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
-use Prophecy\Argument;
 
 final class AmazonPayApiClientSpec extends ObjectBehavior
 {
@@ -32,7 +30,7 @@ final class AmazonPayApiClientSpec extends ObjectBehavior
             'secretKey' => 'secretKey',
             'clientId' => 'clientId',
             'region' => 'region',
-            'environment' => 'sandbox'
+            'environment' => 'sandbox',
         ]);
     }
 
@@ -46,7 +44,7 @@ final class AmazonPayApiClientSpec extends ObjectBehavior
             'secretKey' => 'secretKey',
             'clientId' => 'clientId',
             'region' => 'region',
-            'environment' => 'sandbox'
+            'environment' => 'sandbox',
         ]);
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
 
@@ -56,7 +54,7 @@ final class AmazonPayApiClientSpec extends ObjectBehavior
             'secretKey' => 'secretKey',
             'clientId' => 'clientId',
             'region' => 'region',
-            'environment' => 'sandbox'
+            'environment' => 'sandbox',
         ]);
 
         $this->initializeFromPaymentMethod($paymentMethod);

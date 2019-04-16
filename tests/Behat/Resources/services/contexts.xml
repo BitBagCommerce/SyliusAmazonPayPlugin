@@ -3,6 +3,7 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <defaults public="true" />
+
         <service id="bitbag_sylius_amazon_pay_plugin.behat.context.ui.admin.managing_payment_method_amazon_pay" class="Tests\BitBag\SyliusAmazonPayPlugin\Behat\Context\Ui\Admin\ManagingPaymentMethodContext">
             <argument type="service" id="bitbag_sylius_amazon_pay_plugin.page.admin.payment_method.create" />
             <tag name="fob.context_service"/>

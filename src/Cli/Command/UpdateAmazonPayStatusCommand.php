@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusAmazonPayPlugin\Cli\Command;
 
+use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
+use BitBag\SyliusAmazonPayPlugin\Repository\PaymentRepositoryInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentStateResolverInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
-use BitBag\SyliusAmazonPayPlugin\Repository\PaymentRepositoryInterface;
-use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentStateResolverInterface;
 
 final class UpdateAmazonPayStatusCommand extends Command
 {

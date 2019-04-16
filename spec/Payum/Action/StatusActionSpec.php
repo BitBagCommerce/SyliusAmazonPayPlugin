@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusAmazonPayPlugin\Payum\Action;
 
-use Payum\Core\Action\ActionInterface;
-use Payum\Core\GatewayAwareInterface;
 use BitBag\SyliusAmazonPayPlugin\Payum\Action\StatusAction;
+use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
+use Payum\Core\GatewayAwareInterface;
 use Payum\Core\Request\GetStatusInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use Sylius\Component\Core\Model\PaymentInterface;
 
 final class StatusActionSpec extends ObjectBehavior
 {
@@ -32,7 +30,7 @@ final class StatusActionSpec extends ObjectBehavior
 
     function it_executes(
         GetStatusInterface $request
-    ): void{
+    ): void {
         $arrayObject = new ArrayObject(['amazon_pay']);
         $request->getModel()->willReturn($arrayObject);
         $request->markNew()->shouldBeCalled();

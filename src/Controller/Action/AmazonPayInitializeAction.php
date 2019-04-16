@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusAmazonPayPlugin\Controller\Action;
 
+use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClient;
+use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
@@ -12,17 +16,13 @@ use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
-use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClient;
-use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
-use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 
 final class AmazonPayInitializeAction
 {
     /** @var CartContextInterface */
     private $cartContext;
 
-    /** @var PaymentMethodResolverInterface  */
+    /** @var PaymentMethodResolverInterface */
     private $paymentMethodResolver;
 
     /** @var AmazonPayApiClientInterface|AmazonPayApiClient */

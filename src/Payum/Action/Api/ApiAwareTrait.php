@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusAmazonPayPlugin\Payum\Action\Api;
 
-use Payum\Core\Exception\UnsupportedApiException;
 use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
+use Payum\Core\Exception\UnsupportedApiException;
 
 trait ApiAwareTrait
 {
