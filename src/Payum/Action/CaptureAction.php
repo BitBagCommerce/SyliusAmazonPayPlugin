@@ -14,6 +14,7 @@ use Payum\Core\Request\Capture;
 use BitBag\SyliusAmazonPayPlugin\Client\AmazonPayApiClientInterface;
 use BitBag\SyliusAmazonPayPlugin\Payum\Action\Api\ApiAwareTrait;
 
+
 final class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {
     use GatewayAwareTrait, ApiAwareTrait;
