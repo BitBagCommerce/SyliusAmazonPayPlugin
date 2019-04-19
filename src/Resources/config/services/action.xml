@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="true" />
+
+        <service id="bitbag_sylius_amazon_pay_plugin.action.capture" class="BitBag\SyliusAmazonPayPlugin\Payum\Action\CaptureAction">
+            <tag name="payum.action" factory="amazonpay" alias="payum.action.capture"/>
+        </service>
+
+        <service id="bitbag_sylius_amazon_pay_plugin.action.convert_payment" class="BitBag\SyliusAmazonPayPlugin\Payum\Action\ConvertPaymentAction">
+            <argument type="service" id="sylius.payment_description_provider"/>
+            <tag name="payum.action" factory="amazonpay" alias="payum.action.convert_payment"/>
+        </service>
+
+        <service id="bitbag_sylius_amazon_pay_plugin.action.status" class="BitBag\SyliusAmazonPayPlugin\Payum\Action\StatusAction">
+            <tag name="payum.action" factory="amazonpay" alias="payum.action.status"/>
+        </service>
+    </services>
+</container>

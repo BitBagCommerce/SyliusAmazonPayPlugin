@@ -1,0 +1,61 @@
+<div id="walletWidgetDiv"></div>
+
+{% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
+
+<link href="{{ asset('bundles/bitbagsyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
+
+<script src="{{ asset('bundles/bitbagsyliusamazonpayplugin/js/retrieveAccessToken.js') }}"></script>
+
+<script
+        async
+        type='text/javascript'
+        src='https://static-eu.payments-amazon.com/OffAmazonPayments/{{ config.region }}{{ 'sandbox' == config.environment ? '/' ~ config.environment : '' }}/lpa/js/Widgets.js?sellerId={{ config.merchantId }}'
+></script>
+
+<script>
+    window.onAmazonLoginReady = function () {
+        try {
+            amazon.Login.setClientId("{{ config.clientId }}");
+            amazon.Login.setUseCookie(true);
+        } catch (err) {
+            alert(err);
+        }
+    };
+
+    $('#next-step').addClass('disabled');
+    $('form[name="sylius_checkout_select_payment"] .ui.unmargined.segments').hide();
+
+    window.onAmazonPaymentsReady = function () {
+        new OffAmazonPayments.Widgets.Wallet({
+            sellerId: '{{ config.merchantId }}',
+
+            {% if amazonOrderReferenceId is null %}
+            onOrderReferenceCreate: function(orderReference) {
+                let orderReferenceId = orderReference.getAmazonOrderReferenceId();
+
+                $.post('{{ path('bitbag_sylius_amazon_pay_order_reference_create') }}', {
+                    orderReferenceId: orderReferenceId
+                }).done(function (data) {
+
+                });
+            },
+            {% else %}
+            amazonOrderReferenceId: "{{ amazonOrderReferenceId }}",
+            {% endif %}
+
+            design: {
+                designMode: 'responsive'
+            },
+            onPaymentSelect: function(orderReference) {
+                $('#next-step').removeClass('disabled');
+            },
+            onError: function(error) {
+                $.post('{{ path('bitbag_sylius_amazon_pay_error') }}', {
+                    message: error.getErrorMessage()
+                }).done(function (data) {
+                    window.location.replace("{{ path('sylius_shop_cart_summary') }}");
+                });
+            }
+        }).bind("walletWidgetDiv");
+    };
+</script>

@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: BitBag\SyliusAmazonPayPlugin
+        psr4_prefix: BitBag\SyliusAmazonPayPlugin

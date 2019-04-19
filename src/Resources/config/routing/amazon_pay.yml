@@ -1,0 +1,35 @@
+bitbag_sylius_amazon_pay_start:
+    path: /start
+    methods: [GET]
+    defaults:
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.amazon_pay_start
+
+bitbag_sylius_amazon_pay_initialize:
+    path: /initialize
+    methods: [POST]
+    defaults:
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.initialize
+
+bitbag_sylius_amazon_pay_order_reference_create:
+    path: /order-reference-create
+    methods: [POST]
+    defaults:
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.order_reference_create
+
+bitbag_sylius_amazon_pay_address_select:
+    path: /address-select
+    methods: [POST]
+    defaults:
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.address_select
+
+bitbag_sylius_amazon_pay_authorize_payment:
+    path: /authorize-payment
+    methods: [POST]
+    defaults:
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.authorize_payment
+
+bitbag_sylius_amazon_pay_error:
+    path: /error
+    methods: [POST]
+    defaults:
+        _controller: bitbag_sylius_amazon_pay_plugin.controller.action.error
