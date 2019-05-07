@@ -31,7 +31,7 @@ This plugin allows you to integrate AmazonPay payment with Sylius platform app.
 
 1. Require plugin with composer:
    ```bash
-    $ composer require bitbag/sylius-amazon-pay-plugin
+    $ composer require bitbag/amazon-pay-plugin
    ```
 
 2. Add plugin class to your bundles.php file:
