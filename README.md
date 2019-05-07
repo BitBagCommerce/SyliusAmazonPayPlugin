@@ -10,7 +10,7 @@
         <img src="https://img.shields.io/packagist/v/bitbag/amazon-pay-plugin.svg" />
     </a>
     <a href="http://travis-ci.org/BitBagCommerce/SyliusAmazonPayPlugin" title="Build status" target="_blank">
-        <img src="https://img.shields.io/travis/BitBagCommerce/SyliusAmazonPayPlugin/master.svg" />
+         <img src="https://img.shields.io/travis/BitBagCommerce/SyliusAmazonPayPlugin/master.svg" />
     </a>
     <a href="https://scrutinizer-ci.com/g/BitBagCommerce/SyliusAmazonPayPlugin/" title="Scrutinizer" target="_blank">
         <img src="https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusAmazonPayPlugin.svg" />
