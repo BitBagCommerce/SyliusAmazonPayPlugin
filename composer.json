@@ -1,5 +1,5 @@
 {
-    "name": "bitbag/sylius-amazon-pay-plugin",
+    "name": "bitbag/amazon-pay-plugin",
     "type": "sylius-plugin",
     "keywords": ["sylius", "sylius-plugin"],
     "description": "Amazon Pay Plugin.",
