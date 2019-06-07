@@ -8,7 +8,7 @@
         "php": "^7.2",
         "ext-json": "*",
 
-        "sylius/sylius": "~1.4.0",
+        "sylius/sylius": "^1.4",
         "guzzlehttp/guzzle": "^6.3",
         "symfony/asset": "^4.2",
         "amzn/amazon-pay-sdk-php": "^3.4"
