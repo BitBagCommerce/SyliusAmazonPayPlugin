@@ -62,7 +62,11 @@ This plugin allows you to integrate AmazonPay payment with Sylius platform app.
    ```bash 
     bin/console assets:install --symlink
    ```
-6. Clear cache:
+6. Install theme assets (only if using a theme):
+   ```bash 
+    bin/console sylius:theme:assets:install
+   ```
+7. Clear cache:
    ```bash 
     bin/console cache:clear
    ```
