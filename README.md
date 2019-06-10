@@ -92,7 +92,7 @@ sylius_shop:
            shipping_selected:
                route: sylius_shop_checkout_complete
            shipping_skipped:
-               route: sylius_shop_checkout_complet
+               route: sylius_shop_checkout_complete
 ```
 
 Add state machine in _sylius.yml:
