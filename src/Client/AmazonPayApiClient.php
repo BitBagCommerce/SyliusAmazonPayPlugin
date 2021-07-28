@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BitBag\SyliusAmazonPayPlugin\Client;
 
 use AmazonPay\Client;
+use Exception;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 
 class AmazonPayApiClient implements AmazonPayApiClientInterface
@@ -12,6 +13,9 @@ class AmazonPayApiClient implements AmazonPayApiClientInterface
     /** @var Client */
     private $client;
 
+    /**
+     * @throws Exception
+     */
     public function initializeFromPaymentMethod(PaymentMethodInterface $paymentMethod): void
     {
         $config = $paymentMethod->getGatewayConfig()->getConfig();
@@ -19,6 +23,9 @@ class AmazonPayApiClient implements AmazonPayApiClientInterface
         $this->initialize($config);
     }
 
+    /**
+     * @throws Exception
+     */
     public function initialize(array $config): void
     {
         $this->client = new Client([

@@ -12,11 +12,15 @@ use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 final class RenderWalletWidgetExtension extends AbstractExtension
 {
-    /** @var EngineInterface */
-    private $templatingEngine;
+    /** @var Environment */
+    private $templating;
 
     /** @var PaymentMethodResolverInterface */
     private $paymentMethodResolver;
@@ -25,11 +29,11 @@ final class RenderWalletWidgetExtension extends AbstractExtension
     private $cartContext;
 
     public function __construct(
-        EngineInterface $templatingEngine,
+        Environment $templating,
         PaymentMethodResolverInterface $paymentMethodResolver,
         CartContextInterface $cartContext
     ) {
-        $this->templatingEngine = $templatingEngine;
+        $this->templating = $templating;
         $this->paymentMethodResolver = $paymentMethodResolver;
         $this->cartContext = $cartContext;
     }
@@ -41,6 +45,11 @@ final class RenderWalletWidgetExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function renderWalletWidget(): string
     {
         /** @var OrderInterface $order */
@@ -51,7 +60,7 @@ final class RenderWalletWidgetExtension extends AbstractExtension
 
         if (
             null === $paymentMethodCurrent ||
-            AmazonPayGatewayFactory::FACTORY_NAME !== $paymentMethodCurrent->getGatewayConfig()->getFactoryName()
+            AmazonPayGatewayFactory::FACTORY_NAME !== $paymentMethodCurrent->getGatewayConfig()->getConfig()['type']
         ) {
             return '';
         }
@@ -72,7 +81,7 @@ final class RenderWalletWidgetExtension extends AbstractExtension
             $amazonOrderReferenceId = $paymentDetails['amazon_pay']['amazon_order_reference_id'];
         }
 
-        return $this->templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/Wallet:_widget.html.twig', [
+        return $this->templating->render('BitBagSyliusAmazonPayPlugin/AmazonPay/Wallet/_widget.html.twig', [
             'config' => $config,
             'amazonOrderReferenceId' => $amazonOrderReferenceId,
         ]);

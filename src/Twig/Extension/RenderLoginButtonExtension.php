@@ -9,18 +9,22 @@ use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 final class RenderLoginButtonExtension extends AbstractExtension
 {
-    /** @var EngineInterface */
-    private $templatingEngine;
+    /** @var Environment */
+    private $templating;
 
     /** @var PaymentMethodResolverInterface */
     private $paymentMethodResolver;
 
-    public function __construct(EngineInterface $templatingEngine, PaymentMethodResolverInterface $paymentMethodResolver)
+    public function __construct(Environment $templating, PaymentMethodResolverInterface $paymentMethodResolver)
     {
-        $this->templatingEngine = $templatingEngine;
+        $this->templating = $templating;
         $this->paymentMethodResolver = $paymentMethodResolver;
     }
 
@@ -31,6 +35,11 @@ final class RenderLoginButtonExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     public function renderLoginButton(): string
     {
         $paymentMethod = $this->paymentMethodResolver->resolvePaymentMethod(AmazonPayGatewayFactory::FACTORY_NAME);
@@ -41,7 +50,7 @@ final class RenderLoginButtonExtension extends AbstractExtension
 
         $config = $paymentMethod->getGatewayConfig()->getConfig();
 
-        return $this->templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/Login:_button.html.twig', [
+        return $this->templating->render('@BitBagSyliusAmazonPayPlugin/AmazonPay/Login/_button.html.twig', [
             'config' => $config,
         ]);
     }

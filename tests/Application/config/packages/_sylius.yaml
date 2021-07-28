@@ -2,9 +2,10 @@ imports:
     - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
 
     - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
-    - { resource: "@SyliusAdminApiBundle/Resources/config/app/config.yml" }
 
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
 
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
@@ -51,3 +52,4 @@ winzou_state_machine:
             complete:
                 from: [payment_selected, payment_skipped, shipping_selected, shipping_skipped]
                 to: completed
+

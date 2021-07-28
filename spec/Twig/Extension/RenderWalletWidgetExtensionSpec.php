@@ -68,7 +68,7 @@ final class RenderWalletWidgetExtensionSpec extends ObjectBehavior
         $payment->getMethod()->willReturn($paymentMethod);
         $order->getLastPayment()->willReturn($payment);
 
-        $gatewayConfig->getFactoryName()->willReturn('amazonpay');
+        $gatewayConfig->getConfig()->willReturn('amazonpay');
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
 
         $gatewayConfig->getConfig()->willReturn([]);

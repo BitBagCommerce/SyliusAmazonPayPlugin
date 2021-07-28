@@ -6,6 +6,7 @@ namespace BitBag\SyliusAmazonPayPlugin\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -109,11 +110,13 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('type', HiddenType::class, [
+                'empty_data' => 'amazonpay'
+            ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $data = $event->getData();
 
                 $data['payum.http_client'] = '@bitbag.sylius_amazon_pay_plugin.amazon_pay_api_client';
-
                 $event->setData($data);
             })
         ;
