@@ -47,6 +47,7 @@ final class PaymentStateResolverSpec extends ObjectBehavior
         EntityManagerInterface $paymentEntityManager,
         ResponseParser $parser
     ): void {
+
         $payment->getMethod()->willReturn($paymentMethod);
 
         $amazonPayApiClient->initializeFromPaymentMethod($paymentMethod)->shouldBeCalled();
@@ -62,8 +63,8 @@ final class PaymentStateResolverSpec extends ObjectBehavior
         ])->willReturn($parser);
 
         $amazonPayApiClient->getClient()->willReturn($client);
-        $paymentEntityManager->flush()->shouldBeCalled();
 
+        $paymentEntityManager->flush()->shouldBeCalled();
         $this->resolve($payment);
     }
 }

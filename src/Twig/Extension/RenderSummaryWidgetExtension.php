@@ -59,6 +59,7 @@ final class RenderSummaryWidgetExtension extends AbstractExtension
 
         if (
             null === $paymentMethodCurrent ||
+            !isset($paymentMethodCurrent->getGatewayConfig()->getConfig()['type']) ||
             AmazonPayGatewayFactory::FACTORY_NAME !== $paymentMethodCurrent->getGatewayConfig()->getConfig()['type']
         ) {
             return '';

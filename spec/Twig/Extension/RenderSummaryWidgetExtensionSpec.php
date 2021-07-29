@@ -13,15 +13,19 @@ use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 final class RenderSummaryWidgetExtensionSpec extends ObjectBehavior
 {
     function let(
-        EngineInterface $templatingEngine,
+        Environment $templating,
         PaymentMethodResolverInterface $paymentMethodResolver,
         CartContextInterface $cartContext
     ): void {
-        $this->beConstructedWith($templatingEngine, $paymentMethodResolver, $cartContext);
+        $this->beConstructedWith($templating, $paymentMethodResolver, $cartContext);
     }
 
     function it_is_initializable(): void
@@ -43,6 +47,11 @@ final class RenderSummaryWidgetExtensionSpec extends ObjectBehavior
         }
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     function it_returns_empty_string_on_null_payment_method_current(
         CartContextInterface $cartContext,
         OrderInterface $order,
@@ -56,6 +65,11 @@ final class RenderSummaryWidgetExtensionSpec extends ObjectBehavior
         $this->renderSummaryWidget()->shouldReturn('');
     }
 
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
     function it_returns_empty_string_on_null_payment_method(
         CartContextInterface $cartContext,
         OrderInterface $order,
@@ -68,7 +82,7 @@ final class RenderSummaryWidgetExtensionSpec extends ObjectBehavior
         $payment->getMethod()->willReturn($paymentMethod);
         $order->getLastPayment()->willReturn($payment);
 
-        $gatewayConfig->getFactoryName()->willReturn('amazonpay');
+        $gatewayConfig->getConfig()->willReturn(['type' => 'amazonpay']);
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
 
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn(null);
@@ -76,12 +90,17 @@ final class RenderSummaryWidgetExtensionSpec extends ObjectBehavior
         $this->renderSummaryWidget()->shouldReturn('');
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     function it_renders_address_book_widget(
         PaymentMethodResolverInterface $paymentMethodResolver,
         PaymentMethodInterface $paymentMethod,
         CartContextInterface $cartContext,
         OrderInterface $order,
-        EngineInterface $templatingEngine,
+        Environment $templating,
         PaymentInterface $payment,
         GatewayConfigInterface $gatewayConfig
     ): void {
@@ -90,11 +109,9 @@ final class RenderSummaryWidgetExtensionSpec extends ObjectBehavior
         $payment->getMethod()->willReturn($paymentMethod);
         $order->getLastPayment()->willReturn($payment);
 
-        $gatewayConfig->getFactoryName()->willReturn('amazonpay');
+        $gatewayConfig->getConfig()->willReturn(['type' => 'amazonpay']);
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
 
-        $gatewayConfig->getConfig()->willReturn([]);
-        $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn($paymentMethod);
 
         $payment->getDetails()->willReturn(['amazon_pay' => [
@@ -102,8 +119,8 @@ final class RenderSummaryWidgetExtensionSpec extends ObjectBehavior
         ]]);
         $order->getLastPayment()->willReturn($payment);
 
-        $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/Summary:_widget.html.twig', [
-            'config' => [], 'amazonOrderReferenceId' => 123, ])->willReturn('content');
+        $templating->render('@BitBagSyliusAmazonPayPlugin/AmazonPay/Summary/_widget.html.twig', [
+            'config' => ['type' => 'amazonpay'], 'amazonOrderReferenceId' => 123, ])->willReturn('content');
 
         $this->renderSummaryWidget()->shouldReturn('content');
     }

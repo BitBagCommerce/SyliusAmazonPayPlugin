@@ -60,6 +60,7 @@ final class RenderWalletWidgetExtension extends AbstractExtension
 
         if (
             null === $paymentMethodCurrent ||
+            !isset($paymentMethodCurrent->getGatewayConfig()->getConfig()['type']) ||
             AmazonPayGatewayFactory::FACTORY_NAME !== $paymentMethodCurrent->getGatewayConfig()->getConfig()['type']
         ) {
             return '';
@@ -81,7 +82,7 @@ final class RenderWalletWidgetExtension extends AbstractExtension
             $amazonOrderReferenceId = $paymentDetails['amazon_pay']['amazon_order_reference_id'];
         }
 
-        return $this->templating->render('BitBagSyliusAmazonPayPlugin/AmazonPay/Wallet/_widget.html.twig', [
+        return $this->templating->render('@BitBagSyliusAmazonPayPlugin/AmazonPay/Wallet/_widget.html.twig', [
             'config' => $config,
             'amazonOrderReferenceId' => $amazonOrderReferenceId,
         ]);

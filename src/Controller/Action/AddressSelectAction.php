@@ -57,6 +57,13 @@ final class AddressSelectAction
 
         $orderReferenceDetails = $this->amazonPayApiClient->getClient()->getOrderReferenceDetails($requestParameters)->toArray();
 
+        if(null === $orderReferenceDetails){
+            return new JsonResponse([
+                'address' => null,
+                'buyer' => null
+            ]);
+        }
+
         return new JsonResponse([
             'address' => $orderReferenceDetails['GetOrderReferenceDetailsResult']['OrderReferenceDetails']['Destination'],
             'buyer' => $orderReferenceDetails['GetOrderReferenceDetailsResult']['OrderReferenceDetails']['Buyer'],
