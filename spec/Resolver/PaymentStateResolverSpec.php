@@ -12,11 +12,14 @@ use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentStateResolverInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 use SM\Factory\FactoryInterface;
+use SM\StateMachine\StateMachineInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
+use Sylius\Component\Payment\PaymentTransitions;
 
 final class PaymentStateResolverSpec extends ObjectBehavior
 {
+
     function let(
         FactoryInterface $stateMachineFactory,
         AmazonPayApiClientInterface $amazonPayApiClient,
@@ -45,7 +48,9 @@ final class PaymentStateResolverSpec extends ObjectBehavior
         AmazonPayApiClientInterface $amazonPayApiClient,
         Client $client,
         EntityManagerInterface $paymentEntityManager,
-        ResponseParser $parser
+        ResponseParser $parser,
+        FactoryInterface $stateMachineFactory,
+        StateMachineInterface $stateMachine
     ): void {
 
         $payment->getMethod()->willReturn($paymentMethod);
@@ -62,9 +67,24 @@ final class PaymentStateResolverSpec extends ObjectBehavior
             'amazon_authorization_id' => '321',
         ])->willReturn($parser);
 
+        $authorizationDetailsResponse['GetAuthorizationDetailsResult']['AuthorizationDetails']['AuthorizationStatus'] = [
+            'ReasonCode' => 'MaxCapturesProcessed',
+            'State' => 'Closed'
+        ];
+
+        $parser->toArray()->willReturn($authorizationDetailsResponse);
+
+        $stateMachineFactory->get($payment, PaymentTransitions::GRAPH)->willReturn($stateMachine);
+
+        $stateMachine->can(PaymentTransitions::TRANSITION_FAIL)->willReturn(false);
+        $stateMachine->can(PaymentTransitions::TRANSITION_COMPLETE)->willReturn(true);
+        $stateMachine->apply(PaymentTransitions::TRANSITION_COMPLETE)->willReturn(true);
+
+
         $amazonPayApiClient->getClient()->willReturn($client);
 
         $paymentEntityManager->flush()->shouldBeCalled();
+
         $this->resolve($payment);
     }
 }
