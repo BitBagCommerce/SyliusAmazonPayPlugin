@@ -22,9 +22,12 @@ jobs:
             matrix:
                 php: [ 7.4, 8.0 ]
                 symfony: [ ^4.4, ^5.2 ]
-                sylius: [ 1.9.6, ~1.10 ]
+                sylius: [ ~1.9, ~1.10 ]
                 node: [ 10.x ]
                 mysql: [ 5.7 ]
+                exclude:
+                    - sylius: [~1.9]
+                      php: [8.0]
 
         env:
             APP_ENV: test
