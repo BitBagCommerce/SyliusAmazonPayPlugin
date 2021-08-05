@@ -13,15 +13,19 @@ use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
 {
     function let(
-        EngineInterface $templatingEngine,
+        Environment $templating,
         PaymentMethodResolverInterface $paymentMethodResolver,
         CartContextInterface $cartContext
     ): void {
-        $this->beConstructedWith($templatingEngine, $paymentMethodResolver, $cartContext);
+        $this->beConstructedWith($templating, $paymentMethodResolver, $cartContext);
     }
 
     function it_is_initializable(): void
@@ -56,6 +60,11 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
         $this->renderAddressBookWidget()->shouldReturn('');
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     function it_returns_empty_string_on_null_payment_method(
         CartContextInterface $cartContext,
         OrderInterface $order,
@@ -68,7 +77,7 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
         $payment->getMethod()->willReturn($paymentMethod);
         $order->getLastPayment()->willReturn($payment);
 
-        $gatewayConfig->getFactoryName()->willReturn('amazonpay');
+        $gatewayConfig->getConfig()->willReturn(['type' => 'amazonpay']);
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
 
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn(null);
@@ -76,10 +85,15 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
         $this->renderAddressBookWidget()->shouldReturn('');
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     function it_renders_address_book_widget(
         CartContextInterface $cartContext,
         OrderInterface $order,
-        EngineInterface $templatingEngine,
+        Environment $templating,
         PaymentMethodResolverInterface $paymentMethodResolver,
         PaymentMethodInterface $paymentMethod,
         PaymentInterface $payment,
@@ -90,11 +104,9 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
         $payment->getMethod()->willReturn($paymentMethod);
         $order->getLastPayment()->willReturn($payment);
 
-        $gatewayConfig->getFactoryName()->willReturn('amazonpay');
+        $gatewayConfig->getConfig()->willReturn(['type' => 'amazonpay']);
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
 
-        $gatewayConfig->getConfig()->willReturn([]);
-        $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn($paymentMethod);
 
         $payment->getDetails()->willReturn(['amazon_pay' => [
@@ -102,8 +114,8 @@ final class RenderAddressBookWidgetExtensionSpec extends ObjectBehavior
         ]]);
         $order->getLastPayment()->willReturn($payment);
 
-        $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/AddressBook:_widget.html.twig', [
-            'config' => [], 'amazonOrderReferenceId' => 123, ])->willReturn('content');
+        $templating->render('@BitBagSyliusAmazonPayPlugin/AmazonPay/AddressBook/_widget.html.twig', [
+            'config' => ['type' => 'amazonpay'], 'amazonOrderReferenceId' => 123, ])->willReturn('content');
 
         $this->renderAddressBookWidget()->shouldReturn('content');
     }

@@ -65,6 +65,14 @@ final class AddressSelectActionSpec extends ObjectBehavior
             'amazon_order_reference_id' => 123,
             'access_token' => '123',
         ])->willReturn($parser);
+
+        $orderReferenceDetails['GetOrderReferenceDetailsResult']['OrderReferenceDetails'] = [
+            'Destination' => 'test',
+            'Buyer' => 'test'
+        ];
+
+        $parser->toArray()->willReturn($orderReferenceDetails);
+
         $amazonPayApiClient->getClient()->willReturn($client);
 
         $this->__invoke($request);

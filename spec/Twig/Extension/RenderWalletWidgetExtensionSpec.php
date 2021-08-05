@@ -13,15 +13,19 @@ use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 final class RenderWalletWidgetExtensionSpec extends ObjectBehavior
 {
     function let(
-        EngineInterface $templatingEngine,
+        Environment $templating,
         PaymentMethodResolverInterface $paymentMethodResolver,
         CartContextInterface $cartContext
     ): void {
-        $this->beConstructedWith($templatingEngine, $paymentMethodResolver, $cartContext);
+        $this->beConstructedWith($templating, $paymentMethodResolver, $cartContext);
     }
 
     function it_is_initializable()
@@ -43,6 +47,11 @@ final class RenderWalletWidgetExtensionSpec extends ObjectBehavior
         }
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     function it_returns_empty_string_on_null_payment_method_current(
         CartContextInterface $cartContext,
         OrderInterface $order,
@@ -56,6 +65,11 @@ final class RenderWalletWidgetExtensionSpec extends ObjectBehavior
         $this->renderWalletWidget()->shouldReturn('');
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     function it_returns_empty_string_on_null_payment_method(
         CartContextInterface $cartContext,
         OrderInterface $order,
@@ -68,7 +82,7 @@ final class RenderWalletWidgetExtensionSpec extends ObjectBehavior
         $payment->getMethod()->willReturn($paymentMethod);
         $order->getLastPayment()->willReturn($payment);
 
-        $gatewayConfig->getFactoryName()->willReturn('amazonpay');
+        $gatewayConfig->getConfig()->willReturn('amazonpay');
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
 
         $gatewayConfig->getConfig()->willReturn([]);
@@ -78,13 +92,18 @@ final class RenderWalletWidgetExtensionSpec extends ObjectBehavior
         $this->renderWalletWidget()->shouldReturn('');
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     function it_renders_wallet_widget(
         PaymentMethodResolverInterface $paymentMethodResolver,
         PaymentMethodInterface $paymentMethod,
         PaymentInterface $payment,
         CartContextInterface $cartContext,
         OrderInterface $order,
-        EngineInterface $templatingEngine,
+        Environment $templating,
         GatewayConfigInterface $gatewayConfig
     ): void {
         $cartContext->getCart()->willReturn($order);
@@ -92,10 +111,7 @@ final class RenderWalletWidgetExtensionSpec extends ObjectBehavior
         $payment->getMethod()->willReturn($paymentMethod);
         $order->getLastPayment()->willReturn($payment);
 
-        $gatewayConfig->getFactoryName()->willReturn('amazonpay');
-        $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
-
-        $gatewayConfig->getConfig()->willReturn([]);
+        $gatewayConfig->getConfig()->willReturn(['type' => 'amazonpay']);
         $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
         $paymentMethodResolver->resolvePaymentMethod('amazonpay')->willReturn($paymentMethod);
 
@@ -104,8 +120,8 @@ final class RenderWalletWidgetExtensionSpec extends ObjectBehavior
         ]]);
         $order->getLastPayment()->willReturn($payment);
 
-        $templatingEngine->render('BitBagSyliusAmazonPayPlugin:AmazonPay/Wallet:_widget.html.twig', [
-            'config' => [], 'amazonOrderReferenceId' => 123, ])->willReturn('content');
+        $templating->render('@BitBagSyliusAmazonPayPlugin/AmazonPay/Wallet/_widget.html.twig', [
+            'config' => ['type' => 'amazonpay'], 'amazonOrderReferenceId' => 123, ])->willReturn('content');
 
         $this->renderWalletWidget()->shouldReturn('content');
     }

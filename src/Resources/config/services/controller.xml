@@ -5,7 +5,7 @@
         <defaults public="true" />
 
         <service id="bitbag_sylius_amazon_pay_plugin.controller.action.amazon_pay_start" class="BitBag\SyliusAmazonPayPlugin\Controller\Action\AmazonPayStartAction">
-            <argument type="service" id="templating" />
+            <argument type="service" id="twig" />
         </service>
 
         <service id="bitbag_sylius_amazon_pay_plugin.controller.action.initialize" class="BitBag\SyliusAmazonPayPlugin\Controller\Action\AmazonPayInitializeAction">
