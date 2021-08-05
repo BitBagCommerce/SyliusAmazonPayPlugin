@@ -1,7 +1,6 @@
+# [![](https://bitbag.io/wp-content/uploads/2021/08/AmazonPay.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_amazon_pay)
+
 <h1 align="center">
-    <a href="http://bitbag.shop" target="_blank">
-        <img src="doc/logo.jpeg" width="55%" />
-    </a>
     <br />
     <a href="https://packagist.org/packages/bitbag/amazon-pay-plugin" title="License" target="_blank">
         <img src="https://img.shields.io/packagist/l/bitbag/amazon-pay-plugin.svg" />
