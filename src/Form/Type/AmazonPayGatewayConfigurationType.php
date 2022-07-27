@@ -117,7 +117,7 @@ final class AmazonPayGatewayConfigurationType extends AbstractType
                 ],
             ])
             ->add('type', HiddenType::class, [
-                'empty_data' => 'amazonpay'
+                'empty_data' => 'amazonpay',
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $data = $event->getData();

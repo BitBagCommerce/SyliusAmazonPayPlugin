@@ -35,6 +35,6 @@ final class PaymentMethodResolver implements PaymentMethodResolverInterface
             $this->channelContext->getChannel()
         );
 
-        return count($paymentMethods) > 0 ? $paymentMethods[0] : null;
+        return 0 < count($paymentMethods) ? $paymentMethods[0] : null;
     }
 }
