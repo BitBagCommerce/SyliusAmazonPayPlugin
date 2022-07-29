@@ -12,13 +12,12 @@ namespace BitBag\SyliusAmazonPayPlugin\Twig\Extension;
 
 use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
 use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
-use Symfony\Component\Templating\EngineInterface;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 final class RenderLoginButtonExtension extends AbstractExtension
 {

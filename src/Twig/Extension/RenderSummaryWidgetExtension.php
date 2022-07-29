@@ -15,13 +15,12 @@ use BitBag\SyliusAmazonPayPlugin\Resolver\PaymentMethodResolverInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentMethod;
 use Sylius\Component\Order\Context\CartContextInterface;
-use Symfony\Component\Templating\EngineInterface;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 final class RenderSummaryWidgetExtension extends AbstractExtension
 {
@@ -55,7 +54,8 @@ final class RenderSummaryWidgetExtension extends AbstractExtension
      * @throws SyntaxError
      * @throws RuntimeError
      * @throws LoaderError
-     */public function renderSummaryWidget(): string
+     */
+    public function renderSummaryWidget(): string
     {
         /** @var OrderInterface $order */
         $order = $this->cartContext->getCart();

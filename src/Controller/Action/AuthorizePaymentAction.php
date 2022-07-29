@@ -107,8 +107,8 @@ final class AuthorizePaymentAction
 
         $authorizationStatus = $authorizeResponse['AuthorizeResult']['AuthorizationDetails']['AuthorizationStatus'];
 
-        if ($authorizationStatus['State'] === AmazonPayApiClientInterface::DECLINED_AUTHORIZATION_STATUS) {
-            if ($authorizationStatus['ReasonCode'] === 'InvalidPaymentMethod') {
+        if (AmazonPayApiClientInterface::DECLINED_AUTHORIZATION_STATUS === $authorizationStatus['State']) {
+            if ('InvalidPaymentMethod' === $authorizationStatus['ReasonCode']) {
                 $flashBag->add('error', $this->translator->trans('bitbag_sylius_amazon_pay_plugin.ui.invalid_payment_method'));
 
                 return new JsonResponse(
@@ -117,7 +117,7 @@ final class AuthorizePaymentAction
                 );
             }
 
-            if ($authorizationStatus['ReasonCode'] === AmazonPayApiClientInterface::TRANSACTION_TIMED_OUT_ERROR_CODE) {
+            if (AmazonPayApiClientInterface::TRANSACTION_TIMED_OUT_ERROR_CODE === $authorizationStatus['ReasonCode']) {
                 $authorizationReferenceId = bin2hex(random_bytes(12));
 
                 $authorizeResponse = $this->amazonPayApiClient->getClient()->authorize([
@@ -146,7 +146,7 @@ final class AuthorizePaymentAction
 
             $orderReferenceStatus = $orderReferenceDetailsResponse['GetOrderReferenceDetailsResult']['OrderReferenceDetails']['OrderReferenceStatus'];
 
-            if ($orderReferenceStatus['State'] === AmazonPayApiClientInterface::OPEN_ORDER_REFERENCE_STATUS) {
+            if (AmazonPayApiClientInterface::OPEN_ORDER_REFERENCE_STATUS === $orderReferenceStatus['State']) {
                 $this->amazonPayApiClient->getClient()->cancelOrderReference([
                     'amazon_order_reference_id' => $orderReferenceId,
                 ]);

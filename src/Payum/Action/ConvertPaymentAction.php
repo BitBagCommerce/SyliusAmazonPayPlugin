@@ -53,7 +53,7 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
         return
             $request instanceof Convert &&
             $request->getSource() instanceof PaymentInterface &&
-            $request->getTo() === 'array'
+            'array' === $request->getTo()
         ;
     }
 }

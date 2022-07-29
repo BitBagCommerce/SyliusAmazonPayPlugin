@@ -40,7 +40,7 @@ class AmazonPayApiClient implements AmazonPayApiClientInterface
             'secret_key' => $config['secretKey'],
             'client_id' => $config['clientId'],
             'region' => $config['region'],
-            'sandbox' => $config['environment'] === self::SANDBOX_ENVIRONMENT,
+            'sandbox' => self::SANDBOX_ENVIRONMENT === $config['environment'],
         ]);
     }
 

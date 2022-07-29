@@ -30,7 +30,6 @@ final class AmazonPayPaymentMethodsResolver implements PaymentMethodsResolverInt
 
     public function getSupportedMethods(BasePaymentInterface $payment): array
     {
-        /** @var PaymentInterface $payment */
         Assert::isInstanceOf($payment, PaymentInterface::class);
         Assert::true($this->supports($payment), 'This payment method is not support by resolver');
 
