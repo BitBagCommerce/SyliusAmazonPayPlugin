@@ -45,7 +45,7 @@ final class UpdateAmazonPayStatusCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $payments = $this->paymentRepository->findAllByGatewayFactoryNameAndState(
             AmazonPayGatewayFactory::FACTORY_NAME,
@@ -55,5 +55,6 @@ final class UpdateAmazonPayStatusCommand extends Command
         foreach ($payments as $payment) {
             $this->paymentStateResolver->resolve($payment);
         }
+        return 0;
     }
 }
