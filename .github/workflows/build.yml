@@ -86,8 +86,9 @@ jobs:
             - name: Restrict Symfony version
               if: matrix.symfony != ''
               run: |
-                  composer global require --no-progress --no-scripts --no-plugins "symfony/flex:^1.10"
-                  composer config extra.symfony.require "${{ matrix.symfony }}"
+                composer global config --no-plugins allow-plugins.symfony/flex true
+                composer global require --no-progress --no-scripts --no-plugins "symfony/flex:^1.10"
+                composer config extra.symfony.require "${{ matrix.symfony }}"
             - name: Restrict Sylius version
               if: matrix.sylius != ''
               run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
