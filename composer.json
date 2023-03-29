@@ -8,10 +8,10 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.0",
         "amzn/amazon-pay-sdk-php": "^3.7",
         "sylius/sylius": ">=1.9.0",
-      "ext-json": "*"
+        "ext-json": "*"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
@@ -45,7 +45,11 @@
         "vimeo/psalm": "4.7.1"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false,
+            "phpstan/extension-installer": false
+        }
     },
     "autoload": {
         "psr-4": {
