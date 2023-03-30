@@ -28,7 +28,7 @@ jobs:
 
                 exclude:
                     -
-                        sylius: ~1.1.0
+                        sylius: ~1.11.0
                         symfony: ^6.0
 
         env:
