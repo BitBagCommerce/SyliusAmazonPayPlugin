@@ -10,15 +10,7 @@
     "require": {
         "php": "^8.0",
         "amzn/amazon-pay-sdk-php": "^3.7",
-        "adyen/php-api-library": "^11.0",
-        "composer/package-versions-deprecated": "^1.11",
-        "doctrine/annotations": "^1.14",
-        "nyholm/psr7": "^1.4",
-        "psalm/plugin-symfony": "^4.0",
-        "sylius/refund-plugin": "~1.0.0 || ^1.1",
-        "sylius/sylius": "~1.11.0",
-        "symfony/messenger": "^5.4 || ^6.0",
-        "symfony/serializer": "^5.4 || ^6.0",
+        "sylius/sylius": "~1.11.0 || ~1.12.0",
         "symfony/webpack-encore-bundle": "^1.14"
     },
     "require-dev": {
@@ -44,9 +36,11 @@
         "phpunit/phpunit": "^9.5",
         "polishsymfonycommunity/symfony-mocker-container": "^1.0",
         "symfony/browser-kit": "^5.4 || 6.0",
+        "symfony/css-selector": "^6.0",
         "symfony/debug-bundle": "^5.4 || ^6.0",
         "symfony/dotenv": "^5.4 || ^6.0",
         "symfony/intl": "^5.4 || ^6.0",
+        "symfony/phpunit-bridge": "^6.2",
         "symfony/web-profiler-bundle": "^5.4 || ^6.0",
         "symplify/easy-coding-standard": "^9.3, !=9.3.27",
         "vimeo/psalm": "^4.4.1 || ^5.0.0"
@@ -75,11 +69,6 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
-        }
-    },
-    "extra": {
-        "symfony": {
-            "require": "^5.4"
         }
     }
 }

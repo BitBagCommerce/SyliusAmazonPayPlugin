@@ -8,20 +8,11 @@ security:
       ignore_case: false
       encode_as_base64: true
       iterations: 5000
-      cost: null
-      memory_cost: null
-      time_cost: null
+      cost: 4
+      memory_cost: 4
+      time_cost: 4
     Sylius\Component\User\Model\UserInterface:
       algorithm: argon2i
-      migrate_from: {  }
-      hash_algorithm: sha512
-      key_length: 40
-      ignore_case: false
-      encode_as_base64: true
-      iterations: 5000
-      cost: null
-      memory_cost: null
-      time_cost: null
 
   enable_authenticator_manager: true
   providers:
