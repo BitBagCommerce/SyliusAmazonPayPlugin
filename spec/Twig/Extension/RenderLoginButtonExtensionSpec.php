@@ -20,6 +20,7 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Twig\Extension\AbstractExtension;
 
 final class RenderLoginButtonExtensionSpec extends ObjectBehavior
 {
@@ -37,7 +38,7 @@ final class RenderLoginButtonExtensionSpec extends ObjectBehavior
 
     function it_extends_twig_extension(): void
     {
-        $this->shouldHaveType(\Twig_Extension::class);
+        $this->shouldHaveType(AbstractExtension::class);
     }
 
     function it_returns_functions(): void
@@ -45,7 +46,7 @@ final class RenderLoginButtonExtensionSpec extends ObjectBehavior
         $functions = $this->getFunctions();
         $functions->shouldHaveCount(1);
         foreach ($functions as $function) {
-            $function->shouldHaveType(\Twig_SimpleFunction::class);
+            $function->shouldHaveType(AbstractExtension::class);
         }
     }
 
