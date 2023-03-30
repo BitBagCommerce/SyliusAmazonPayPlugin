@@ -1,9 +1,28 @@
 security:
-#  password_hashers:
-#    Sylius\Component\User\Model\UserInterface:
-#      algorithm: argon2i
-#      time_cost: 3
-#      memory_cost: 10
+password_hashers:
+  argon2i:
+    algorithm: argon2i
+    migrate_from: {  }
+    hash_algorithm: sha512
+    key_length: 40
+    ignore_case: false
+    encode_as_base64: true
+    iterations: 5000
+    cost: null
+    memory_cost: null
+    time_cost: null
+  Sylius\Component\User\Model\UserInterface:
+    algorithm: argon2i
+    migrate_from: {  }
+    hash_algorithm: sha512
+    key_length: 40
+    ignore_case: false
+    encode_as_base64: true
+    iterations: 5000
+    cost: null
+    memory_cost: null
+    time_cost: null
+
   enable_authenticator_manager: true
   providers:
     sylius_admin_user_provider:
