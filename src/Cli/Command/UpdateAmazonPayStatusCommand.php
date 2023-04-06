@@ -55,6 +55,7 @@ final class UpdateAmazonPayStatusCommand extends Command
         foreach ($payments as $payment) {
             $this->paymentStateResolver->resolve($payment);
         }
+
         return 0;
     }
 }
