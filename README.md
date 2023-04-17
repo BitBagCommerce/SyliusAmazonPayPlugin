@@ -158,14 +158,30 @@ sylius_fixtures:
                                     clientId: "test"
                                     region: de
 ```
-
+Configure config/packages/webpack_encore.yaml
+```yaml
+    builds:
+        *: *
+        shop: '%kernel.project_dir%/public/build/shop'
+        admin: '%kernel.project_dir%/public/build/admin'
+```
 ## Testing
 
+
+Copy Sylius templates overridden by plug-in to your templates directory (`templates/bundles/`):
+
+```bash
+    mkdir -p templates/bundles/SyliusAdminBundle/
+    mkdir -p templates/bundles/SyliusShopBundle/
+    
+    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/Syli
+    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusShopBundle/* templates/bundles/SyliusShopBundle/
+```
 ```bash
 $ composer install
 $ cd tests/Application
 $ yarn install
-$ yarn run gulp
+$ yarn encore dev
 $ bin/console assets:install web -e test
 $ bin/console doctrine:database:create -e test
 $ bin/console doctrine:schema:create -e test
