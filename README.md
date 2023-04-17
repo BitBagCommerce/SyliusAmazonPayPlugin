@@ -174,7 +174,7 @@ Copy Sylius templates overridden by plug-in to your templates directory (`templa
     mkdir -p templates/bundles/SyliusAdminBundle/
     mkdir -p templates/bundles/SyliusShopBundle/
     
-    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/Syli
+    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
     cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusShopBundle/* templates/bundles/SyliusShopBundle/
 ```
 ```bash
