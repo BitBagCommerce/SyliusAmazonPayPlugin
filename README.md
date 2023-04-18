@@ -70,13 +70,13 @@ This **open-source plugin was developed to help the Sylius community**. If you h
    ```
 5. Copy Sylius templates overridden by plug-in to your templates directory (`templates/bundles/`):
 
-```
-mkdir -p templates/bundles/SyliusAdminBundle/
-mkdir -p templates/bundles/SyliusShopBundle/
-
-cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
-cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusShopBundle/* templates/bundles/SyliusShopBundle/
-```
+    ```bash 
+    mkdir -p templates/bundles/SyliusAdminBundle/
+    mkdir -p templates/bundles/SyliusShopBundle/
+    
+    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
+    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusShopBundle/* templates/bundles/SyliusShopBundle/
+    ```
 6. Install assets:
    ```bash 
     bin/console assets:install 
