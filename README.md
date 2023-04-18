@@ -70,7 +70,7 @@ This **open-source plugin was developed to help the Sylius community**. If you h
    ```
 5. Install assets:
    ```bash 
-    bin/console assets:install --symlink
+    bin/console assets:install 
    ```
 6. Install theme assets (only if using a theme):
    ```bash 
