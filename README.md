@@ -185,6 +185,9 @@ Copy Sylius templates overridden by plug-in to your templates directory (`templa
     
     cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
     cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusShopBundle/* templates/bundles/SyliusShopBundle/
+```
+Then please run the commands below:
+```
 $ composer install
 $ cd tests/Application
 $ yarn install
