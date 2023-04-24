@@ -68,7 +68,15 @@ This **open-source plugin was developed to help the Sylius community**. If you h
        requirements:
            _locale: ^[a-z]{2}(?:_[A-Z]{2})?$  
    ```
-5. Copy Sylius templates overridden by plug-in to your templates directory (`templates/bundles/`):
+5. Please add the Webpack build configuration to your `config/packages/webpack_encore.yaml` file:
+
+    ```yaml
+    webpack_encore:
+        builds:
+            shop: '%kernel.project_dir%/public/build/shop'
+            admin: '%kernel.project_dir%/public/build/admin'
+    ```
+6. Copy Sylius templates overridden by plug-in to your templates directory (`templates/bundles/`):
 
     ```bash 
     mkdir -p templates/bundles/SyliusAdminBundle/
@@ -77,15 +85,18 @@ This **open-source plugin was developed to help the Sylius community**. If you h
     cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
     cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusShopBundle/* templates/bundles/SyliusShopBundle/
     ```
-6. Install assets:
+7. Install assets:
    ```bash 
     bin/console assets:install 
    ```
-7. Install theme assets (only if using a theme):
+8. Install theme assets (only if using a theme):
    ```bash 
     bin/console sylius:theme:assets:install
    ```
-8. Clear cache:
+   
+   Note. When you use `--symlink` option, it has to be passed both in points 7 and 8.
+   
+9. Clear cache:
    ```bash 
     bin/console cache:clear
    ```
