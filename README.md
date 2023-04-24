@@ -68,15 +68,24 @@ This **open-source plugin was developed to help the Sylius community**. If you h
        requirements:
            _locale: ^[a-z]{2}(?:_[A-Z]{2})?$  
    ```
-5. Install assets:
+5. Copy Sylius templates overridden by plug-in to your templates directory (`templates/bundles/`):
+
+    ```bash 
+    mkdir -p templates/bundles/SyliusAdminBundle/
+    mkdir -p templates/bundles/SyliusShopBundle/
+    
+    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
+    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusShopBundle/* templates/bundles/SyliusShopBundle/
+    ```
+6. Install assets:
    ```bash 
-    bin/console assets:install --symlink
+    bin/console assets:install 
    ```
-6. Install theme assets (only if using a theme):
+7. Install theme assets (only if using a theme):
    ```bash 
     bin/console sylius:theme:assets:install
    ```
-7. Clear cache:
+8. Clear cache:
    ```bash 
     bin/console cache:clear
    ```
@@ -158,14 +167,31 @@ sylius_fixtures:
                                     clientId: "test"
                                     region: de
 ```
-
+Configure config/packages/webpack_encore.yaml
+```yaml
+    builds:
+        *: *
+        shop: '%kernel.project_dir%/public/build/shop'
+        admin: '%kernel.project_dir%/public/build/admin'
+```
 ## Testing
 
+
+Copy Sylius templates overridden by plug-in to your templates directory (`templates/bundles/`):
+
 ```bash
+    mkdir -p templates/bundles/SyliusAdminBundle/
+    mkdir -p templates/bundles/SyliusShopBundle/
+    
+    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
+    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusShopBundle/* templates/bundles/SyliusShopBundle/
+```
+Then please run the commands below:
+```
 $ composer install
 $ cd tests/Application
 $ yarn install
-$ yarn run gulp
+$ yarn encore dev
 $ bin/console assets:install web -e test
 $ bin/console doctrine:database:create -e test
 $ bin/console doctrine:schema:create -e test
