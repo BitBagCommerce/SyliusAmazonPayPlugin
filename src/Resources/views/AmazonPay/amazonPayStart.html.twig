@@ -1,5 +1,3 @@
-{% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
-
 <script>
     function getURLParameter(name, source) {
         return decodeURIComponent((new RegExp('[?|&|#]' + name + '=' +
@@ -14,11 +12,12 @@
         document.cookie = "amazon_Login_accessToken=" + accessToken;
     }
 
-    $.post('{{ path('bitbag_sylius_amazon_pay_initialize') }}', {
+    fetch('{{ path('bitbag_sylius_amazon_pay_initialize') }}', {
+        method: 'POST',
         accessToken: accessToken
-    }).done(function (data) {
+    }).then(function (data) {
         window.location.replace("{{ path('sylius_shop_checkout_address') }}" + location.hash);
-    }).fail(function (data) {
+    }).catch(function (data) {
         {#window.location.replace("{{ path('sylius_shop_cart_summary') }}");#}
     });
 </script>

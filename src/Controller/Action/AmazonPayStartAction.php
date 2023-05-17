@@ -35,7 +35,7 @@ final class AmazonPayStartAction
     public function __invoke(Request $request): Response
     {
         return new Response(
-            $this->templating->render('BitBagSyliusAmazonPayPlugin:AmazonPay:amazonPayStart.html.twig')
+            $this->templating->render('@BitBagSyliusAmazonPayPlugin/AmazonPay/amazonPayStart.html.twig')
         );
     }
 }
