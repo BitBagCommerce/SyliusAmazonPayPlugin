@@ -6,15 +6,18 @@
         ;
     }
 
-    let accessToken = getURLParameter("access_token", location.hash);
+    let accessToken = getURLParameter('access_token', location.hash);
 
     if (typeof accessToken === 'string' && accessToken.match(/^Atza/)) {
         document.cookie = "amazon_Login_accessToken=" + accessToken;
     }
 
+    let formData = new FormData();
+    formData.append('accessToken', accessToken);
+
     fetch('{{ path('bitbag_sylius_amazon_pay_initialize') }}', {
         method: 'POST',
-        accessToken: accessToken
+        body: formData
     }).then(function (data) {
         window.location.replace("{{ path('sylius_shop_checkout_address') }}" + location.hash);
     }).catch(function (data) {
