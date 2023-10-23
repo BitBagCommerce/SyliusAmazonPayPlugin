@@ -54,7 +54,7 @@ final class CheckoutStartAction
         $order = $this->cartContext->getCart();
 
         /** @var PaymentMethodInterface $paymentMethod */
-        $paymentMethod = $order->getLastPayment()->getMethod();
+        $paymentMethod = $order->getLastPayment()?->getMethod();
 
         if (
             null !== $paymentMethod &&
