@@ -61,12 +61,11 @@ This **open-source plugin was developed to help the Sylius community**. If you h
 4. Add routing to sylius_shop.yml:
     ```yaml
     sylius_shop_checkout_start:
-       path: /{_locale}/checkout-start
+       path: /
        methods: [GET]
        defaults:
            _controller: bitbag_sylius_amazon_pay_plugin.controller.action.checkout_start
-       requirements:
-           _locale: ^[a-z]{2}(?:_[A-Z]{2})?$  
+
    ```
 5. Please add the Webpack build configuration to your `config/packages/webpack_encore.yaml` file:
 

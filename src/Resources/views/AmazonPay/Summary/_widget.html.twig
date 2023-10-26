@@ -1,7 +1,7 @@
 <div id="readOnlyAddressBookWidgetDiv"></div>
 <div id="readOnlyWalletWidgetDiv"></div>
 
-{% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/shop/js/app.js'} %}
+{{ encore_entry_script_tags('app-shop-entry', null, 'app.shop') }}
 
 <link href="{{ asset('bundles/bitbagsyliusamazonpayplugin/css/Widgets.css') }}" rel="stylesheet">
 
