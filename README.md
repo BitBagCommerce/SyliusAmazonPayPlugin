@@ -178,13 +178,6 @@ sylius_fixtures:
                                     clientId: "test"
                                     region: de
 ```
-Configure config/packages/webpack_encore.yaml
-```yaml
-    builds:
-        *: *
-        shop: '%kernel.project_dir%/public/build/shop'
-        admin: '%kernel.project_dir%/public/build/admin'
-```
 ## Testing
 
 
