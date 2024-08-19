@@ -61,7 +61,7 @@ final class RenderSummaryWidgetExtension extends AbstractExtension
         $order = $this->cartContext->getCart();
 
         /** @var PaymentMethod $paymentMethodCurrent */
-        $paymentMethodCurrent = $order->getLastPayment()->getMethod();
+        $paymentMethodCurrent = $order->getLastPayment()?->getMethod();
 
         if (
             null === $paymentMethodCurrent ||
