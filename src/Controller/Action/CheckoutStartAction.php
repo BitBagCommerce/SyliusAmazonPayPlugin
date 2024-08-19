@@ -13,6 +13,7 @@ namespace BitBag\SyliusAmazonPayPlugin\Controller\Action;
 use BitBag\SyliusAmazonPayPlugin\AmazonPayGatewayFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethod;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
@@ -53,25 +54,30 @@ final class CheckoutStartAction
         /** @var OrderInterface $order */
         $order = $this->cartContext->getCart();
 
-        /** @var PaymentMethodInterface $paymentMethod */
-        $paymentMethod = $order->getLastPayment()->getMethod();
+        /** @var PaymentInterface $order */
+        $payment = $order->getLastPayment();
 
-        if (
-            null !== $paymentMethod &&
-            AmazonPayGatewayFactory::FACTORY_NAME === $paymentMethod->getGatewayConfig()->getFactoryName()
-        ) {
-            /** @var PaymentMethod[] $paymentMethods */
-            $paymentMethods = $this->paymentMethodsResolver->getSupportedMethods($order->getLastPayment());
+        if(null !== $payment) {
+            /** @var PaymentMethodInterface $paymentMethod */
+            $paymentMethod = $payment->getMethod();
 
-            foreach ($paymentMethods as $paymentMethod) {
-                if (
-                    AmazonPayGatewayFactory::FACTORY_NAME !== $paymentMethod->getGatewayConfig()->getFactoryName()
-                ) {
-                    $order->getLastPayment()->setMethod($paymentMethod);
+            if (
+                null !== $paymentMethod &&
+                AmazonPayGatewayFactory::FACTORY_NAME === $paymentMethod->getGatewayConfig()->getFactoryName()
+            ) {
+                /** @var PaymentMethod[] $paymentMethods */
+                $paymentMethods = $this->paymentMethodsResolver->getSupportedMethods($order->getLastPayment());
 
-                    $this->orderEntityManager->flush();
+                foreach ($paymentMethods as $paymentMethod) {
+                    if (
+                        AmazonPayGatewayFactory::FACTORY_NAME !== $paymentMethod->getGatewayConfig()->getFactoryName()
+                    ) {
+                        $order->getLastPayment()->setMethod($paymentMethod);
 
-                    return new RedirectResponse($this->router->generate('sylius_shop_checkout_address'));
+                        $this->orderEntityManager->flush();
+
+                        return new RedirectResponse($this->router->generate('sylius_shop_checkout_address'));
+                    }
                 }
             }
         }
