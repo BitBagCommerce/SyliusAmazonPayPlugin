@@ -42,147 +42,26 @@ This **open-source plugin was developed to help the Sylius community**. If you h
 All main functionalities of the plugin are described [here.](https://github.com/BitBagCommerce/SyliusAmazonPayPlugin/blob/master/doc/functionalities.md)
 
 
-# Installation
+## Installation
 
-1. Require plugin with composer:
-   ```bash
-    $ composer require bitbag/amazon-pay-plugin
-   ```
+---
+### Requirements
 
-2. Add plugin class to your bundles.php file:
+We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.
 
-     ```bash
-        $bundles = [
-            BitBag\SyliusAmazonPayPlugin\BitBagSyliusAmazonPayPlugin::class => ['all' => true],
-        ];
+| Package       | Version         |
+|---------------|-----------------|
+| PHP           | \>=8.0          |
+| sylius/sylius | 1.12.x - 1.13.x |
+| MySQL         | \>= 5.7         |
+| NodeJS        | \>= 20.x        |
 
-     ```
-3. Import routing on top of your config/routes.yaml file:
-    ```yaml
-    bitbag_sylius_amazon_pay_plugin:
-        resource: "@BitBagSyliusAmazonPayPlugin/Resources/config/routing.yml"
-        prefix: /
-    ```
-4. Add routing to sylius_shop.yml:
-    ```yaml
-    sylius_shop_checkout_start:
-       path: /{_locale}/checkout-start
-       methods: [GET]
-       defaults:
-           _controller: bitbag_sylius_amazon_pay_plugin.controller.action.checkout_start
-       requirements:
-           _locale: ^[a-z]{2}(?:_[A-Z]{2})?$  
-   ```
-5. Please add the Webpack build configuration to your `config/packages/webpack_encore.yaml` file:
+----
 
-    ```yaml
-    webpack_encore:
-        builds:
-            shop: '%kernel.project_dir%/public/build/shop'
-            admin: '%kernel.project_dir%/public/build/admin'
-    ```
-6. Copy Sylius templates overridden by plug-in to your templates directory (`templates/bundles/`):
+### Full installation guide
+- [See the full installation guide](doc/installation.md)
 
-    ```bash 
-    mkdir -p templates/bundles/SyliusAdminBundle/
-    mkdir -p templates/bundles/SyliusShopBundle/
-    
-    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
-    cp -R vendor/bitbag/amazon-pay-plugin/tests/Application/templates/bundles/SyliusShopBundle/* templates/bundles/SyliusShopBundle/
-    ```
-7. Install assets:
-   ```bash 
-    bin/console assets:install 
-   ```
-8. Install theme assets (only if using a theme):
-   ```bash 
-    bin/console sylius:theme:assets:install
-   ```
-   
-   Note. When you use `--symlink` option, it has to be passed both in points 7 and 8.
-   
-9. Clear cache:
-   ```bash 
-    bin/console cache:clear
-   ```
 
-## Change the order of steps in the checkout
- Add checkout resolver to _sylius.yml:
-
-```yaml
-sylius_shop:
-    checkout_resolver:
-       pattern: /checkout/.+
-       route_map:
-           empty_order:
-               route: sylius_shop_cart_summary
-           cart:
-               route: sylius_shop_checkout_address
-           addressed:
-               route: sylius_shop_checkout_select_payment
-           payment_selected:
-               route: sylius_shop_checkout_select_shipping
-           payment_skipped:
-               route: sylius_shop_checkout_select_shipping
-           shipping_selected:
-               route: sylius_shop_checkout_complete
-           shipping_skipped:
-               route: sylius_shop_checkout_complete
-```
-
-Add state machine in _sylius.yml:
-
-```yaml
-winzou_state_machine:
-    sylius_order_checkout:
-       transitions:
-           select_payment:
-               from: [payment_selected, shipping_skipped, shipping_selected, addressed]
-               to: payment_selected
-           complete:
-               from: [payment_selected, payment_skipped, shipping_selected, shipping_skipped]
-               to: completed
-```
-## Cron job
-Cron refreshes the status of AmazonPay
-
-for example:
-
-```bash
-*/5 * * * * bin/console bitbag:amazon-pay:update-payment-state
-```
-
-## Fixtures
-Example fixture configuration:
-```yaml
-sylius_fixtures:
-    suites:
-        default:
-            fixtures:
-                payment_method:
-                    options:
-                        custom:
-                            amazon_pay:
-                                code: "amazon_pay"
-                                name: "Amazon pay"
-                                channels:
-                                    - "US_WEB"
-                                enabled: true
-                                gatewayFactory: amazonpay
-                                gatewayName: Amazon pay
-                                gatewayConfig:
-                                    payum.http_client: '@bitbag.sylius_amazon_pay_plugin.amazon_pay_api_client'
-                                    buttonColor: Gold
-                                    buttonSize: Large
-                                    buttonType: PwA
-                                    buttonLanguage: de-DE
-                                    environment: sandbox
-                                    merchantId: "test" 
-                                    accessKey: "test"
-                                    secretKey: "test"
-                                    clientId: "test"
-                                    region: de
-```
 ## Testing
 
 
