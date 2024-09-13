@@ -54,6 +54,7 @@ We have a 70-person team of experts: business analysts and consultants, eCommerc
    * [Testing](#testing)
 * [Functionalities](#functionalities)
 * [Demo](#demo)
+* [Additional resources for developers](#additional-resources-for-developers)
 * [License](#license)
 * [Contact and Support](#contact-and-support)
 * [Community](#community)
